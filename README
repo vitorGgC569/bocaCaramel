@@ -1,1 +1,82 @@
-Please find the documentation in the doc/ folder.
+# Caramel Coders BOCA
+
+## Requisitos
+
+- Docker Desktop em execucao
+- PowerShell no Windows ou Bash no Linux/macOS
+
+## Estrutura
+
+- `boca-docker/`: stack Docker do BOCA
+- `boca_deploy.ps1`: automacao para Windows
+- `boca_deploy.sh`: automacao para Linux e macOS
+- `setup_boca_profiles.ps1`: aplica os usuarios padrao desta configuracao
+
+## Subir no Windows
+
+```powershell
+.\boca_deploy.ps1 install
+```
+
+## Subir no Linux ou macOS
+
+```bash
+chmod +x ./boca_deploy.sh
+./boca_deploy.sh install
+```
+
+## URLs
+
+- BOCA: [http://localhost:8000/boca](http://localhost:8000/boca)
+- Grafana: [http://localhost:3001](http://localhost:3001)
+
+## Credenciais
+
+- BOCA contest: `CCASuperControlContest`
+- Senha contest: `Ur#t4i@CCAIFG0!2026xZq`
+- BOCA admin: `CCASuperControlRuntime`
+- Senha admin: `Ur#t4i@CCAIFG0!2026xZq2`
+- Grafana: `CCASuperOverview`
+- Senha Grafana: `Ur#t4i@CCAIFG0!2026xZq3`
+
+## Comandos
+
+Windows:
+
+```powershell
+.\boca_deploy.ps1 start
+.\boca_deploy.ps1 stop
+.\boca_deploy.ps1 status
+.\boca_deploy.ps1 logs
+.\boca_deploy.ps1 restart
+.\boca_deploy.ps1 reset
+.\boca_deploy.ps1 profiles
+.\boca_deploy.ps1 open
+```
+
+Linux ou macOS:
+
+```bash
+./boca_deploy.sh start
+./boca_deploy.sh stop
+./boca_deploy.sh status
+./boca_deploy.sh logs
+./boca_deploy.sh restart
+./boca_deploy.sh reset
+./boca_deploy.sh profiles
+./boca_deploy.sh open
+```
+
+## Configuracao inicial
+
+1. Entre no BOCA com `CCASuperControlContest`.
+2. Crie e ative o contest.
+3. Entre com `CCASuperControlRuntime`.
+4. Cadastre sites, usuarios, linguagens e problemas.
+5. Use o Grafana para acompanhar os dados locais do contest.
+
+## Observacoes
+
+- O Grafana fica exposto apenas em `localhost:3001`.
+- O script `profiles` reaplica os usuarios padrao sem remover os dados do banco.
+- O comando `reset` remove containers e volumes da stack.

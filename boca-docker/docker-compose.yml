@@ -1,0 +1,43 @@
+---
+services:
+  boca-web:
+    environment:
+      - BOCA_DB_SUPER_PASSWORD=Ur#t4i@CCAIFG0!2026xZq
+      - BOCA_PASSWORD=Ur#t4i@CCAIFG0!2026xZq
+      - BOCA_KEY=CCAIFGoiano_Urutai_7k9Xm2Pq8Wn5Rj4L
+      - BOCA_JAIL_HOST=localhost
+    ports:
+      - 8000:80
+
+  boca-jail:
+    privileged: true
+    environment:
+      - BOCA_DB_SUPER_PASSWORD=Ur#t4i@CCAIFG0!2026xZq
+      - BOCA_PASSWORD=Ur#t4i@CCAIFG0!2026xZq
+      - BOCA_KEY=CCAIFGoiano_Urutai_7k9Xm2Pq8Wn5Rj4L
+      - BOCA_JAIL_HOST=localhost
+
+  grafana:
+    image: grafana/grafana:latest
+    depends_on:
+      - boca-db
+    ports:
+      - 127.0.0.1:3001:3000
+    environment:
+      - GF_SECURITY_ADMIN_USER=CCASuperOverview
+      - GF_SECURITY_ADMIN_PASSWORD=Ur#t4i@CCAIFG0!2026xZq3
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/var/lib/grafana/dashboards/boca-analytics.json
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    restart: unless-stopped
+
+  boca-db:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_PASSWORD=Ur#t4i@CCAIFG0!2026xZq
+
+volumes:
+  grafana-data:
