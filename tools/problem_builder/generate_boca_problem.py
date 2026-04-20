@@ -67,7 +67,7 @@ def parse_simple_yaml(path):
         if ":" not in raw_line:
             raise BuildError(f"Linha invalida em {path}: {raw_line}")
         key, value = raw_line.split(":", 1)
-        key = key.strip()
+        key = key.strip().lstrip("\ufeff")
         if not re.fullmatch(r"[A-Za-z0-9_]+", key):
             raise BuildError(f"Chave invalida em {path}: {key}")
         value = value.strip()
