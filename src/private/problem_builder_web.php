@@ -45,25 +45,58 @@ function bpw_latex_paragraphs($text) {
 	return implode("\n\n", $paragraphs) . "\n";
 }
 
-function bpw_latex_verbatim($text) {
-	$text = bpw_normalize_newlines(rtrim($text));
-	$text = str_replace('\\end{verbatim}', '\\end\{verbatim\}', $text);
-	return "\\begin{verbatim}\n" . $text . "\n\\end{verbatim}\n";
-}
-
 function bpw_latex_section($title, $text) {
 	$text = trim($text);
 	if($text == '') return '';
 	return "\\section*{" . bpw_latex_escape($title) . "}\n" . bpw_latex_paragraphs($text) . "\n";
 }
 
+function bpw_latex_code_lines($text) {
+	$text = rtrim(bpw_normalize_newlines($text));
+	$lines = explode("\n", $text);
+	if(count($lines) == 0 || (count($lines) == 1 && $lines[0] == ''))
+		$lines = array('');
+	$out = array();
+	foreach($lines as $line) {
+		if($line == '') $out[] = "\\mbox{}";
+		else $out[] = str_replace(' ', '~', bpw_latex_escape($line));
+	}
+	return implode("\\\\\n", $out);
+}
+
+function bpw_latex_code_box($text) {
+	return "\\fcolorbox{ccboxborder}{ccboxbg}{\\begin{minipage}{0.90\\linewidth}\n" .
+		"{\\ttfamily\\small\n" .
+		bpw_latex_code_lines($text) . "\n" .
+		"}\n" .
+		"\\end{minipage}}\n";
+}
+
+function bpw_latex_examples($examples) {
+	if(!is_array($examples) || count($examples) == 0) return '';
+	$out = "\\section*{Exemplos}\n";
+	$count = 1;
+	foreach($examples as $example) {
+		$input = isset($example['input']) ? $example['input'] : '';
+		$output = isset($example['output']) ? $example['output'] : '';
+		$out .= "\\subsection*{Caso " . $count . "}\n" .
+			"\\noindent\\begin{minipage}[t]{0.48\\textwidth}\n" .
+			"\\textbf{Entrada}\\\\[0.35em]\n" .
+			bpw_latex_code_box($input) .
+			"\\end{minipage}\\hfill\n" .
+			"\\begin{minipage}[t]{0.48\\textwidth}\n" .
+			"\\textbf{Saida}\\\\[0.35em]\n" .
+			bpw_latex_code_box($output) .
+			"\\end{minipage}\n\n" .
+			"\\vspace{0.8em}\n\n";
+		$count++;
+	}
+	return $out;
+}
+
 function bpw_latex_statement($fields) {
 	$title = trim($fields['title']) == '' ? 'Questao' : trim($fields['title']);
-	$sample = '';
-	if(trim($fields['sample_input']) != '' || trim($fields['sample_output']) != '') {
-		$sample .= "\\section*{Exemplo de entrada}\n" . bpw_latex_verbatim($fields['sample_input']) . "\n";
-		$sample .= "\\section*{Exemplo de saida}\n" . bpw_latex_verbatim($fields['sample_output']) . "\n";
-	}
+	$examples = isset($fields['examples']) ? $fields['examples'] : array();
 	return "\\documentclass[12pt,a4paper]{article}\n" .
 		"\\usepackage[utf8]{inputenc}\n" .
 		"\\usepackage[T1]{fontenc}\n" .
@@ -73,6 +106,9 @@ function bpw_latex_statement($fields) {
 		"\\usepackage{xcolor}\n" .
 		"\\geometry{margin=2.2cm}\n" .
 		"\\definecolor{ccgreen}{HTML}{0B8C85}\n" .
+		"\\definecolor{ccboxbg}{HTML}{F7F0D8}\n" .
+		"\\definecolor{ccboxborder}{HTML}{B8A978}\n" .
+		"\\setlength{\\fboxsep}{6pt}\n" .
 		"\\setlength{\\parindent}{0pt}\n" .
 		"\\setlength{\\parskip}{0.75em}\n" .
 		"\\begin{document}\n" .
@@ -87,7 +123,7 @@ function bpw_latex_statement($fields) {
 		bpw_latex_section('Descricao', $fields['description']) .
 		bpw_latex_section('Entrada', $fields['input']) .
 		bpw_latex_section('Saida', $fields['output']) .
-		$sample .
+		bpw_latex_examples($examples) .
 		bpw_latex_section('Observacoes', $fields['notes']) .
 		"\\end{document}\n";
 }

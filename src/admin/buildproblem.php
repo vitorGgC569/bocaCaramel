@@ -29,6 +29,7 @@ function bp_positive_int($name, $fallback, $min=1, $max=100000) {
 function bp_collect_cases() {
 	$inputs = isset($_POST['case_input']) && is_array($_POST['case_input']) ? $_POST['case_input'] : array();
 	$outputs = isset($_POST['case_output']) && is_array($_POST['case_output']) ? $_POST['case_output'] : array();
+	$visibilities = isset($_POST['case_visibility']) && is_array($_POST['case_visibility']) ? $_POST['case_visibility'] : array();
 	$cases = array();
 	$total = max(count($inputs), count($outputs));
 	for($i = 0; $i < $total; $i++) {
@@ -37,18 +38,28 @@ function bp_collect_cases() {
 		if(trim($input) == '' && trim($output) == '') continue;
 		if(trim($input) == '' || trim($output) == '')
 			bp_error_page('Todo caso de teste precisa ter entrada e saida esperada.');
-		$cases[] = array('input' => $input, 'output' => $output);
+		$visibility = isset($visibilities[$i]) ? $visibilities[$i] : 'opaque';
+		$cases[] = array('input' => $input, 'output' => $output, 'public' => $visibility == 'public');
 	}
 	if(count($cases) == 0)
 		bp_error_page('Inclua pelo menos um caso de teste.');
 	return $cases;
 }
 
+function bp_public_examples($cases) {
+	$examples = array();
+	foreach($cases as $case) {
+		if(isset($case['public']) && $case['public'])
+			$examples[] = array('input' => $case['input'], 'output' => $case['output']);
+	}
+	return $examples;
+}
+
 function bp_post_text($name) {
 	return isset($_POST[$name]) ? trim($_POST[$name]) : '';
 }
 
-function bp_collect_latex_statement($fullname) {
+function bp_collect_latex_statement($fullname, $cases) {
 	$title = bp_post_text('latex_title');
 	if($title == '') $title = $fullname;
 	$description = bp_post_text('latex_description');
@@ -61,17 +72,16 @@ function bp_collect_latex_statement($fullname) {
 		'description' => $description,
 		'input' => $input,
 		'output' => $output,
-		'sample_input' => isset($_POST['latex_sample_input']) ? $_POST['latex_sample_input'] : '',
-		'sample_output' => isset($_POST['latex_sample_output']) ? $_POST['latex_sample_output'] : '',
+		'examples' => bp_public_examples($cases),
 		'notes' => bp_post_text('latex_notes')
 	);
 	return array('statement.tex', bpw_latex_statement($fields));
 }
 
-function bp_collect_statement($fullname) {
+function bp_collect_statement($fullname, $cases) {
 	$mode = isset($_POST['statement_mode']) ? $_POST['statement_mode'] : 'latex';
 	if($mode == 'latex')
-		return bp_collect_latex_statement($fullname);
+		return bp_collect_latex_statement($fullname, $cases);
 	$manual = isset($_POST['statement_text']) ? trim($_POST['statement_text']) : '';
 	if($mode == 'file') {
 		if(!isset($_FILES['statement_file']) || $_FILES['statement_file']['error'] == UPLOAD_ERR_NO_FILE)
@@ -102,7 +112,8 @@ function bp_generate_zip() {
 	if($basename == '') bp_error_page('Informe o basename do problema.');
 	if($fullname == '') bp_error_page('Informe o nome completo do problema.');
 	$languages = isset($_POST['languages']) && is_array($_POST['languages']) ? $_POST['languages'] : array('py3');
-	list($statementName, $statementContent) = bp_collect_statement($fullname);
+	$cases = bp_collect_cases();
+	list($statementName, $statementContent) = bp_collect_statement($fullname, $cases);
 	$spec = array(
 		'basename' => $basename,
 		'fullname' => $fullname,
@@ -114,7 +125,7 @@ function bp_generate_zip() {
 		'statement_name' => $statementName,
 		'statement_content' => $statementContent,
 		'compile_pdf' => isset($_POST['statement_mode']) && $_POST['statement_mode'] == 'latex',
-		'cases' => bp_collect_cases()
+		'cases' => $cases
 	);
 	$temp = tempnam(sys_get_temp_dir(), 'boca_problem_');
 	if($temp === false) bp_error_page('Nao foi possivel criar arquivo temporario.');
@@ -162,6 +173,7 @@ $langs = bpw_allowed_languages();
 .cc-case th { background: #eeee00; border: 1px solid #555555; padding: 4px; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; }
 .cc-case td { border: 1px solid #555555; background: #f7f7ef; padding: 4px; }
 .cc-case textarea { width: 98%; height: 95px; font-family: "Courier New", Courier, mono; font-size: 10pt; }
+.cc-case select { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; }
 .cc-actions { text-align: center; margin-top: 14px; }
 .cc-warning { border: 1px solid #aa8800; background: #fff8bf; padding: 8px; margin-top: 8px; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; }
 .cc-small-button { font-size: 10pt; }
@@ -187,6 +199,7 @@ function addCase() {
 	var table = document.createElement('table');
 	table.className = 'cc-case';
 	table.innerHTML = '<tr><th colspan="2">Caso de teste ' + total + '</th></tr>' +
+		'<tr><td colspan="2">Tipo do caso<br><select name="case_visibility[]"><option value="public">Publico: aparece no PDF e no auto judging</option><option value="opaque" selected>Opaco: apenas auto judging</option></select></td></tr>' +
 		'<tr><td width="50%">Entrada<br><textarea name="case_input[]"></textarea></td>' +
 		'<td width="50%">Saida esperada<br><textarea name="case_output[]"></textarea></td></tr>';
 	area.appendChild(table);
@@ -324,12 +337,8 @@ window.onload = function() { showStatementMode(); };
 							<td><textarea name="latex_output" rows="5" cols="90"></textarea></td>
 						</tr>
 						<tr>
-							<td class="cc-label">Exemplo de entrada:</td>
-							<td><textarea name="latex_sample_input" rows="4" cols="90"></textarea></td>
-						</tr>
-						<tr>
-							<td class="cc-label">Exemplo de saida:</td>
-							<td><textarea name="latex_sample_output" rows="4" cols="90"></textarea></td>
+							<td class="cc-label">Exemplos no PDF:</td>
+							<td><div class="cc-warning">O PDF usa os casos de teste marcados como Publico. Casos Opacos entram no ZIP e no auto judging, mas nao aparecem no enunciado.</div></td>
 						</tr>
 						<tr>
 							<td class="cc-label">Observacoes:</td>
@@ -362,11 +371,20 @@ window.onload = function() { showStatementMode(); };
 					<table class="cc-case">
 						<tr><th colspan="2">Caso de teste 1</th></tr>
 						<tr>
+							<td colspan="2">Tipo do caso<br>
+								<select name="case_visibility[]">
+									<option value="public" selected>Publico: aparece no PDF e no auto judging</option>
+									<option value="opaque">Opaco: apenas auto judging</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
 							<td width="50%">Entrada<br><textarea name="case_input[]"></textarea></td>
 							<td width="50%">Saida esperada<br><textarea name="case_output[]"></textarea></td>
 						</tr>
 					</table>
 				</div>
+				<div class="cc-warning">Cada caso vira um par separado de arquivos no ZIP: input/001 com output/001, input/002 com output/002, e assim por diante.</div>
 				<input type="button" class="cc-small-button" value="Adicionar caso" onclick="addCase();">
 				<input type="button" class="cc-small-button" value="Remover ultimo" onclick="removeCase();">
 			</div>
