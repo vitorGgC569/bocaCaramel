@@ -21,6 +21,77 @@ function bpw_normalize_newlines($text) {
 	return str_replace(array("\r\n", "\r"), "\n", $text);
 }
 
+function bpw_latex_escape($text) {
+	$text = bpw_normalize_newlines($text);
+	$map = array(
+		'\\' => '\\textbackslash{}',
+		'{' => '\\{',
+		'}' => '\\}',
+		'$' => '\\$',
+		'&' => '\\&',
+		'%' => '\\%',
+		'#' => '\\#',
+		'_' => '\\_',
+		'^' => '\\textasciicircum{}',
+		'~' => '\\textasciitilde{}'
+	);
+	return strtr($text, $map);
+}
+
+function bpw_latex_paragraphs($text) {
+	$text = trim(bpw_latex_escape($text));
+	if($text == '') return '';
+	$paragraphs = preg_split("/\n\s*\n/", $text);
+	return implode("\n\n", $paragraphs) . "\n";
+}
+
+function bpw_latex_verbatim($text) {
+	$text = bpw_normalize_newlines(rtrim($text));
+	$text = str_replace('\\end{verbatim}', '\\end\{verbatim\}', $text);
+	return "\\begin{verbatim}\n" . $text . "\n\\end{verbatim}\n";
+}
+
+function bpw_latex_section($title, $text) {
+	$text = trim($text);
+	if($text == '') return '';
+	return "\\section*{" . bpw_latex_escape($title) . "}\n" . bpw_latex_paragraphs($text) . "\n";
+}
+
+function bpw_latex_statement($fields) {
+	$title = trim($fields['title']) == '' ? 'Questao' : trim($fields['title']);
+	$sample = '';
+	if(trim($fields['sample_input']) != '' || trim($fields['sample_output']) != '') {
+		$sample .= "\\section*{Exemplo de entrada}\n" . bpw_latex_verbatim($fields['sample_input']) . "\n";
+		$sample .= "\\section*{Exemplo de saida}\n" . bpw_latex_verbatim($fields['sample_output']) . "\n";
+	}
+	return "\\documentclass[12pt,a4paper]{article}\n" .
+		"\\usepackage[utf8]{inputenc}\n" .
+		"\\usepackage[T1]{fontenc}\n" .
+		"\\usepackage[brazil]{babel}\n" .
+		"\\usepackage{graphicx}\n" .
+		"\\usepackage{geometry}\n" .
+		"\\usepackage{xcolor}\n" .
+		"\\geometry{margin=2.2cm}\n" .
+		"\\definecolor{ccgreen}{HTML}{0B8C85}\n" .
+		"\\setlength{\\parindent}{0pt}\n" .
+		"\\setlength{\\parskip}{0.75em}\n" .
+		"\\begin{document}\n" .
+		"\\begin{center}\n" .
+		"{\\Large\\bfseries Problemas Caramel Coder's}\n\n" .
+		"\\vspace{0.45cm}\n" .
+		"\\includegraphics[width=0.34\\textwidth]{caramel-coders.png}\n\n" .
+		"\\vspace{1.0cm}\n" .
+		"{\\LARGE\\bfseries " . bpw_latex_escape($title) . "}\n" .
+		"\\end{center}\n\n" .
+		"\\vspace{0.35cm}\n" .
+		bpw_latex_section('Descricao', $fields['description']) .
+		bpw_latex_section('Entrada', $fields['input']) .
+		bpw_latex_section('Saida', $fields['output']) .
+		$sample .
+		bpw_latex_section('Observacoes', $fields['notes']) .
+		"\\end{document}\n";
+}
+
 function bpw_mkdir($dir) {
 	if(!is_dir($dir) && !@mkdir($dir, 0770, true))
 		throw new Exception('Nao foi possivel criar a pasta temporaria do pacote.');
@@ -153,6 +224,9 @@ function bpw_create_package($repoRoot, $spec, $zipPath) {
 	bpw_write_file($stage . $ds . 'tests' . $ds . 'py3', bpw_test_script(), 0755);
 	$statementName = bpw_sanitize_filename($spec['statement_name'], 'statement.md');
 	bpw_write_file($stage . $ds . 'description' . $ds . $statementName, $spec['statement_content'], 0640);
+	$logo = $repoRoot . $ds . 'src' . $ds . 'images' . $ds . 'caramel-coders.png';
+	if(is_readable($logo))
+		bpw_copy_file($logo, $stage . $ds . 'description' . $ds . 'caramel-coders.png', 0644);
 	$info = "basename=" . $spec['basename'] . "\n" .
 		"fullname=" . $spec['fullname'] . "\n" .
 		"descfile=" . $statementName . "\n";

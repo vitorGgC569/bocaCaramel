@@ -44,9 +44,38 @@ function bp_collect_cases() {
 	return $cases;
 }
 
-function bp_collect_statement() {
+function bp_post_text($name) {
+	return isset($_POST[$name]) ? trim($_POST[$name]) : '';
+}
+
+function bp_collect_latex_statement($fullname) {
+	$title = bp_post_text('latex_title');
+	if($title == '') $title = $fullname;
+	$description = bp_post_text('latex_description');
+	$input = bp_post_text('latex_input');
+	$output = bp_post_text('latex_output');
+	if($description == '' || $input == '' || $output == '')
+		bp_error_page('No template LaTeX, preencha descricao, entrada e saida.');
+	$fields = array(
+		'title' => $title,
+		'description' => $description,
+		'input' => $input,
+		'output' => $output,
+		'sample_input' => isset($_POST['latex_sample_input']) ? $_POST['latex_sample_input'] : '',
+		'sample_output' => isset($_POST['latex_sample_output']) ? $_POST['latex_sample_output'] : '',
+		'notes' => bp_post_text('latex_notes')
+	);
+	return array('statement.tex', bpw_latex_statement($fields));
+}
+
+function bp_collect_statement($fullname) {
+	$mode = isset($_POST['statement_mode']) ? $_POST['statement_mode'] : 'latex';
+	if($mode == 'latex')
+		return bp_collect_latex_statement($fullname);
 	$manual = isset($_POST['statement_text']) ? trim($_POST['statement_text']) : '';
-	if(isset($_FILES['statement_file']) && $_FILES['statement_file']['error'] != UPLOAD_ERR_NO_FILE) {
+	if($mode == 'file') {
+		if(!isset($_FILES['statement_file']) || $_FILES['statement_file']['error'] == UPLOAD_ERR_NO_FILE)
+			bp_error_page('Envie um arquivo de enunciado.');
 		if($_FILES['statement_file']['error'] != UPLOAD_ERR_OK)
 			bp_error_page('Falha no upload do enunciado.');
 		if(!is_uploaded_file($_FILES['statement_file']['tmp_name']))
@@ -60,6 +89,8 @@ function bp_collect_statement() {
 			bp_error_page('Nao foi possivel ler o enunciado enviado.');
 		return array($name, $content);
 	}
+	if($mode != 'manual')
+		bp_error_page('Modo de enunciado invalido.');
 	if($manual == '')
 		bp_error_page('Informe o enunciado manualmente ou envie um arquivo.');
 	return array('statement.md', "# Enunciado\n\n" . $manual . "\n");
@@ -71,7 +102,7 @@ function bp_generate_zip() {
 	if($basename == '') bp_error_page('Informe o basename do problema.');
 	if($fullname == '') bp_error_page('Informe o nome completo do problema.');
 	$languages = isset($_POST['languages']) && is_array($_POST['languages']) ? $_POST['languages'] : array('py3');
-	list($statementName, $statementContent) = bp_collect_statement();
+	list($statementName, $statementContent) = bp_collect_statement($fullname);
 	$spec = array(
 		'basename' => $basename,
 		'fullname' => $fullname,
@@ -133,6 +164,13 @@ $langs = bpw_allowed_languages();
 .cc-actions { text-align: center; margin-top: 14px; }
 .cc-warning { border: 1px solid #aa8800; background: #fff8bf; padding: 8px; margin-top: 8px; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; }
 .cc-small-button { font-size: 10pt; }
+.cc-mode { border: 1px solid #555555; background: #f7f7ef; padding: 8px; margin-bottom: 10px; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; }
+.cc-mode label { margin-right: 18px; white-space: nowrap; }
+.cc-mode-box { display: none; }
+.cc-mode-box textarea { width: 94%; font-family: "Courier New", Courier, mono; font-size: 10pt; }
+.cc-latex-preview { border: 1px solid #555555; background: #ffffff; text-align: center; padding: 16px; margin-bottom: 10px; font-family: Verdana, Arial, Helvetica, sans-serif; }
+.cc-latex-preview img { width: 130px; height: auto; display: block; margin: 10px auto 16px auto; }
+.cc-latex-preview-title { font-size: 15pt; font-weight: bold; }
 @media (max-width: 760px) {
 	.cc-builder { width: 98%; }
 	.cc-logo { width: 82px; }
@@ -157,10 +195,42 @@ function removeCase() {
 	var tables = area.getElementsByTagName('table');
 	if(tables.length > 1) area.removeChild(tables[tables.length - 1]);
 }
+function statementMode() {
+	var modes = document.getElementsByName('statement_mode');
+	for(var i = 0; i < modes.length; i++) {
+		if(modes[i].checked) return modes[i].value;
+	}
+	return 'latex';
+}
+function showStatementMode() {
+	var mode = statementMode();
+	var boxes = ['latex', 'file', 'manual'];
+	for(var i = 0; i < boxes.length; i++) {
+		var box = document.getElementById('statement_' + boxes[i]);
+		if(box) box.style.display = boxes[i] == mode ? 'block' : 'none';
+	}
+}
 function validateBuilder() {
 	if(document.formbuilder.fullname.value == '' || document.formbuilder.basename.value == '') {
 		alert('Informe o nome completo e o basename.');
 		return false;
+	}
+	var mode = statementMode();
+	if(mode == 'latex') {
+		if(document.formbuilder.latex_description.value == '' || document.formbuilder.latex_input.value == '' || document.formbuilder.latex_output.value == '') {
+			alert('No template LaTeX, preencha descricao, entrada e saida.');
+			return false;
+		}
+	} else if(mode == 'file') {
+		if(document.formbuilder.statement_file.value == '') {
+			alert('Envie um arquivo de enunciado.');
+			return false;
+		}
+	} else if(mode == 'manual') {
+		if(document.formbuilder.statement_text.value == '') {
+			alert('Preencha o texto manual do enunciado.');
+			return false;
+		}
 	}
 	var inputs = document.getElementsByName('case_input[]');
 	var outputs = document.getElementsByName('case_output[]');
@@ -174,6 +244,7 @@ function validateBuilder() {
 	}
 	return true;
 }
+window.onload = function() { showStatementMode(); };
 </script>
 <div class="cc-builder">
 	<table class="cc-head">
@@ -222,16 +293,65 @@ function validateBuilder() {
 		<div class="cc-section">
 			<div class="cc-section-title">Enunciado</div>
 			<div class="cc-section-body">
-				<table class="cc-grid">
-					<tr>
-						<td class="cc-label">Arquivo pronto:</td>
-						<td><input type="file" name="statement_file" size="45"> <span class="cc-help">PDF, TXT, MD ou TEX.</span></td>
-					</tr>
-					<tr>
-						<td class="cc-label">Ou texto manual:</td>
-						<td><textarea class="edit" name="statement_text" rows="10" cols="90"></textarea></td>
-					</tr>
-				</table>
+				<div class="cc-mode">
+					<label><input type="radio" name="statement_mode" value="latex" checked onclick="showStatementMode();"> Template LaTeX Caramel Coders</label>
+					<label><input type="radio" name="statement_mode" value="file" onclick="showStatementMode();"> Arquivo pronto</label>
+					<label><input type="radio" name="statement_mode" value="manual" onclick="showStatementMode();"> Texto manual simples</label>
+				</div>
+				<div id="statement_latex" class="cc-mode-box">
+					<div class="cc-latex-preview">
+						<div><b>Problemas Caramel Coder's</b></div>
+						<img src="../images/caramel-coders.png" alt="Caramel Coders">
+						<div class="cc-latex-preview-title">Titulo da questao</div>
+						<div class="cc-help">O ZIP tera um statement.tex neste formato, com a logo junto em description/caramel-coders.png.</div>
+					</div>
+					<table class="cc-grid">
+						<tr>
+							<td class="cc-label">Titulo no enunciado:</td>
+							<td><input type="text" name="latex_title" size="60" maxlength="100" value=""> <span class="cc-help">Se vazio, usa o nome completo.</span></td>
+						</tr>
+						<tr>
+							<td class="cc-label">Descricao:</td>
+							<td><textarea name="latex_description" rows="7" cols="90"></textarea></td>
+						</tr>
+						<tr>
+							<td class="cc-label">Entrada:</td>
+							<td><textarea name="latex_input" rows="5" cols="90"></textarea></td>
+						</tr>
+						<tr>
+							<td class="cc-label">Saida:</td>
+							<td><textarea name="latex_output" rows="5" cols="90"></textarea></td>
+						</tr>
+						<tr>
+							<td class="cc-label">Exemplo de entrada:</td>
+							<td><textarea name="latex_sample_input" rows="4" cols="90"></textarea></td>
+						</tr>
+						<tr>
+							<td class="cc-label">Exemplo de saida:</td>
+							<td><textarea name="latex_sample_output" rows="4" cols="90"></textarea></td>
+						</tr>
+						<tr>
+							<td class="cc-label">Observacoes:</td>
+							<td><textarea name="latex_notes" rows="4" cols="90"></textarea></td>
+						</tr>
+					</table>
+				</div>
+				<div id="statement_file" class="cc-mode-box">
+					<table class="cc-grid">
+						<tr>
+							<td class="cc-label">Arquivo pronto:</td>
+							<td><input type="file" name="statement_file" size="45"> <span class="cc-help">PDF, TXT, MD ou TEX.</span></td>
+						</tr>
+					</table>
+				</div>
+				<div id="statement_manual" class="cc-mode-box">
+					<table class="cc-grid">
+						<tr>
+							<td class="cc-label">Texto manual:</td>
+							<td><textarea class="edit" name="statement_text" rows="10" cols="90"></textarea></td>
+						</tr>
+					</table>
+				</div>
 			</div>
 		</div>
 		<div class="cc-section">
