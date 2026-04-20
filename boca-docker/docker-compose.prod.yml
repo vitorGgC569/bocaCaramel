@@ -1,7 +1,10 @@
 ---
 services:
   boca-web:
-    image: ghcr.io/joaofazolo/boca-docker/boca-web:latest
+    build:
+      context: .
+      dockerfile: docker/web-latex/Dockerfile
+    image: caramel-coders/boca-web-latex:local
     depends_on:
       - boca-db
     deploy:

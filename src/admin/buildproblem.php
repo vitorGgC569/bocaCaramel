@@ -113,6 +113,7 @@ function bp_generate_zip() {
 		'languages' => $languages,
 		'statement_name' => $statementName,
 		'statement_content' => $statementContent,
+		'compile_pdf' => isset($_POST['statement_mode']) && $_POST['statement_mode'] == 'latex',
 		'cases' => bp_collect_cases()
 	);
 	$temp = tempnam(sys_get_temp_dir(), 'boca_problem_');
@@ -303,7 +304,7 @@ window.onload = function() { showStatementMode(); };
 						<div><b>Problemas Caramel Coder's</b></div>
 						<img src="../images/caramel-coders.png" alt="Caramel Coders">
 						<div class="cc-latex-preview-title">Titulo da questao</div>
-						<div class="cc-help">O ZIP tera um statement.tex neste formato, com a logo junto em description/caramel-coders.png.</div>
+						<div class="cc-help">O ZIP tera um statement.pdf neste formato, com o arquivo LaTeX e a logo junto em description/.</div>
 					</div>
 					<table class="cc-grid">
 						<tr>

@@ -67,7 +67,7 @@ function bpw_latex_statement($fields) {
 	return "\\documentclass[12pt,a4paper]{article}\n" .
 		"\\usepackage[utf8]{inputenc}\n" .
 		"\\usepackage[T1]{fontenc}\n" .
-		"\\usepackage[brazil]{babel}\n" .
+		"\\usepackage[brazilian]{babel}\n" .
 		"\\usepackage{graphicx}\n" .
 		"\\usepackage{geometry}\n" .
 		"\\usepackage{xcolor}\n" .
@@ -90,6 +90,42 @@ function bpw_latex_statement($fields) {
 		$sample .
 		bpw_latex_section('Observacoes', $fields['notes']) .
 		"\\end{document}\n";
+}
+
+function bpw_pdflatex_path() {
+	$output = array();
+	$return = 1;
+	@exec('command -v pdflatex 2>/dev/null', $output, $return);
+	if($return != 0 || count($output) == 0 || trim($output[0]) == '')
+		throw new Exception('pdflatex nao encontrado no container BOCA.');
+	return trim($output[0]);
+}
+
+function bpw_tail($lines, $count=12) {
+	if(!is_array($lines)) return '';
+	$tail = array_slice($lines, -$count);
+	return implode(' ', $tail);
+}
+
+function bpw_compile_latex_statement($descriptionDir, $statementName) {
+	if(strtolower(pathinfo($statementName, PATHINFO_EXTENSION)) != 'tex')
+		return $statementName;
+	$pdflatex = bpw_pdflatex_path();
+	$current = getcwd();
+	$output = array();
+	$return = 1;
+	@chdir($descriptionDir);
+	$cmd = escapeshellarg($pdflatex) . ' -interaction=nonstopmode -halt-on-error -output-directory ' . escapeshellarg($descriptionDir) . ' ' . escapeshellarg($statementName) . ' 2>&1';
+	@exec($cmd, $output, $return);
+	if($current !== false) @chdir($current);
+	$pdfName = preg_replace('/\.tex$/i', '.pdf', $statementName);
+	$pdfPath = $descriptionDir . DIRECTORY_SEPARATOR . $pdfName;
+	@unlink($descriptionDir . DIRECTORY_SEPARATOR . preg_replace('/\.tex$/i', '.aux', $statementName));
+	@unlink($descriptionDir . DIRECTORY_SEPARATOR . preg_replace('/\.tex$/i', '.log', $statementName));
+	if($return != 0 || !is_readable($pdfPath))
+		throw new Exception('Falha ao compilar LaTeX: ' . bpw_tail($output));
+	@chmod($pdfPath, 0640);
+	return $pdfName;
 }
 
 function bpw_mkdir($dir) {
@@ -227,6 +263,8 @@ function bpw_create_package($repoRoot, $spec, $zipPath) {
 	$logo = $repoRoot . $ds . 'src' . $ds . 'images' . $ds . 'caramel-coders.png';
 	if(is_readable($logo))
 		bpw_copy_file($logo, $stage . $ds . 'description' . $ds . 'caramel-coders.png', 0644);
+	if(isset($spec['compile_pdf']) && $spec['compile_pdf'])
+		$statementName = bpw_compile_latex_statement($stage . $ds . 'description', $statementName);
 	$info = "basename=" . $spec['basename'] . "\n" .
 		"fullname=" . $spec['fullname'] . "\n" .
 		"descfile=" . $statementName . "\n";
