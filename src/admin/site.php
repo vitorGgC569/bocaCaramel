@@ -159,8 +159,7 @@ if (isset($_POST["Submit1"]) && $_POST["Submit1"] == "Send" && isset($_POST["nam
 			$param['siteactive']=$_POST["active"];
 		$param['sitescorelevel']=$_POST["scorelevel"];
 		$param['sitepermitlogins']='';
-		if(isset($_POST["autojudge"]))
-			$param['siteautojudge']=$_POST["autojudge"];
+		$param['siteautojudge']='t';
 		$param['sitechiefname']=$_POST["chiefname"];
 		DBUpdateSite ($param);
 		$st1 = DBSiteInfo($_SESSION["usertable"]["contestnumber"],$_POST["site"]);
@@ -475,13 +474,9 @@ echo "):</td>";
       <tr>
         <td width="35%" align=right>Autojudge (without human interaction):</td>
         <td width="65%">
-<?php
-          if ($st["siteautojudge"] == "t")
-            echo "<input class=checkbox type=\"checkbox\" name=\"autojudge\" checked value=\"t\" />";
-          else
-            echo "<input class=checkbox type=\"checkbox\" name=\"autojudge\" value=\"t\" />";
-	  echo " &lt;- experimental";
-?>
+          <input type="hidden" name="autojudge" value="t" />
+          <input class=checkbox type="checkbox" checked disabled="disabled" />
+          enabled
         </td>
       </tr>
       <tr>

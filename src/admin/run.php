@@ -26,6 +26,28 @@ $order = myhtmlspecialchars($_GET["order"]);
 else
 		$order = '';
 }
+
+function adminAutoJudgeShort($text) {
+  if(strlen($text) > 90) return substr($text, 0, 87) . "...";
+  return $text;
+}
+
+function adminAutoJudgeCell($run) {
+  $autoip = isset($run["autoip"]) ? trim($run["autoip"]) : "";
+  $autobegin = isset($run["autobegin"]) ? trim($run["autobegin"]) : "";
+  $autoend = isset($run["autoend"]) ? trim($run["autoend"]) : "";
+  $autoanswer = isset($run["autoanswer"]) ? trim($run["autoanswer"]) : "";
+  if($autoend != "") {
+    if($autoanswer == "")
+      return array("color" => "ff7777", "label" => "erro", "detail" => "sem resposta do autojudge", "title" => "sem resposta do autojudge");
+    return array("color" => "bbbbff", "label" => "avaliado", "detail" => adminAutoJudgeShort($autoanswer), "title" => $autoanswer);
+  }
+  if($autobegin != "" || $autoip != "") {
+    $detail = "por " . ($autoip != "" ? $autoip : "autojudge");
+    return array("color" => "77ff77", "label" => "avaliando", "detail" => $detail, "title" => $detail);
+  }
+  return array("color" => "ffff88", "label" => "aguardando", "detail" => "na fila", "title" => "na fila");
+}
 ?>
 
 <form name="form1" method="post" action="<?php echo $runphp; ?>">
@@ -44,7 +66,7 @@ else
 <!--  <td><b>Filename</b></td> -->
   <td><b><a href="<?php echo $runphp; ?>?order=status">Status</a></b></td>
   <td><b><a href="<?php echo $runphp; ?>?order=judge">Judge (Site)</a></b></td>
-  <td><b>AJ</b></td>
+  <td><b>Autojudge</b></td>
   <td><b><a href="<?php echo $runphp; ?>?order=answer">Answer</a></b></td>
  </tr>
 <?php
@@ -68,7 +90,7 @@ if(isset($_POST)) {
 					       $run[$i]["site"], $run[$i]["number"], '', '', true))
 		      $nrenew++;
 		  }
-		  if(isset($_POST["open"]) && $_POST["open"]=="Open selected runs for rejudging") {
+		  if(isset($_POST["open"]) && $_POST["open"]=="Open selected runs for manual rejudging") {
 		    DBGiveUpRunAutojudging($_SESSION["usertable"]["contestnumber"], 
 					   $run[$i]["site"], $run[$i]["number"]);
 		    if (DBChiefRunGiveUp($run[$i]["number"], $run[$i]["site"], 
@@ -145,13 +167,11 @@ for ($i=0; $i<count($run); $i++) {
 
   echo "</td>\n";
 
-  if ($run[$i]["autoend"] != "") {
-    $color="bbbbff";
-    if ($run[$i]["autoanswer"]=="") $color="ff7777";
-  }
-  else if ($run[$i]["autobegin"]=="") $color="ffff88";
-  else $color="77ff77";
-  echo "<td bgcolor=\"#$color\">&nbsp;&nbsp;</td>\n";
+  $aj = adminAutoJudgeCell($run[$i]);
+  echo "<td bgcolor=\"#" . $aj["color"] . "\" title=\"" . myhtmlspecialchars($aj["title"]) . "\">";
+  echo myhtmlspecialchars($aj["label"]);
+  if($aj["detail"] != "") echo "<br><small>" . myhtmlspecialchars($aj["detail"]) . "</small>";
+  echo "</td>\n";
 
   if ($run[$i]["answer"] == "") {
     echo "  <td>&nbsp;</td>\n";
@@ -183,7 +203,8 @@ else {
   <center>
 <b>Click on the number of a run to edit it or select them with<br />the checkboxes and use the buttons to work on multiple runs:</b><br /><br />
       <input type="submit" name="auto" value="Re-run autojudge for selected runs" onClick="conf()">
-      <input type="submit" name="open" value="Open selected runs for rejudging" onClick="conf()">
+      <input type="submit" name="open" value="Open selected runs for manual rejudging" onClick="conf()">
+<br><small>Re-run autojudge requeues automatic judging. Manual rejudging changes the run status to judged+.</small>
 <br><br>
   </center>
   </form>

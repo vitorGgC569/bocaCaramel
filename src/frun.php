@@ -579,7 +579,7 @@ function DBOpenRunsSNS($contest,$site,$st,$order='run') {
 		"r.runjudge2 as judge2, r.runjudgesite2 as judgesite2, " .
 		"a.runanswer as answer, r.runfilename as filename, " .
 		"r.runanswer1 as answer1, r.runanswer2 as answer2, " .
-		"r.autobegindate as autobegin, r.autoenddate as autoend, r.autoanswer as autoanswer ".
+		"r.autoip as autoip, r.autobegindate as autobegin, r.autoenddate as autoend, r.autoanswer as autoanswer ".
 		"from runtable as r, problemtable as p, langtable as l, answertable as a, usertable as u " .
 		"where r.contestnumber=$contest and p.contestnumber=r.contestnumber and u.contestnumber=r.contestnumber and " .
 		"r.runproblem=p.problemnumber and l.contestnumber=r.contestnumber and r.usernumber=u.usernumber and r.runsitenumber=u.usersitenumber and " .

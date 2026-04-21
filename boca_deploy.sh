@@ -1,34 +1,54 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
-BOCA_DOCKER_DIR="$ROOT_DIR/boca-docker"
-BOCA_URL="http://localhost:8000/boca"
-ACTION="${1:-}"
+ROOT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+BOCA_DOCKER_DIR="${BOCA_DOCKER_DIR:-$ROOT_DIR/boca-docker}"
+BOCA_URL="${BOCA_URL:-http://localhost:8000/boca}"
+GRAFANA_URL="${GRAFANA_URL:-http://localhost:3001}"
+ACTION="${1:-menu}"
+COMPOSE_FILES=(-f docker-compose.yml -f docker-compose.prod.yml)
 
-write_section() {
-  printf '\n%s\n' "Caramel Coders BOCA - $1"
+section() {
+  printf '\nCaramel Coders BOCA - %s\n' "$1"
+}
+
+fail() {
+  printf '%s\n' "$1" >&2
+  exit 1
+}
+
+require_command() {
+  command -v "$1" >/dev/null 2>&1 || fail "Comando nao encontrado: $1"
 }
 
 assert_boca_dir() {
-  if [ ! -d "$BOCA_DOCKER_DIR" ]; then
-    echo "Diretorio nao encontrado: $BOCA_DOCKER_DIR" >&2
-    exit 1
-  fi
+  [ -d "$BOCA_DOCKER_DIR" ] || fail "Diretorio nao encontrado: $BOCA_DOCKER_DIR"
 }
 
 test_prerequisites() {
-  docker --version >/dev/null
+  require_command docker
+  require_command curl
   docker compose version --short >/dev/null
   docker info >/dev/null
 }
 
-invoke_compose() {
+compose() {
   assert_boca_dir
   (
     cd "$BOCA_DOCKER_DIR"
-    docker compose -f docker-compose.yml -f docker-compose.prod.yml "$@"
+    docker compose "${COMPOSE_FILES[@]}" "$@"
   )
+}
+
+container_id() {
+  compose ps -q "$1"
+}
+
+web_container() {
+  local id
+  id="$(container_id boca-web)"
+  [ -n "$id" ] || fail "Container boca-web nao encontrado. Execute ./boca_deploy.sh start ou install."
+  printf '%s\n' "$id"
 }
 
 wait_boca() {
@@ -44,8 +64,11 @@ wait_boca() {
 }
 
 apply_profiles() {
-  local temp_file
-  temp_file="$ROOT_DIR/inject_profiles.php"
+  local web
+  web="$(web_container)"
+  (
+  temp_file="$(mktemp "${TMPDIR:-/tmp}/boca_profiles.XXXXXX.php")"
+  trap 'rm -f "$temp_file"' EXIT
   cat > "$temp_file" <<'PHP'
 <?php
 putenv('BOCA_DB_HOST=boca-db');
@@ -61,59 +84,61 @@ DBExec($c, "INSERT INTO usertable (contestnumber, usersitenumber, usernumber, us
 echo "Perfis aplicados com sucesso!\n";
 ?>
 PHP
-  docker cp "$temp_file" boca-docker-boca-web-1:/var/www/boca/src/inject.php >/dev/null
-  docker exec boca-docker-boca-web-1 php /var/www/boca/src/inject.php
-  docker exec boca-docker-boca-web-1 rm /var/www/boca/src/inject.php >/dev/null
-  rm -f "$temp_file"
+  docker exec "$web" rm -f /var/www/boca/src/inject.php >/dev/null 2>&1 || true
+  docker cp "$temp_file" "$web:/var/www/boca/src/inject.php" >/dev/null
+  docker exec "$web" php /var/www/boca/src/inject.php
+  docker exec "$web" rm -f /var/www/boca/src/inject.php >/dev/null
+  )
 }
 
 install_boca() {
-  write_section "Install"
+  section "Install"
   test_prerequisites
-  invoke_compose up -d --build
-  wait_boca
+  compose up -d --build
+  wait_boca || fail "BOCA nao respondeu dentro do tempo esperado."
   apply_profiles
-  printf '%s\n' "BOCA: $BOCA_URL"
-  printf '%s\n' "Grafana: http://localhost:3001"
+  printf 'BOCA: %s\n' "$BOCA_URL"
+  printf 'Grafana: %s\n' "$GRAFANA_URL"
 }
 
 start_boca() {
-  write_section "Start"
-  invoke_compose up -d
-  wait_boca
-  printf '%s\n' "BOCA: $BOCA_URL"
+  section "Start"
+  test_prerequisites
+  compose up -d
+  wait_boca || fail "BOCA nao respondeu dentro do tempo esperado."
+  printf 'BOCA: %s\n' "$BOCA_URL"
 }
 
 stop_boca() {
-  write_section "Stop"
-  invoke_compose down
+  section "Stop"
+  compose down
 }
 
 status_boca() {
-  write_section "Status"
-  invoke_compose ps
+  section "Status"
+  compose ps
 }
 
 logs_boca() {
-  write_section "Logs"
-  invoke_compose logs -f --tail=50
+  section "Logs"
+  compose logs -f --tail=50
 }
 
 restart_boca() {
-  write_section "Restart"
-  invoke_compose restart
-  wait_boca
-  printf '%s\n' "BOCA: $BOCA_URL"
+  section "Restart"
+  compose restart
+  wait_boca || fail "BOCA nao respondeu dentro do tempo esperado."
+  printf 'BOCA: %s\n' "$BOCA_URL"
 }
 
 reset_boca() {
-  write_section "Reset"
+  section "Reset"
   read -r -p "Digite SIM para remover containers e volumes: " confirmation
   if [ "$confirmation" != "SIM" ]; then
-    echo "Operacao cancelada."
+    printf '%s\n' "Operacao cancelada."
     return
   fi
-  invoke_compose down -v
+  compose down -v
 }
 
 open_boca() {
@@ -128,9 +153,28 @@ open_boca() {
   printf '%s\n' "$BOCA_URL"
 }
 
+usage() {
+  cat <<EOF
+Uso: ./boca_deploy.sh <comando>
+
+Comandos:
+  install   Constroi, sobe o ambiente e aplica os perfis padrao
+  start     Sobe o ambiente existente
+  stop      Derruba os containers sem remover volumes
+  status    Mostra o estado dos servicos
+  logs      Mostra logs em tempo real
+  restart   Reinicia os servicos
+  reset     Remove containers e volumes apos confirmacao
+  profiles  Reaplica usuarios padrao e autojudge nos sites
+  open      Abre a URL do BOCA
+  menu      Abre o menu interativo
+  help      Mostra esta ajuda
+EOF
+}
+
 show_menu() {
   while true; do
-    write_section "Menu"
+    section "Menu"
     printf '%s\n' "1. install"
     printf '%s\n' "2. start"
     printf '%s\n' "3. stop"
@@ -153,7 +197,7 @@ show_menu() {
       8) apply_profiles ;;
       9) open_boca ;;
       0) exit 0 ;;
-      *) echo "Opcao invalida." ;;
+      *) printf '%s\n' "Opcao invalida." ;;
     esac
   done
 }
@@ -168,5 +212,7 @@ case "$ACTION" in
   reset) reset_boca ;;
   profiles) apply_profiles ;;
   open) open_boca ;;
-  *) show_menu ;;
+  menu) show_menu ;;
+  help|-h|--help) usage ;;
+  *) usage; exit 1 ;;
 esac

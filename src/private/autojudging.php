@@ -15,6 +15,38 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
+function BOCAJavaMainClass($source) {
+  if(!is_readable($source)) return false;
+  $code = file_get_contents($source);
+  if($code === false) return false;
+  $code = preg_replace('/\/\*.*?\*\//s', '', $code);
+  $code = preg_replace('/\/\/[^\r\n]*/', '', $code);
+  if(preg_match_all('/\b(?:public\s+)?(?:final\s+)?class\s+([A-Za-z_$][A-Za-z0-9_$]*)\b/', $code, $matches, PREG_OFFSET_CAPTURE)) {
+    $count = count($matches[0]);
+    for($i = 0; $i < $count; $i++) {
+      $start = $matches[0][$i][1];
+      $end = ($i + 1 < $count) ? $matches[0][$i + 1][1] : strlen($code);
+      $chunk = substr($code, $start, $end - $start);
+      if(preg_match('/\bstatic\b[\sA-Za-z0-9_<>\[\],.?]*\bvoid\s+main\s*\(/', $chunk))
+        return $matches[1][$i][0];
+    }
+    if(preg_match('/\bpublic\s+(?:final\s+)?class\s+([A-Za-z_$][A-Za-z0-9_$]*)\b/', $code, $m))
+      return $m[1];
+  }
+  return false;
+}
+
+function BOCAJavaPackageName($source) {
+  if(!is_readable($source)) return "";
+  $code = file_get_contents($source);
+  if($code === false) return "";
+  $code = preg_replace('/\/\*.*?\*\//s', '', $code);
+  $code = preg_replace('/\/\/[^\r\n]*/', '', $code);
+  if(preg_match('/^\s*package\s+([A-Za-z_$][A-Za-z0-9_$]*(?:\.[A-Za-z_$][A-Za-z0-9_$]*)*)\s*;/m', $code, $m))
+    return $m[1];
+  return "";
+}
+
 $ds = DIRECTORY_SEPARATOR;
 if($ds=="") $ds = "/";
 
@@ -307,6 +339,36 @@ while(42) {
     echo "Autojudging answered 'Always yes' (contest=$contest, site=$site, run=$number)\n";
     continue;
   }
+
+  $compileSource = $run["sourcename"];
+  $runTarget = $basename;
+  $failedinput = "";
+  if($run["extension"] == "java" && strtolower(substr($run["sourcename"], -5)) == ".java") {
+    $javaSourcePath = $dir . $ds . $run["sourcename"];
+    $javaMain = BOCAJavaMainClass($javaSourcePath);
+    if($javaMain !== false) {
+      $javaReady = false;
+      $javaPackage = BOCAJavaPackageName($javaSourcePath);
+      $javaSource = $javaMain . ".java";
+      if($javaPackage != "") {
+        $javaCode = file_get_contents($javaSourcePath);
+        if($javaCode !== false) {
+          $javaCode = preg_replace('/^\s*package\s+[A-Za-z_$][A-Za-z0-9_$]*(?:\.[A-Za-z_$][A-Za-z0-9_$]*)*\s*;\s*/m', '', $javaCode, 1);
+          file_put_contents($dir . $ds . $javaSource, $javaCode);
+        }
+      } else if($javaSource != $run["sourcename"]) {
+        @copy($dir . $ds . $run["sourcename"], $dir . $ds . $javaSource);
+      }
+      if(is_readable($dir . $ds . $javaSource)) {
+        $compileSource = $javaSource;
+        $javaReady = true;
+      }
+      if($javaReady) {
+        $runTarget = $javaMain;
+        echo "Java main class detected: $runTarget\n";
+      }
+    }
+  }
   
   if(!isset($limits[$basename][$run["extension"]][0]) || !is_numeric($limits[$basename][$run["extension"]][0]) ||
      !isset($limits[$basename][$run["extension"]][1]) || !is_numeric($limits[$basename][$run["extension"]][1]) ||
@@ -349,8 +411,8 @@ while(42) {
 
   chmod($script, 0700);
   $ex = escapeshellcmd($script) ." ".
-    escapeshellarg($run["sourcename"])." ".
-    escapeshellarg($basename) . " ".
+    escapeshellarg($compileSource)." ".
+    escapeshellarg($runTarget) . " ".
     escapeshellarg(trim($limits[$basename][$run["extension"]][0]))." ".
     escapeshellarg(trim($limits[$basename][$run["extension"]][2]));
   $ex .= " >stdout 2>stderr";
@@ -457,7 +519,7 @@ while(42) {
 	  }
 
 	  $ex = escapeshellcmd($script) ." ".
-	    escapeshellarg($basename) . " ".
+	    escapeshellarg($runTarget) . " ".
 	    escapeshellarg($dir . $ds . "input" . $ds . $file)." ".
 	    escapeshellarg(trim($limits[$basename][$run["extension"]][0]))." ".
 	    escapeshellarg(trim($limits[$basename][$run["extension"]][1]))." ".
@@ -471,10 +533,10 @@ while(42) {
 	  }
 	  mkdir($dir . $ds . 'tmp', 0777);
 	  @chown($dir . $ds . 'tmp',"nobody");
-	  if(is_readable($dir . $ds . $basename)) {
-	    @copy($dir . $ds . $basename, $dir . $ds . 'tmp' . $ds . $basename);
-	    @chown($dir . $ds . 'tmp' . $ds . $basename,"nobody");
-	    @chmod($dir . $ds . 'tmp' . $ds . $basename,0755);
+	  if(is_readable($dir . $ds . $runTarget)) {
+	    @copy($dir . $ds . $runTarget, $dir . $ds . 'tmp' . $ds . $runTarget);
+	    @chown($dir . $ds . 'tmp' . $ds . $runTarget,"nobody");
+	    @chmod($dir . $ds . 'tmp' . $ds . $runTarget,0755);
 	  }
 	  if(is_readable($dir . $ds . 'run.jar')) {
 	    @copy($dir . $ds . 'run.jar', $dir . $ds . 'tmp' . $ds . 'run.jar');
@@ -503,7 +565,8 @@ while(42) {
 	  chdir($dir);
 	  if($localretval != 0) {
 	    list($retval,$answer) = exitmsg($localretval);
-	    $answer = "(WHILE RUNNING) " . $answer;
+	    $failedinput = $file;
+	    $answer = "(WHILE RUNNING input " . $file . ") " . $answer;
 	    break;
 	  }
 	  if(is_file($dir . $ds . 'output' . $ds . $file)) {
@@ -541,24 +604,28 @@ while(42) {
 	    if($localretval < 4 || $localretval > 6) {
 	      // contact staff
 	      $retval = 7;
-	      $answer='(Contact staff)' . $answertmp;
+	      $failedinput = $file;
+	      $answer='(Contact staff input ' . $file . ') ' . $answertmp;
 	      if($showcor) $answertmp .= ' (' . $ncor . '/' . $ninputlist . ' OKs)';
 	      break;
 	    }
 	    if($localretval == 6) {
 	      $retval=$localretval;
-	      $answer='(Wrong answer)'. $answertmp;
+	      $failedinput = $file;
+	      $answer='(Wrong answer input ' . $file . ') ' . $answertmp;
 	      if($showcor) $answertmp .= ' (' . $ncor . '/' . $ninputlist . ' OKs)';
 	      break;
 	    }
 	    if($localretval == 5) {
 	      $retval=$localretval;
-	      $answer='(Presentation error)'. $answertmp;
+	      $failedinput = $file;
+	      $answer='(Presentation error input ' . $file . ') ' . $answertmp;
 	      if($showcor) $answertmp .= ' (' . $ncor . '/' . $ninputlist . ' OKs)';
 	    } else {
 	      if($localretval != 4) {
 		$retval = 7;
-		$answer='(Contact staff)' . $answertmp;
+		$failedinput = $file;
+		$answer='(Contact staff input ' . $file . ') ' . $answertmp;
 		if($showcor) $answertmp .= ' (' . $ncor . '/' . $ninputlist . ' OKs)';
 		break;
 	      }
@@ -687,6 +754,8 @@ while(42) {
   echo "Sending results to server...\n";
   //echo "out==> "; system("tail -n1 ". $dir.$ds.'allout');
   //echo "err==> "; system("tail -n1 ". $dir.$ds.'allerr');
+  if($failedinput != "" && strpos($answer, "input " . $failedinput) === false)
+    $answer = "(input " . $failedinput . ") " . $answer;
   $answer=substr($answer,0,200);
   DBUpdateRunAutojudging($contest, $site, $number, $ip, $answer, $dir.$ds.'allout', $dir.$ds.'allerr', $retval);
   LogLevel("Autojudging: answered $retval '$answer' (run=$number, site=$site, contest=$contest)",3);

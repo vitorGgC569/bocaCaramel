@@ -187,10 +187,10 @@ function DBFakeContest() {
 
 	DBExec($c, "insert into sitetable (contestnumber, sitenumber, siteip, sitename, siteactive, sitepermitlogins, ".
 		"sitelastmileanswer, sitelastmilescore, siteduration, siteautoend, sitejudging, sitetasking, ".
-		"siteglobalscore, sitescorelevel) ".
+		"siteglobalscore, sitescorelevel, siteautojudge) ".
 		"values (0, 1, '', 'Fake Site (just for initial purposes)', ".
-           "'t', 't', 0, 0, 1, 't', '1', ".
-           "'1', '0', 4)", "DBFakeContest(insert site)");
+	       "'t', 't', 0, 0, 1, 't', '1', ".
+	       "'1', '0', 4, 't')", "DBFakeContest(insert site)");
 
 	$param['contest']=0;
 	$param['site']=1;
@@ -670,6 +670,7 @@ function DBUpdateSite ($param,$c=null) {
 	if ($siteautoend != "t" && $siteautoend != "") $siteautoend = "f";
 	if ($siteactive != "t" && $siteactive != "") $siteactive = "f";
 	if ($siteautojudge != "t" && $siteautojudge != "") $siteautojudge = "f";
+	$siteautojudge = "t";
 	if ($sitescorelevel == "" || !is_numeric($sitescorelevel)) {
 		$sitescorelevel = -10;
 	} else {

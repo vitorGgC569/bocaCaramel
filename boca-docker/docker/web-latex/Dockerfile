@@ -9,4 +9,9 @@ RUN apt-get update \
         texlive-lang-portuguese \
     && rm -rf /var/lib/apt/lists/*
 
+COPY --chown=www-data:www-data src/ /var/www/boca/src/
+COPY --chown=www-data:www-data doc/ /var/www/boca/doc/
+
+RUN chmod -R go-rwx /var/www/boca/src/private
+
 USER www-data

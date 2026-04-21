@@ -2,8 +2,8 @@
 services:
   boca-web:
     build:
-      context: .
-      dockerfile: docker/web-latex/Dockerfile
+      context: ..
+      dockerfile: boca-docker/docker/web-latex/Dockerfile
     image: caramel-coders/boca-web-latex:local
     depends_on:
       - boca-db

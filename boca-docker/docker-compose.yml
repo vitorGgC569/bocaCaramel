@@ -12,7 +12,7 @@ services:
       - BOCA_KEY=CCAIFGoiano_Urutai_7k9Xm2Pq8Wn5Rj4L
       - BOCA_JAIL_HOST=localhost
     ports:
-      - 8000:80
+      - 0.0.0.0:8000:80
     volumes:
       - ./php/uploads.ini:/etc/php/8.1/apache2/conf.d/99-boca-uploads.ini:ro
     restart: unless-stopped

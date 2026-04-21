@@ -23,16 +23,16 @@ function globalconf() {
  $conf['doenc']=false;
 
  $conf["dblocal"]="false"; // use unix socket to connect?
-$conf["dbhost"]="localhost";
-$conf["dbport"]="5432";
+$conf["dbhost"]=getenv('BOCA_DB_HOST') ?: "boca-db";
+$conf["dbport"]=getenv('BOCA_DB_PORT') ?: "5432";
 
-  $conf["dbname"]="bocadb"; // name of the boca database
+  $conf["dbname"]=getenv('BOCA_DB_NAME') ?: "bocadb"; // name of the boca database
 
-  $conf["dbuser"]="bocauser"; // unprivileged boca user
-$conf["dbpass"]="dAm0HAiC";
+  $conf["dbuser"]=getenv('BOCA_DB_USER') ?: "bocauser"; // unprivileged boca user
+$conf["dbpass"]=getenv('BOCA_DB_PASSWORD') ?: "dAm0HAiC";
 
-  $conf["dbsuperuser"]="bocauser"; // privileged boca user
-$conf["dbsuperpass"]="dAm0HAiC";
+  $conf["dbsuperuser"]=getenv('BOCA_DB_SUPER_USER') ?: "postgres"; // privileged boca user
+$conf["dbsuperpass"]=getenv('BOCA_DB_SUPER_PASSWORD') ?: "";
 
         // note that it is fine to use the same user
 
@@ -43,18 +43,18 @@ $conf["dbsuperpass"]="dAm0HAiC";
   // eventually created come already with the password set to this
   // value. It is your task later to update these passwords to
   // some other values within the BOCA web interface.
-  $conf["basepass"]="boca";
+  $conf["basepass"]=getenv('BOCA_PASSWORD') ?: "boca";
 
   // secret key to be used in HTTP headers
   // you MUST set it with any random large enough sequence
-$conf["key"]="GG56KFJtNDBGjJprR6ex";
+$conf["key"]=getenv('BOCA_KEY') ?: "GG56KFJtNDBGjJprR6ex";
 
 
   // the following field is used by the autojudging script
   // set it with the ip of the computer running the script
   // The real purpose of it is only to differentiate between
   // autojudges when multiple computers are used as autojudges
-  $conf["ip"]='local';
+  $conf["ip"]=getenv('BOCA_JAIL_HOST') ?: 'local';
 
   return $conf;
 }
