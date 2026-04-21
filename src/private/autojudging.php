@@ -51,8 +51,7 @@ echo "max memory set to " . ini_get('memory_limit'). "\n";
 
 $tmpdir = getenv("TMP");
 if($tmpdir=="") $tmpdir = getenv("TMPDIR");
-if($tmpdir[0] != '/') $tmdir = "/tmp";
-if($tmpdir=="") $tmpdir = "/tmp";
+if($tmpdir=="" || $tmpdir[0] != '/') $tmpdir = "/tmp";
 
 $basdir=$ds;
 if(file_exists($ds . 'bocajail' . $tmpdir)) {

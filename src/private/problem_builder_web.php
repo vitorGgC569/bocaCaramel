@@ -211,6 +211,9 @@ function bpw_language_list($languages) {
 function bpw_test_script() {
 	return "#!/bin/bash\n" .
 		"set -e\n" .
+		"SCRIPT_DIR=\$(CDPATH= cd -- \"\$(dirname -- \"\$0\")\" && pwd)\n" .
+		"PACKAGE_DIR=\$(CDPATH= cd -- \"\$SCRIPT_DIR/..\" && pwd)\n" .
+		"cd \"\$SCRIPT_DIR\"\n" .
 		"cat > test.py <<'EOF'\n" .
 		"import sys\n" .
 		"print(sys.stdin.read().strip())\n" .
@@ -220,10 +223,10 @@ function bpw_test_script() {
 		"EOF\n" .
 		"TL=2\n" .
 		"REP=1\n" .
-		"chmod 755 ../compile/py3\n" .
-		"../compile/py3 test.py test.exe \$TL\n" .
-		"chmod 755 ../run/py3\n" .
-		"../run/py3 test.exe test.in \$TL \$REP\n" .
+		"chmod 755 \"\$PACKAGE_DIR/compile/py3\"\n" .
+		"\"\$PACKAGE_DIR/compile/py3\" test.py test.exe \$TL\n" .
+		"chmod 755 \"\$PACKAGE_DIR/run/py3\"\n" .
+		"\"\$PACKAGE_DIR/run/py3\" test.exe test.in \$TL \$REP\n" .
 		"output=\$(cat stdout0 2>/dev/null || true)\n" .
 		"if [ \"\$output\" != \"inputdata\" ]; then\n" .
 		"  echo \"ERROR\"\n" .

@@ -84,7 +84,7 @@ CREATE TABLE \"sitetable\" (
         \"updatetime\" int4 DEFAULT EXTRACT(EPOCH FROM now()) NOT NULL, -- (indica a ultima atualizacao no registro)
         \"sitechiefname\" varchar(20) DEFAULT '' NOT NULL,  -- (username do juiz chefe, se existir)
 -- (esta tabela contem uma linha para cada site do contest)
- 	    \"siteautojudge\" bool DEFAULT 'f',
+        \"siteautojudge\" bool DEFAULT 't',
         \"sitemaxruntime\" int4 DEFAULT 600 NOT NULL,
         \"sitemaxjudgewaittime\" int4 DEFAULT 900 NOT NULL,
         CONSTRAINT \"site_pkey\" PRIMARY KEY (\"contestnumber\", \"sitenumber\"),
@@ -654,7 +654,7 @@ function DBUpdateSite ($param,$c=null) {
 	$sitechiefname = '';
 	$siteip='';
 	$updatetime = -1;
-	$siteautojudge = 'f';
+	$siteautojudge = 't';
 	$siteautoend='f';
 	$siteglobalscore='';
 	$siteactive='f';
@@ -1151,10 +1151,10 @@ function DBNewSite ($contest, $c=null, $param=array()) {
 	if(!DBExecNonStop($c, "insert into sitetable (contestnumber, sitenumber, siteip, sitename, siteactive, sitepermitlogins, ".
 			  "sitelastmileanswer, sitelastmilescore, siteduration, siteautoend, sitejudging, sitetasking, ".
 			  "siteglobalscore, sitescorelevel, ".
-			  "sitenextuser, sitenextclar, sitenextrun, sitenexttask, sitemaxtask, updatetime) values ".
+			  "sitenextuser, sitenextclar, sitenextrun, sitenexttask, sitemaxtask, updatetime, siteautojudge) values ".
 			  "($contest, $number, '$siteip', '$sitename', 't', 't', ".
 			  $ct["contestlastmileanswer"].",".$ct["contestlastmilescore"].
-			  ", $duration, 't', '$number', '$number', '$number', $sitescorelevel, 0, 0, 0, 0, 10, $updatetime)")) {
+			  ", $duration, 't', '$number', '$number', '$number', $sitescorelevel, 0, 0, 0, 0, 10, $updatetime, 't')")) {
 	  if($cw)	DBExec($c, "commit work");
 	  return false;
 	}

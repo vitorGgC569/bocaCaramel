@@ -2,6 +2,11 @@
 services:
   boca-web:
     environment:
+      - BOCA_DB_HOST=boca-db
+      - BOCA_DB_USER=bocauser
+      - BOCA_DB_PASSWORD=dAm0HAiC
+      - BOCA_DB_NAME=bocadb
+      - BOCA_DB_SUPER_USER=postgres
       - BOCA_DB_SUPER_PASSWORD=Ur#t4i@CCAIFG0!2026xZq
       - BOCA_PASSWORD=Ur#t4i@CCAIFG0!2026xZq
       - BOCA_KEY=CCAIFGoiano_Urutai_7k9Xm2Pq8Wn5Rj4L
@@ -10,14 +15,23 @@ services:
       - 8000:80
     volumes:
       - ./php/uploads.ini:/etc/php/8.1/apache2/conf.d/99-boca-uploads.ini:ro
+    restart: unless-stopped
 
   boca-jail:
     privileged: true
     environment:
+      - BOCA_DB_HOST=boca-db
+      - BOCA_DB_USER=postgres
+      - BOCA_DB_PASSWORD=Ur#t4i@CCAIFG0!2026xZq
+      - BOCA_DB_NAME=bocadb
+      - BOCA_DB_SUPER_USER=postgres
       - BOCA_DB_SUPER_PASSWORD=Ur#t4i@CCAIFG0!2026xZq
       - BOCA_PASSWORD=Ur#t4i@CCAIFG0!2026xZq
       - BOCA_KEY=CCAIFGoiano_Urutai_7k9Xm2Pq8Wn5Rj4L
       - BOCA_JAIL_HOST=localhost
+      - TMP=/tmp
+      - TMPDIR=/tmp
+    restart: unless-stopped
 
   grafana:
     image: grafana/grafana:latest
@@ -40,6 +54,7 @@ services:
     image: postgres:14-alpine
     environment:
       - POSTGRES_PASSWORD=Ur#t4i@CCAIFG0!2026xZq
+    restart: unless-stopped
 
 volumes:
   grafana-data:
