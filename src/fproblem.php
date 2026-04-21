@@ -107,6 +107,13 @@ function DBClearProblemTmp($contestnumber) {
   $ptmp = $_SESSION["locr"] . $ds . "private" . $ds . "problemtmp" . $ds . "contest" . $contestnumber . "-*.hash";
   foreach(glob($ptmp) as $file) @unlink($file);
 }
+function DBGrantProblemInputAccess($c,$oid) {
+  if($oid === false || $oid === null || $oid === '') return;
+  $cf = globalconf();
+  if(!isset($cf["dbuser"]) || $cf["dbuser"] == '') return;
+  $dbuser = str_replace('"','""',$cf["dbuser"]);
+  DBExecNonStop($c, "grant select, update on large object $oid to \"$dbuser\"", "DBGrantProblemInputAccess");
+}
 function DBGetFullProblemData($contestnumber,$freeproblems=false) {
   $c = DBConnect();
   DBExec($c, "begin work", "GetFullProblemData");
@@ -377,6 +384,7 @@ function DBNewProblem($contestnumber, $param, $c=null) {
 	    MSGError("problem importing file to database. See log for details!");
 	    exit;
 	  }
+	  DBGrantProblemInputAccess($c,$oid1);
 	  if($oldoid != '') DB_lo_unlink($c,$oldoid);
 	  $inputhash = DBcrc($contestnumber, $oid1, $c);
 	} else
@@ -395,6 +403,7 @@ function DBNewProblem($contestnumber, $param, $c=null) {
 	  MSGError("problem importing file to database. See log for details!");
 	  exit;
 	}
+	DBGrantProblemInputAccess($c,$oid1);
 	if($oldoid != '') DB_lo_unlink($c,$oldoid);
 	$inputhash = DBcrc($contestnumber, $oid1, $c);
       } else
