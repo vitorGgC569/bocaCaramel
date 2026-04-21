@@ -23,7 +23,10 @@ services:
         condition: on-failure
 
   boca-jail:
-    image: ghcr.io/joaofazolo/boca-docker/boca-jail:latest
+    build:
+      context: .
+      dockerfile: docker/jail-languages/Dockerfile
+    image: caramel-coders/boca-jail-languages:local
     depends_on:
       - boca-db
     deploy:
