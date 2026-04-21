@@ -139,8 +139,17 @@ find . -name "*.java" | while read lin; do
   echo \$? > ../compileit.retcode
 done
 rm -f ../$jarfile
-\$jar cvfe ../$jarfile $mainname *
-exit 0
+jarout="../$jarfile"
+jarbuild="\$jarout"
+if [ ${#jarfile} -lt 3 ]; then
+  jarbuild="../${jarfile}_run.jar"
+fi
+\$jar cvfe "\$jarbuild" $mainname *
+ret=\$?
+if [ "\$jarbuild" != "\$jarout" ] && [ "\$ret" = "0" ]; then
+  cp "\$jarbuild" "\$jarout"
+fi
+exit \$ret
 EOF
 chmod 755 compileit.sh
 

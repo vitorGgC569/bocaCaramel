@@ -281,8 +281,8 @@ window.onload = function() { showStatementMode(); };
 						<td><input type="text" name="fullname" size="60" maxlength="100" value=""> <span class="cc-help">Exemplo: Soma Simples</span></td>
 					</tr>
 					<tr>
-						<td class="cc-label">Basename:</td>
-						<td><input type="text" name="basename" size="30" maxlength="60" value=""> <span class="cc-help">Sem espacos. Exemplo: soma</span></td>
+						<td class="cc-label">Basename / arquivo esperado:</td>
+						<td><input type="text" name="basename" size="30" maxlength="60" value=""> <span class="cc-help">Para receber A.java, use A. Para receber F.java, use F.</span></td>
 					</tr>
 					<tr>
 						<td class="cc-label">Tempo:</td>
