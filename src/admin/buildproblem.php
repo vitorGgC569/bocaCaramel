@@ -1,6 +1,7 @@
 <?php
 $generating = isset($_POST['SubmitWizard']) && $_POST['SubmitWizard'] == 'Gerar ZIP';
-if($generating) $_POST['noflush'] = 'true';
+$previewing = isset($_POST['SubmitPreview']) && $_POST['SubmitPreview'] == 'Pre-visualizar PDF';
+if($generating || $previewing) $_POST['noflush'] = 'true';
 require('header.php');
 require_once('../private/problem_builder_web.php');
 if(($ct = DBContestInfo($_SESSION["usertable"]["contestnumber"])) == null)
@@ -151,7 +152,48 @@ function bp_generate_zip() {
 	}
 }
 
+function bp_preview_pdf() {
+	$basename = isset($_POST['basename']) ? bpw_sanitize_filename($_POST['basename'], '') : '';
+	$fullname = isset($_POST['fullname']) ? trim($_POST['fullname']) : '';
+	if($basename == '') bp_error_page('Informe o basename do problema.');
+	if($fullname == '') bp_error_page('Informe o nome completo do problema.');
+	$mode = isset($_POST['statement_mode']) ? $_POST['statement_mode'] : 'latex';
+	if($mode != 'latex')
+		bp_error_page('A pre-visualizacao em PDF esta disponivel apenas para o template LaTeX Caramel Coders.');
+	$cases = bp_collect_cases();
+	list($statementName, $statementContent) = bp_collect_latex_statement($fullname, $cases);
+	$temp = tempnam(sys_get_temp_dir(), 'boca_pdf_');
+	if($temp === false) bp_error_page('Nao foi possivel criar arquivo temporario.');
+	@unlink($temp);
+	$dir = $temp . '_preview';
+	try {
+		bpw_mkdir($dir);
+		bpw_write_file($dir . DIRECTORY_SEPARATOR . $statementName, $statementContent, 0640);
+		$logo = dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'caramel-coders.png';
+		if(is_readable($logo))
+			bpw_copy_file($logo, $dir . DIRECTORY_SEPARATOR . 'caramel-coders.png', 0644);
+		$pdfName = bpw_compile_latex_statement($dir, $statementName);
+		$pdfPath = $dir . DIRECTORY_SEPARATOR . $pdfName;
+		$data = file_get_contents($pdfPath);
+		bpw_remove_dir($dir);
+		if($data === false) bp_error_page('Nao foi possivel ler o PDF gerado.');
+		while(ob_get_level() > 0) @ob_end_clean();
+		header("Expires: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: no-cache, must-revalidate");
+		header("Pragma: no-cache");
+		header("Content-Type: application/pdf");
+		header("Content-Disposition: inline; filename=\"" . $basename . "-preview.pdf\"");
+		echo $data;
+		exit;
+	} catch(Exception $e) {
+		bpw_remove_dir($dir);
+		bp_error_page($e->getMessage());
+	}
+}
+
 if($generating) bp_generate_zip();
+if($previewing) bp_preview_pdf();
 $langs = bpw_allowed_languages();
 ?>
 <style>
@@ -225,11 +267,17 @@ function showStatementMode() {
 	}
 }
 function validateBuilder() {
+	var action = document.getElementById('builder_action');
+	var builderAction = action ? action.value : 'zip';
 	if(document.formbuilder.fullname.value == '' || document.formbuilder.basename.value == '') {
 		alert('Informe o nome completo e o basename.');
 		return false;
 	}
 	var mode = statementMode();
+	if(builderAction == 'preview' && mode != 'latex') {
+		alert('A pre-visualizacao em PDF esta disponivel apenas para o template LaTeX Caramel Coders.');
+		return false;
+	}
 	if(mode == 'latex') {
 		if(document.formbuilder.latex_description.value == '' || document.formbuilder.latex_input.value == '' || document.formbuilder.latex_output.value == '') {
 			alert('No template LaTeX, preencha descricao, entrada e saida.');
@@ -258,6 +306,10 @@ function validateBuilder() {
 	}
 	return true;
 }
+function setBuilderAction(action) {
+	var field = document.getElementById('builder_action');
+	if(field) field.value = action;
+}
 window.onload = function() { showStatementMode(); };
 </script>
 <div class="cc-builder">
@@ -272,6 +324,7 @@ window.onload = function() { showStatementMode(); };
 		</tr>
 	</table>
 	<form name="formbuilder" enctype="multipart/form-data" method="post" action="buildproblem.php" onsubmit="return validateBuilder();">
+		<input type="hidden" name="builder_action" id="builder_action" value="zip">
 		<div class="cc-section">
 			<div class="cc-section-title">Dados do problema</div>
 			<div class="cc-section-body">
@@ -390,11 +443,12 @@ window.onload = function() { showStatementMode(); };
 			</div>
 		</div>
 		<div class="cc-actions">
-			<input type="submit" name="SubmitWizard" value="Gerar ZIP">
+			<input type="submit" name="SubmitPreview" value="Pre-visualizar PDF" formtarget="_blank" onclick="setBuilderAction('preview');">
+			<input type="submit" name="SubmitWizard" value="Gerar ZIP" onclick="setBuilderAction('zip');">
 			<input type="reset" value="Limpar">
 		</div>
 	</form>
-	<div class="cc-warning">Depois de baixar o ZIP, volte para Problems, escolha o numero e nome curto do problema, envie o pacote em Problem package (ZIP) e confirme.</div>
+	<div class="cc-warning">Use Pre-visualizar PDF para conferir o enunciado em nova aba. Depois de baixar o ZIP, volte para Problems, escolha o numero e nome curto do problema, envie o pacote em Problem package (ZIP) e confirme.</div>
 </div>
 </body>
 </html>
