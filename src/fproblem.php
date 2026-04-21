@@ -145,6 +145,9 @@ function DBGetFullProblemData($contestnumber,$freeproblems=false) {
     if(is_readable($ptmp . ".hash")) {
       $ck = trim(file_get_contents($ptmp . ".hash"));
     }
+    if($a[$i]['fake'] != 't' && ($a[$i]['basefilename']=='' || $a[$i]['fullname']=='')) {
+      $ck = myshorthash('');
+    }
     if($ck != $a[$i]['inputhash']) {
       @unlink($ptmp . ".name");
       @unlink($ptmp . ".hash");
