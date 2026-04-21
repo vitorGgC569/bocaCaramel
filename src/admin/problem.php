@@ -270,9 +270,52 @@ for ($i=0; $i<count($prob); $i++) {
 		ForceLoad("problem.php");
 	}
 }
+
+$problemBalloonColors = array(
+  array("Vermelho", "D70000"),
+  array("Laranja", "F28C28"),
+  array("Amarelo", "FFD700"),
+  array("Verde", "008000"),
+  array("Lima", "8CC63F"),
+  array("Ciano", "00AEEF"),
+  array("Azul", "0066CC"),
+  array("Indigo", "4B0082"),
+  array("Roxo", "800080"),
+  array("Rosa", "FF69B4"),
+  array("Vinho", "800020"),
+  array("Marrom", "8B4513"),
+  array("Coral", "FF7F50"),
+  array("Turquesa", "40E0D0"),
+  array("Dourado", "DAA520"),
+  array("Cinza", "808080"),
+  array("Preto", "000000"),
+  array("Branco", "FFFFFF")
+);
+
+function problemColorPalette($colorInput,$nameInput) {
+  global $problemBalloonColors;
+  $html = "<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"margin-top:2px\"><tr><td colspan=\"6\"><small>Palette:</small></td></tr><tr>";
+  for($i=0; $i<count($problemBalloonColors); $i++) {
+    if($i > 0 && $i % 6 == 0) $html .= "</tr><tr>";
+    $name = $problemBalloonColors[$i][0];
+    $color = $problemBalloonColors[$i][1];
+    $html .= "<td><input type=\"button\" value=\" \" title=\"$name #$color\" style=\"background-color:#$color;width:18px;height:18px;border:1px solid #000;cursor:pointer\" onclick=\"setProblemColor('$colorInput','$nameInput','$color','$name'); return false;\"></td>";
+  }
+  $html .= "</tr></table>";
+  return $html;
+}
 ?>
 <br>
   <script language="javascript">
+    function setProblemColor(colorField, nameField, color, name) {
+      var colorInput = document.getElementsByName(colorField)[0];
+      var nameInput = document.getElementsByName(nameField)[0];
+      if (colorInput) colorInput.value = color.toUpperCase();
+      if (nameInput) nameInput.value = name;
+    }
+    function normalizeProblemColor(input) {
+      input.value = input.value.replace('#', '').toUpperCase().substring(0, 6);
+    }
     function conf2(url) {
       if (confirm("Confirm the DELETION of the PROBLEM and ALL data associated to it?")) {
 		  if (confirm("Are you REALLY sure about what you are doing? DATA CANNOT BE RECOVERED!")) {
@@ -368,7 +411,8 @@ for ($i=0; $i<count($prob); $i++) {
 	balloonurl($prob[$i]["color"]) . "\" />\n";
     }
     echo "<input type=\"text\" name=\"colorname" . $prob[$i]['number'] . "\" value=\"" . $prob[$i]["colorname"] . "\" size=\"10\" maxlength=\"100\" />";
-    echo "<input type=\"text\" name=\"color" . $prob[$i]['number'] . "\" value=\"" . $prob[$i]["color"]. "\" size=\"6\" maxlength=\"6\" />";
+    echo "<input type=\"text\" name=\"color" . $prob[$i]['number'] . "\" value=\"" . $prob[$i]["color"]. "\" size=\"6\" maxlength=\"6\" onkeyup=\"normalizeProblemColor(this)\" onchange=\"normalizeProblemColor(this)\" />";
+    echo problemColorPalette("color" . $prob[$i]['number'], "colorname" . $prob[$i]['number']);
     echo "<input type=\"submit\" name=\"SubmitProblem" . $prob[$i]["number"] . "\" value=\"Update\">";
   } else echo "&nbsp;";
   echo "</td>\n";
@@ -584,7 +628,8 @@ To replace the data of a problem, proceed as if it did not exist (data will be r
       <tr>
         <td width="35%" align=right>Color (RGB HTML format):</td>
         <td width="65%">
-          <input type="text" name="color" value="" size="6" maxlength="6" />
+          <input type="text" name="color" value="" size="6" maxlength="6" onkeyup="normalizeProblemColor(this)" onchange="normalizeProblemColor(this)" />
+          <?php echo problemColorPalette("color", "colorname"); ?>
         </td>
       </tr>
       <tr>
