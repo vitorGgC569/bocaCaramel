@@ -113,7 +113,6 @@ function bpw_latex_statement($fields) {
 		"\\usepackage[T1]{fontenc}\n" .
 		"\\usepackage[brazilian]{babel}\n" .
 		"\\IfFileExists{lmodern.sty}{\\usepackage{lmodern}}{}\n" .
-		"\\IfFileExists{microtype.sty}{\\usepackage{microtype}}{}\n" .
 		"\\usepackage{graphicx}\n" .
 		"\\usepackage{geometry}\n" .
 		"\\usepackage{xcolor}\n" .
