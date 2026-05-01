@@ -16,3 +16,4 @@ debian/debhelper-build-stamp
 debian/files
 
 *.swp
+tools/caramel_lockdown/
