@@ -48,7 +48,10 @@ function bpw_latex_paragraphs($text) {
 function bpw_latex_section($title, $text) {
 	$text = trim($text);
 	if($text == '') return '';
-	return "\\section*{" . bpw_latex_escape($title) . "}\n" . bpw_latex_paragraphs($text) . "\n";
+	return "\\ccsection{" . bpw_latex_escape($title) . "}\n" .
+		"{\\color{cctextgray}\n" .
+		bpw_latex_paragraphs($text) .
+		"}\n\n";
 }
 
 function bpw_latex_code_lines($text) {
@@ -65,30 +68,38 @@ function bpw_latex_code_lines($text) {
 }
 
 function bpw_latex_code_box($text) {
-	return "\\fcolorbox{ccboxborder}{ccboxbg}{\\begin{minipage}{0.90\\linewidth}\n" .
+	return "\\begingroup\n" .
+		"\\setlength{\\fboxsep}{7pt}\n" .
+		"\\fcolorbox{ccboxborder}{ccboxbg}{\\begin{minipage}{0.92\\linewidth}\n" .
 		"{\\ttfamily\\small\n" .
 		bpw_latex_code_lines($text) . "\n" .
 		"}\n" .
-		"\\end{minipage}}\n";
+		"\\end{minipage}}\n" .
+		"\\endgroup\n";
 }
 
 function bpw_latex_examples($examples) {
 	if(!is_array($examples) || count($examples) == 0) return '';
-	$out = "\\section*{Exemplos}\n";
+	$out = "\\ccsection{Exemplos}\n";
 	$count = 1;
 	foreach($examples as $example) {
 		$input = isset($example['input']) ? $example['input'] : '';
 		$output = isset($example['output']) ? $example['output'] : '';
 		$out .= "\\subsection*{Caso " . $count . "}\n" .
-			"\\noindent\\begin{minipage}[t]{0.48\\textwidth}\n" .
-			"\\textbf{Entrada}\\\\[0.35em]\n" .
+			"\\noindent\\begingroup\n" .
+			"\\setlength{\\fboxsep}{8pt}\n" .
+			"\\fcolorbox{ifline}{white}{\\begin{minipage}{0.94\\linewidth}\n" .
+			"\\begin{minipage}[t]{0.47\\linewidth}\n" .
+			"{\\bfseries\\color{ifdark}Entrada}\\\\[0.35em]\n" .
 			bpw_latex_code_box($input) .
 			"\\end{minipage}\\hfill\n" .
-			"\\begin{minipage}[t]{0.48\\textwidth}\n" .
-			"\\textbf{Saida}\\\\[0.35em]\n" .
+			"\\begin{minipage}[t]{0.47\\linewidth}\n" .
+			"{\\bfseries\\color{ifdark}Saida}\\\\[0.35em]\n" .
 			bpw_latex_code_box($output) .
 			"\\end{minipage}\n\n" .
-			"\\vspace{0.8em}\n\n";
+			"\\end{minipage}}\n" .
+			"\\endgroup\n\n" .
+			"\\vspace{0.85em}\n\n";
 		$count++;
 	}
 	return $out;
@@ -101,30 +112,51 @@ function bpw_latex_statement($fields) {
 		"\\usepackage[utf8]{inputenc}\n" .
 		"\\usepackage[T1]{fontenc}\n" .
 		"\\usepackage[brazilian]{babel}\n" .
+		"\\IfFileExists{lmodern.sty}{\\usepackage{lmodern}}{}\n" .
+		"\\IfFileExists{microtype.sty}{\\usepackage{microtype}}{}\n" .
 		"\\usepackage{graphicx}\n" .
 		"\\usepackage{geometry}\n" .
 		"\\usepackage{xcolor}\n" .
-		"\\geometry{margin=2.2cm}\n" .
-		"\\definecolor{ccgreen}{HTML}{0B8C85}\n" .
+		"\\geometry{top=2.0cm,bottom=2.2cm,left=2.3cm,right=2.3cm}\n" .
+		"\\definecolor{ifgreen}{HTML}{00843D}\n" .
+		"\\definecolor{ifdark}{HTML}{1F3A2D}\n" .
+		"\\definecolor{ifline}{HTML}{C7DED0}\n" .
+		"\\definecolor{ifgold}{HTML}{D7A928}\n" .
+		"\\definecolor{cctextgray}{HTML}{444444}\n" .
 		"\\definecolor{ccboxbg}{HTML}{F7F0D8}\n" .
 		"\\definecolor{ccboxborder}{HTML}{B8A978}\n" .
-		"\\setlength{\\fboxsep}{6pt}\n" .
 		"\\setlength{\\parindent}{0pt}\n" .
-		"\\setlength{\\parskip}{0.75em}\n" .
+		"\\setlength{\\parskip}{0.70em}\n" .
+		"\\newcommand{\\ccsection}[1]{\\vspace{0.85em}\\noindent{\\Large\\bfseries\\color{ifgreen}#1}\\par\\vspace{0.10em}{\\color{ifgold}\\rule{0.18\\linewidth}{1pt}}\\par\\vspace{0.20em}}\n" .
 		"\\begin{document}\n" .
-		"\\begin{center}\n" .
-		"{\\Large\\bfseries Problemas Caramel Coder's}\n\n" .
+		"\\noindent\\begingroup\n" .
+		"\\setlength{\\fboxsep}{0pt}\n" .
+		"\\colorbox{ifgreen}{\\begin{minipage}{\\linewidth}\n" .
 		"\\vspace{0.45cm}\n" .
-		"\\includegraphics[width=0.34\\textwidth]{caramel-coders.png}\n\n" .
-		"\\vspace{1.0cm}\n" .
-		"{\\LARGE\\bfseries " . bpw_latex_escape($title) . "}\n" .
+		"\\begin{center}\n" .
+		"{\\color{white}\\fontsize{20}{24}\\selectfont\\bfseries Instituto Federal Goiano\\\\}\n" .
+		"{\\color{white}\\large Campus Uruta\\'{i}}\\\\[0.18cm]\n" .
+		"{\\color{ifgold}\\rule{0.58\\linewidth}{1.2pt}}\\\\[0.24cm]\n" .
+		"{\\color{white}\\small Competicao de Programacao | Caramel Coders BOCA}\n" .
 		"\\end{center}\n\n" .
 		"\\vspace{0.35cm}\n" .
+		"\\end{minipage}}\n" .
+		"\\endgroup\n\n" .
+		"\\vspace{0.75cm}\n" .
+		"\\begin{center}\n" .
+		"\\includegraphics[width=0.22\\textwidth]{caramel-coders.png}\n\n" .
+		"\\vspace{0.55cm}\n" .
+		"{\\fontsize{22}{26}\\selectfont\\bfseries\\color{ifdark} " . bpw_latex_escape($title) . "}\\\\[0.18cm]\n" .
+		"{\\color{ifgreen}\\rule{0.48\\textwidth}{1pt}}\n" .
+		"\\end{center}\n\n" .
+		"\\vspace{0.45cm}\n" .
 		bpw_latex_section('Descricao', $fields['description']) .
 		bpw_latex_section('Entrada', $fields['input']) .
 		bpw_latex_section('Saida', $fields['output']) .
 		bpw_latex_examples($examples) .
 		bpw_latex_section('Observacoes', $fields['notes']) .
+		"\\vfill\n" .
+		"\\begin{center}{\\small\\color{cctextgray}IF Goiano - Campus Uruta\\'{i} | Caramel Coders BOCA}\\end{center}\n" .
 		"\\end{document}\n";
 }
 

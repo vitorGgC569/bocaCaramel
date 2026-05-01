@@ -367,10 +367,11 @@ window.onload = function() { showStatementMode(); };
 				</div>
 				<div id="statement_latex" class="cc-mode-box">
 					<div class="cc-latex-preview">
-						<div><b>Problemas Caramel Coder's</b></div>
+						<div><b>Instituto Federal Goiano</b></div>
+						<div class="cc-help">Campus Urutai | Caramel Coders BOCA</div>
 						<img src="../images/caramel-coders.png" alt="Caramel Coders">
 						<div class="cc-latex-preview-title">Titulo da questao</div>
-						<div class="cc-help">O ZIP tera um statement.pdf neste formato, com o arquivo LaTeX e a logo junto em description/.</div>
+						<div class="cc-help">O ZIP tera um statement.pdf com identidade visual do IF Goiano - Campus Urutai.</div>
 					</div>
 					<table class="cc-grid">
 						<tr>
