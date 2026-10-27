@@ -1,5 +1,5 @@
 [Unit]
-Description=SEMINFO single random wallpaper per boot
+Description=SEMINFO wallpaper assigned to the category
 After=local-fs.target
 Before=display-manager.service
 

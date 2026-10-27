@@ -13,8 +13,12 @@ function In-Ranges([string]$Address,$Ranges) {
     }
     return $false
 }
-foreach($ip in @('127.0.0.1','192.168.50.2','192.168.50.10')) {
+$expectedAllowed=@('127.0.0.1','192.168.50.2')+@($approved)
+foreach($ip in $expectedAllowed) {
     if(In-Ranges $ip $outside) { throw "IP aprovado bloqueado: $ip" }
+}
+foreach($ip in @('192.168.50.10','192.168.50.12')) {
+    if($ip -notin $expectedAllowed -and -not (In-Ranges $ip $outside)) { throw "Equipe sem aprovacao liberada: $ip" }
 }
 foreach($ip in @('0.0.0.0','1.1.1.1','127.0.0.2','172.16.5.10','192.168.50.11','192.168.50.255','255.255.255.255')) {
     if(-not (In-Ranges $ip $outside)) { throw "BOCA ficou aberto para $ip" }

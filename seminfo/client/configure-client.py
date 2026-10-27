@@ -7,7 +7,7 @@ from pathlib import Path
 import subprocess
 import sys
 sys.path.insert(0,'/usr/local/lib/seminfo')
-from client_config import rules
+from client_config import normalize_wallpaper, rules
 
 restoring=len(sys.argv)==3 and sys.argv[1]=='--restore'
 if os.geteuid() != 0 or not (len(sys.argv)==2 or restoring):
@@ -20,6 +20,7 @@ if restoring and (source.stat().st_uid!=0 or source.stat().st_mode & 0o022):
 new=json.loads(source.read_text(encoding='utf-8-sig'))
 if (new['profile'],new['lab']) != (old['profile'],old['lab']):
     raise SystemExit('Perfil/laboratorio errado; navegacao continua bloqueada')
+new['wallpaper']=normalize_wallpaper(new['profile'],new.get('wallpaper'))
 ip=ipaddress.IPv4Address(new['server_ip'])
 net=ipaddress.IPv4Network(new['subnet'],strict=True)
 if ip not in net or net.prefixlen == 0 or ip in (net.network_address,net.broadcast_address):

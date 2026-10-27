@@ -67,7 +67,7 @@ python seminfo/manage.py build-client si
 python seminfo/manage.py build-client tii
 ```
 
-Sem os endereços da TI, usar `--allow-incomplete` gera imagem bloqueada com janela de autorização: informar o IP da banca no laboratório e solicitar acesso. Ela ainda exige ensaio presencial. Testar um USB por sala antes de replicar os dez; reservar um sobressalente por laboratório. Os fundos claros/Espresso fornecidos pelo usuário são sorteados uma única vez por inicialização.
+Sem os endereços da TI, usar `--allow-incomplete` gera imagem bloqueada com janela de autorização: informar o IP da banca no laboratório e solicitar acesso. Ela ainda exige ensaio presencial. Testar um USB por sala antes de replicar os dez; reservar um sobressalente por laboratório. Nas novas construções, o fundo é fixo por categoria: TII usa claro/JUNIOR e SI usa espresso/PLENO, inclusive após reiniciar.
 
 ## Homologação e ativação
 

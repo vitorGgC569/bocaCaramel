@@ -28,3 +28,5 @@ seminfo/reports/
 seminfo/documentacao/output/anteriores/
 **/__pycache__/
 *.pyc
+# Generated previews and local diagnostics are not source artifacts.
+/output/

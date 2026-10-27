@@ -13,8 +13,14 @@ if ($action==='seed') {
         if (!DBNewRun(['contest'=>1,'site'=>1,'user'=>2000+$i,'problem'=>1,'lang'=>$lang,'filename'=>$file,'filepath'=>'/tmp/'.$file,'runnumber'=>$number])) exit(1);
         $expected[$number++]=1;
     }
-    foreach ([['Wrong.c',6],['CompileError.c',2],['Timeout.c',4]] as [$file,$answer]) {
-        if (!DBNewRun(['contest'=>1,'site'=>1,'user'=>2001,'problem'=>1,'lang'=>1,'filename'=>$file,'filepath'=>'/tmp/'.$file,'runnumber'=>$number])) exit(1);
+    foreach ([[1,'Wrong.c',6],[1,'CompileError.c',2],[1,'Timeout.c',4],
+              [3,'WrongJava.java',6],[3,'CompileErrorJava.java',2],[3,'TimeoutJava.java',4],
+              [3,'Multi.zip',1]] as [$lang,$file,$answer]) {
+        // The Java run harness uses the problem basename as its main class.
+        // Keep the source ZIP name different from the problem package A.zip:
+        // both are staged in the same judging directory by BOCA.
+        $submittedName=$lang===3 && $file!=='Multi.zip' ? 'A.java' : $file;
+        if (!DBNewRun(['contest'=>1,'site'=>1,'user'=>2001,'problem'=>1,'lang'=>$lang,'filename'=>$submittedName,'filepath'=>'/tmp/'.$file,'runnumber'=>$number])) exit(1);
         $expected[$number++]=$answer;
     }
     echo json_encode(['ok'=>true,'expected'=>$expected]);
@@ -33,6 +39,6 @@ if ($action==='seed') {
     $r=pg_query($c,'SELECT runnumber,runanswer,runstatus,autoanswer FROM runtable WHERE contestnumber=1 ORDER BY runnumber');
     echo json_encode(pg_fetch_all($r) ?: []);
 } elseif ($action==='diagnostic') {
-    $r=pg_query($c,"SELECT runnumber,autoanswer,convert_from(lo_get(autostderr),'UTF8') AS detail FROM runtable WHERE contestnumber=1 AND runnumber=3");
+    $r=pg_query($c,"SELECT runnumber,runfilename,runanswer,autoanswer,convert_from(lo_get(autostderr),'UTF8') AS detail FROM runtable WHERE contestnumber=1 AND runlangnumber=3 ORDER BY runnumber");
     echo json_encode(pg_fetch_all($r) ?: []);
 }

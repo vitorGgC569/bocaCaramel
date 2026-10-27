@@ -49,7 +49,7 @@ class ConfigurationTests(unittest.TestCase):
             self.assertNotIn('ip6 daddr',text)
             self.assertNotIn('ct state established,related accept',text.split('chain output')[1])
             self.assertFalse(any('credentials' in str(p) for p in overlay.rglob('*')))
-            self.assertEqual((overlay/'usr/share/maratona-background/maratona-common-wallpaper.png').read_bytes(),(HERE/'banners/lab3-si.png').read_bytes())
+            self.assertEqual((overlay/'usr/share/maratona-background/maratona-common-wallpaper.png').read_bytes(),(HERE/'banners/caramel-espresso.png').read_bytes())
 
     def test_incomplete_overlay_is_closed(self):
         c=config();c['server_ip']=None;c['subnet']=None
@@ -67,6 +67,23 @@ class ConfigurationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'Ensaios pendentes'):
                 manage.activate('si')
             control.assert_not_called()
+
+
+class ServerBuildTests(unittest.TestCase):
+    def test_problem_template_tree_changes_server_fingerprint(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);here=root/'seminfo'
+            template=root/'doc/problemexamples/problemtemplate'
+            (template/'compile').mkdir(parents=True)
+            script=template/'compile/java';script.write_bytes(b'first compiler\n')
+            with patch.object(manage,'ROOT',root),patch.object(manage,'HERE',here):
+                first=manage.source_hash()
+                script.write_bytes(b'updated compiler\n')
+                second=manage.source_hash()
+                self.assertNotEqual(first,second)
+                (template/'description').mkdir()
+                (template/'description/problem.info').write_text('basename=A\n')
+                self.assertNotEqual(second,manage.source_hash())
 
 
 class ClientBuildTests(unittest.TestCase):

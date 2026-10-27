@@ -5,6 +5,24 @@ from pathlib import Path
 import shutil
 
 HERE = Path(__file__).resolve().parent
+LEGACY_WALLPAPERS = {'si': 'lab3-si.png', 'tii': 'lab4-tii.png'}
+
+
+def wallpaper_for_profile(profile):
+    """Return the artwork assigned to a category; never choose a fallback."""
+    if profile == 'tii':
+        return 'caramel-claro.png'
+    if profile == 'si':
+        return 'caramel-espresso.png'
+    raise ValueError('Perfil de wallpaper invalido')
+
+
+def normalize_wallpaper(profile, name):
+    """Accept the category's old alias while emitting its current artwork."""
+    expected = wallpaper_for_profile(profile)
+    if name not in (expected, LEGACY_WALLPAPERS[profile]):
+        raise ValueError('Wallpaper nao corresponde ao perfil')
+    return expected
 
 
 def rules(server_ip=None, *, enrollment=False, approved=True, lease_seconds=60):
@@ -49,7 +67,12 @@ table inet seminfo {
 def generate(cfg, destination, *, allow_incomplete=False):
     from manage import validate, write_json, digest
     from admission_setup import ensure_keys
+    cfg = dict(cfg)
+    wallpaper = normalize_wallpaper(cfg.get('profile'), cfg.get('wallpaper'))
+    # The server's administrative schema retains the historical lab aliases.
+    cfg['wallpaper'] = LEGACY_WALLPAPERS[cfg['profile']]
     validate(cfg, network=not allow_incomplete)
+    cfg['wallpaper'] = wallpaper
     destination = Path(destination)
     destination.mkdir(parents=True, exist_ok=True)
     overlay = destination / 'overlay'
@@ -68,7 +91,7 @@ def generate(cfg, destination, *, allow_incomplete=False):
     (overlay / 'etc/dconf/db/local.d/locks/99-seminfo').write_text('/org/gnome/desktop/background/picture-uri\n/org/gnome/desktop/background/picture-uri-dark\n/org/gnome/epiphany/homepage-url\n', encoding='utf-8', newline='\n')
     for name in ('caramel-claro.png', 'caramel-espresso.png'):
         shutil.copy2(HERE / 'banners' / name, overlay / 'usr/share/maratona-background' / name)
-    shutil.copy2(HERE / 'banners' / cfg['wallpaper'], overlay / 'usr/share/maratona-background/maratona-common-wallpaper.png')
+    shutil.copy2(HERE / 'banners' / wallpaper, overlay / 'usr/share/maratona-background/maratona-common-wallpaper.png')
     shutil.copy2(HERE / 'client/network.sh', overlay / 'usr/local/sbin/seminfo-network')
     shutil.copy2(HERE / 'client/verify-client.sh', overlay / 'usr/local/sbin/seminfo-verify')
     shutil.copy2(HERE / 'client/configure-client.py', overlay / 'usr/local/sbin/seminfo-configure')

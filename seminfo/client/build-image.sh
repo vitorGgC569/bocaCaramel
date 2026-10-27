@@ -91,7 +91,7 @@ CHROOT
 # The enrollment window uses the GTK runtime already included by Ubuntu Desktop.
 chroot "$work/root" python3 -c 'import gi; gi.require_version("Gtk", "3.0"); from gi.repository import Gtk'
 # The only privileged password in the image belongs to maintenance, never BOCA.
-hash=$(openssl passwd -6 -stdin < "$passfile")
+hash=$(python3 "$(dirname "$0")/hash-maintenance-password.py" "$passfile")
 printf 'seminfo-admin:%s\n' "$hash" | chroot "$work/root" chpasswd -e
 unset hash
 chroot "$work/root" groupadd -f icpc
@@ -131,7 +131,7 @@ mksquashfs "$work/root" "$work/filesystem.squashfs" -noappend -comp zstd -Xcompr
 mv "$work/filesystem.squashfs" "$work/iso/casper/filesystem.squashfs"
 du -sx --block-size=1 "$work/root" | cut -f1 > "$work/iso/casper/filesystem.size"
 python3 "$(dirname "$0")/patch-boot.py" "$work/iso" "$work/root/etc/seminfo/lab.json"
-(cd "$work/iso"; find . -type f ! -name md5sum.txt ! -name boot.cat -print0 | sort -z | xargs -0 md5sum > md5sum.txt)
+python3 "$(dirname "$0")/generate-iso-md5.py" "$work/iso" "$iso" --report "$work/md5-exclusions.json"
 # Replay the original hybrid boot setup; import only the modified payload.
 xorriso -indev "$iso" -outdev "$output" -boot_image any replay -update_r "$work/iso" / -commit -end
 (cd "$(dirname "$output")"; sha256sum "$(basename "$output")") > "$output.sha256"

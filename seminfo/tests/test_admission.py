@@ -178,11 +178,13 @@ class DeskFirewallTests(unittest.TestCase):
             folder=root/'local/si';folder.mkdir(parents=True)
             cfg=config()|{'control_ips':['172.16.5.10'],'team_ips':['192.168.50.11']}
             (folder/'lab.json').write_text(json.dumps(cfg))
-            (folder/'admission-approved.json').write_text(json.dumps(['192.168.50.10']))
-            run=subprocess.run(['powershell','-NoProfile','-ExecutionPolicy','Bypass','-File',
-                str(HERE/'tests/firewall-ranges.ps1'),'-Script',str(root/'firewall-mesa.ps1')],capture_output=True,text=True)
-            self.assertEqual(run.returncode,0,run.stdout+run.stderr)
-            self.assertIn('PASSOU',run.stdout)
+            for approved in ([], ['192.168.50.10'], ['192.168.50.10', '192.168.50.12']):
+                with self.subTest(approved=approved):
+                    (folder/'admission-approved.json').write_text(json.dumps(approved))
+                    run=subprocess.run(['powershell','-NoProfile','-ExecutionPolicy','Bypass','-File',
+                        str(HERE/'tests/firewall-ranges.ps1'),'-Script',str(root/'firewall-mesa.ps1')],capture_output=True,text=True)
+                    self.assertEqual(run.returncode,0,run.stdout+run.stderr)
+                    self.assertIn('PASSOU',run.stdout)
 
 
 if __name__=='__main__':unittest.main()

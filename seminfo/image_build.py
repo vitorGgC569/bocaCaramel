@@ -78,7 +78,7 @@ def fetch_ubuntu():
 
 def build_client(profile, *, allow_incomplete=False):
     from manage import DIST, ROOT, LOCAL, run, initialize, config, config_hash, client_source_hash, write_json, digest
-    from client_config import generate
+    from client_config import generate, wallpaper_for_profile
     initialize(profile)
     c=config(profile)
     destination=DIST / 'clients' / profile
@@ -108,7 +108,8 @@ def build_client(profile, *, allow_incomplete=False):
                'config_sha256':config_hash(c),'client_source_sha256':client_source_hash(),
                'package_manifest_sha256':digest(output.with_suffix('.packages.txt')),
                'network_configured':bool(c['server_ip'] and c['subnet']),'hardware_boot_verified':False,
-               'wallpaper_approved':True,'wallpaper_mode':'one_random_choice_per_boot',
+               'wallpaper_approved':True,'wallpaper_mode':'fixed_by_profile',
+               'wallpaper':wallpaper_for_profile(profile),
                'wallpaper_sha256':{name:digest(HERE/'banners'/name) for name in ('caramel-claro.png','caramel-espresso.png')},
                'admission_required':True,'admission_fingerprint':json.loads((destination/'overlay/etc/seminfo/lab.json').read_text())['admission_fingerprint'],
                'usb_written':False})

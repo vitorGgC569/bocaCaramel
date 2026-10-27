@@ -1,4 +1,5 @@
 """Run real BOCA/judge with synthetic data in a separate Docker network."""
+import argparse
 import datetime as dt
 import hashlib
 import http.cookiejar
@@ -31,9 +32,15 @@ def fixtures(folder):
              'A.java':'import java.util.*; public class A {public static void main(String[]args){Scanner s=new Scanner(System.in);System.out.println(s.nextInt()+s.nextInt());}}\n',
              'Main.py3':'a,b=map(int,input().split());print(a+b)\n',
              'Wrong.c':'#include <stdio.h>\nint main(){puts("0");}\n','CompileError.c':'invalid C source !\n',
-             'Timeout.c':'int main(){volatile unsigned long i=0;while(1)i++;}\n'}
+             'Timeout.c':'int main(){volatile unsigned long i=0;while(1)i++;}\n',
+             'WrongJava.java':'public class A {public static void main(String[]args){System.out.println(0);}}\n',
+             'CompileErrorJava.java':'invalid Java source !\n',
+             'TimeoutJava.java':'public class A {public static void main(String[]args){while(true){}}}\n'}
     for name,text in sources.items():(folder/name).write_text(text,encoding='utf-8')
-    return sources
+    with ZipFile(folder/'Multi.zip','w',ZIP_DEFLATED) as bundle:
+        bundle.writestr('A.java','import java.util.*; public class A {public static void main(String[]args){Scanner s=new Scanner(System.in);System.out.println(Sum.add(s.nextInt(),s.nextInt()));}}\n')
+        bundle.writestr('Sum.java','class Sum {static int add(int a,int b){return a+b;}}\n')
+    return [*sources,'Multi.zip']
 
 
 def login(base,username,password,role,contest=None):
@@ -48,15 +55,19 @@ def login(base,username,password,role,contest=None):
     return client
 
 
-def main():
+def main(profile='si'):
     lock=json.loads((kit.DIST/'server.lock.json').read_text())
     tag='seminfo-test-'+secrets.token_hex(4);network=tag+'-net'
     names={kind:tag+'-'+kind for kind in ('db','web','jail')}
-    cfg=json.loads((kit.HERE/'labs/si.json').read_text(encoding='utf-8'))
+    cfg=json.loads((kit.HERE/'labs'/f'{profile}.json').read_text(encoding='utf-8'))
     cfg.update(start=(dt.datetime.now(dt.timezone(dt.timedelta(hours=-3)))-dt.timedelta(minutes=10)).isoformat(),timing_confirmed=True,duration_minutes=100,freeze_minutes_before_end=20)
-    credentials=json.loads((kit.LOCAL/'si/credentials.json').read_text(encoding='utf-8'))
-    envfile=kit.LOCAL/'si'/f'{tag}.env'
-    envfile.write_text(''.join(f'{k}={v}\n' for k,v in credentials.items() if k.startswith('BOCA_'))+'SEMINFO_PROFILE=si\n',encoding='utf-8')
+    # Test instances must never reuse the credentials of either real contest.
+    credentials={key:secrets.token_urlsafe(30) for key in
+                 ('POSTGRES_PASSWORD','BOCA_DB_PASSWORD','BOCA_PASSWORD','BOCA_KEY','SYSTEM_PASSWORD','SCORE_PASSWORD')}
+    credentials.update({f'TEAM_{i:02d}':secrets.token_urlsafe(15) for i in range(1,11)})
+    envdir=tempfile.TemporaryDirectory(prefix=tag+'-')
+    envfile=Path(envdir.name)/'test.env'
+    envfile.write_text(''.join(f'{k}={v}\n' for k,v in credentials.items() if k.startswith('BOCA_'))+f'SEMINFO_PROFILE={profile}\n',encoding='utf-8')
     def control(action,extra=None):
         output=kit.run(['docker','exec','-i',names['web'],'php','/opt/seminfo/control.php',action],data=json.dumps({'config':cfg,'credentials':credentials,**(extra or {})}).encode())
         try:return json.loads(output)
@@ -81,7 +92,7 @@ def main():
         base=f'http://127.0.0.1:{port}/boca/'
         login(base,'system',credentials['SYSTEM_PASSWORD'],'system')
         login(base,'admin',credentials['BOCA_PASSWORD'],'admin',contest=1)
-        try:login(base,'si01',credentials['TEAM_01'],'team',contest=1)
+        try:login(base,profile+'01',credentials['TEAM_01'],'team',contest=1)
         except AssertionError:pass
         else:raise AssertionError('Equipe entrou em contest inativo pela selecao explicita')
         with tempfile.TemporaryDirectory() as tmp:
@@ -94,7 +105,7 @@ def main():
             base=f'http://127.0.0.1:{port}/boca/'
             login(base,'admin',credentials['BOCA_PASSWORD'],'admin')
             login(base,'placar',credentials['SCORE_PASSWORD'],'score')
-            for i in range(1,11):login(base,f'si{i:02d}',credentials[f'TEAM_{i:02d}'],'team')
+            for i in range(1,11):login(base,f'{profile}{i:02d}',credentials[f'TEAM_{i:02d}'],'team')
             for url in ('admin/report/webcast.php?webcastcode=allUsers','admin/report/webcast.php?full=1'):
                 try:urllib.request.urlopen(base+url)
                 except urllib.error.HTTPError as exc:assert exc.code==403
@@ -122,6 +133,7 @@ def main():
             from webcast import prepare_export
             report=kit.HERE/'reports'/tag
             prepare_export(data,cfg,report)
+            kit.write_json(report/'java-diagnostic.json',fixture('diagnostic'))
             assert fixture('freeze')['ok']
             frozen=control('scoreboard')
             assert frozen['frozen'] and all(t['solved']==0 for t in frozen['teams'])
@@ -148,9 +160,9 @@ def main():
             fingerprint=kit.fingerprint(names['db'])
             kit.run(['docker','exec',names['db'],'pg_dump','-U','postgres','-d','bocadb','-Fc','-b','-f','/tmp/test.dump'])
             kit.run(['docker','cp',f'{names["db"]}:/tmp/test.dump',backup/'database.dump'])
-            kit.write_json(backup/'manifest.json',{'profile':'si','dump_sha256':kit.digest(backup/'database.dump'),'fingerprint':fingerprint,'database_image':kit.inspect(names['db'])['Image']})
+            kit.write_json(backup/'manifest.json',{'profile':profile,'dump_sha256':kit.digest(backup/'database.dump'),'fingerprint':fingerprint,'database_image':kit.inspect(names['db'])['Image']})
             kit.check_restore(backup)
-            kit.write_json(kit.HERE/'reports/integration.json',{'ok':True,'submissions':len(expected),'teams':10,'languages':4,'http_logins':14,'http_users':13,'system_login':True,'inactive_admin_login':True,'inactive_team_rejected':True,'webcast_http_blocked':True,'scoreboard_parity':True,'scoreboard_freeze_no_leak':True,'final_rejects_rejudge':True,'recovery_with_largeobjects':True,'source_sha256':lock['source_sha256'],'utc':dt.datetime.now(dt.timezone.utc).isoformat()})
+            kit.write_json(kit.HERE/'reports/integration.json',{'ok':True,'profile':profile,'submissions':len(expected),'teams':10,'languages':4,'http_logins':14,'http_users':13,'system_login':True,'inactive_admin_login':True,'inactive_team_rejected':True,'webcast_http_blocked':True,'scoreboard_parity':True,'scoreboard_freeze_no_leak':True,'final_rejects_rejudge':True,'recovery_with_largeobjects':True,'source_sha256':lock['source_sha256'],'utc':dt.datetime.now(dt.timezone.utc).isoformat()})
             print('PASSOU: 10 equipes, 4 linguagens, AC/WA/CE/TLE, login HTTP, placar e paridade.',flush=True)
     except Exception:
         for kind in ('web','jail'):
@@ -160,10 +172,14 @@ def main():
         raise
     finally:
         envfile.unlink(missing_ok=True)
+        envdir.cleanup()
         for name in names.values():
             subprocess=__import__('subprocess')
-            subprocess.run(['docker','rm','-f','-v',name],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
-        __import__('subprocess').run(['docker','network','rm',network],stdout=__import__('subprocess').DEVNULL,stderr=__import__('subprocess').DEVNULL)
+            subprocess.run(['docker','rm','-f','-v',name],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,**kit.hidden_process_options())
+        __import__('subprocess').run(['docker','network','rm',network],stdout=__import__('subprocess').DEVNULL,stderr=__import__('subprocess').DEVNULL,**kit.hidden_process_options())
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--profile',choices=('si','tii'),default='si')
+    main(parser.parse_args().profile)

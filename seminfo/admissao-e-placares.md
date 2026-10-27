@@ -104,7 +104,7 @@ O comando gera exportação local conferida e só libera o resultado final se el
 
 ## Planos de fundo
 
-As imagens fornecidas pelo usuário são `banners/caramel-claro.png` e `banners/caramel-espresso.png`, ambas 2560×1440, preservadas byte a byte. Um serviço oneshot sorteia **uma ou outra por boot**, antes da área de trabalho, e mantém a escolhida durante toda a sessão. Sem carrossel, temporizador ou alternância de tema. O enquadramento `scaled` mostra a arte inteira também em proporções diferentes. Os banners anteriores são preservados como histórico.
+As imagens fornecidas pelo usuário são `banners/caramel-claro.png` e `banners/caramel-espresso.png`, preservadas byte a byte na ISO. A associação é fixa: **TII usa claro/JUNIOR; SI usa espresso/PLENO**. Antes da área de trabalho, um serviço oneshot lê o perfil em `/etc/seminfo/lab.json` e copia a arte correspondente para `maratona-common-wallpaper.png`, o caminho mantido na configuração do GNOME. Perfil inválido ou wallpaper incompatível causa falha explícita, sem escolher outra arte. A escolha permanece igual após reiniciar, sem sorteio, carrossel, temporizador ou alternância de tema. O enquadramento `scaled` mostra a arte inteira também em proporções diferentes. Os banners anteriores são preservados como histórico.
 
 ## Homologação ainda necessária
 

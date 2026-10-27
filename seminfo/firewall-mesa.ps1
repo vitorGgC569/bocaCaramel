@@ -10,6 +10,8 @@ if ($config.profile -ne $Profile) { throw 'Perfil diverge da configuracao' }
 $backupPath=Join-Path $PSScriptRoot "local/$Profile/firewall-before.json"
 $group='SEMINFO-BOCA'
 $guard='SEMINFO-BOCA troca protegida'
+# Windows Firewall rejects the zero-length IPv6 prefix ::/0.
+$allIPv6=@('::/1','8000::/1')
 function To-Number([string]$Text) {
     $ip=[System.Net.IPAddress]::Parse($Text)
     if ($ip.AddressFamily -ne [System.Net.Sockets.AddressFamily]::InterNetwork) { throw 'Somente IPv4' }
@@ -29,7 +31,7 @@ if (-not $Maintenance) {
     $allowed=@('127.0.0.1',$config.server_ip)
     $approvedPath=Join-Path $PSScriptRoot "local/$Profile/admission-approved.json"
     if (Test-Path -LiteralPath $approvedPath) {
-        $approved=@(Get-Content -LiteralPath $approvedPath -Raw | ConvertFrom-Json)
+        $approved=Get-Content -LiteralPath $approvedPath -Raw | ConvertFrom-Json
         foreach($value in $approved) {
             $null=To-Number ([string]$value)
             $allowed += [string]$value
@@ -88,13 +90,13 @@ try {
     } else {
         New-NetFirewallRule -DisplayName "SEMINFO $Profile allow" -Group $group -Direction Inbound -Action Allow -Protocol TCP -LocalPort 8000 -RemoteAddress $allowed -Profile Any | Out-Null
         New-NetFirewallRule -DisplayName "SEMINFO $Profile block ipv4" -Group $group -Direction Inbound -Action Block -Protocol TCP -LocalPort 8000 -RemoteAddress $outside -Profile Any | Out-Null
-        New-NetFirewallRule -DisplayName "SEMINFO $Profile block ipv6" -Group $group -Direction Inbound -Action Block -Protocol TCP -LocalPort 8000 -RemoteAddress '::/0' -Profile Any | Out-Null
+        New-NetFirewallRule -DisplayName "SEMINFO $Profile block ipv6" -Group $group -Direction Inbound -Action Block -Protocol TCP -LocalPort 8000 -RemoteAddress $allIPv6 -Profile Any | Out-Null
         $enrollmentAllowed=@('127.0.0.1',$config.subnet)+@($config.control_ips | Where-Object { $null -ne $_ })
         New-NetFirewallRule -DisplayName "SEMINFO $Profile enrollment allow" -Group $group -Direction Inbound -Action Allow -Protocol TCP -LocalPort 8443 -RemoteAddress $enrollmentAllowed -Profile Any | Out-Null
         New-NetFirewallRule -DisplayName "SEMINFO $Profile enrollment block ipv4" -Group $group -Direction Inbound -Action Block -Protocol TCP -LocalPort 8443 -RemoteAddress $enrollmentOutside -Profile Any | Out-Null
-        New-NetFirewallRule -DisplayName "SEMINFO $Profile enrollment block ipv6" -Group $group -Direction Inbound -Action Block -Protocol TCP -LocalPort 8443 -RemoteAddress '::/0' -Profile Any | Out-Null
+        New-NetFirewallRule -DisplayName "SEMINFO $Profile enrollment block ipv6" -Group $group -Direction Inbound -Action Block -Protocol TCP -LocalPort 8443 -RemoteAddress $allIPv6 -Profile Any | Out-Null
         New-NetFirewallRule -DisplayName "SEMINFO $Profile backend block ipv4" -Group $group -Direction Inbound -Action Block -Protocol TCP -LocalPort 18000,17860,17861,17862 -RemoteAddress @('0.0.0.0-127.0.0.0','127.0.0.2-255.255.255.255') -Profile Any | Out-Null
-        New-NetFirewallRule -DisplayName "SEMINFO $Profile backend block ipv6" -Group $group -Direction Inbound -Action Block -Protocol TCP -LocalPort 18000,17860,17861,17862 -RemoteAddress '::/0' -Profile Any | Out-Null
+        New-NetFirewallRule -DisplayName "SEMINFO $Profile backend block ipv6" -Group $group -Direction Inbound -Action Block -Protocol TCP -LocalPort 18000,17860,17861,17862 -RemoteAddress $allIPv6 -Profile Any | Out-Null
     }
     Get-NetFirewallRule -DisplayName $guard | Remove-NetFirewallRule
 } catch {

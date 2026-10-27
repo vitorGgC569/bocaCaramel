@@ -21,7 +21,7 @@ O ensaio `admission_network.py` usa bancas/clientes isolados, certificados reais
 
 | Registro | Evidência exigida |
 |---|---|
-| `client_boot` | PC/USB identificados; boot sem internet; uma das duas novas artes sorteada e estável; janela com IP; icpc sem sudo; quatro linguagens |
+| `client_boot` | PC/USB identificados; boot sem internet; arte fixa da categoria (TII claro/JUNIOR; SI espresso/PLENO), inclusive após reiniciar; janela com IP; icpc sem sudo; quatro linguagens |
 | `client_persistence` | Arquivo em ~/trabalhos permanece depois de desligar/ligar sem depender do disco interno |
 | `network_isolation` | Pendente bloqueado; código inválido recusado; BOCA correto após aprovação; revogação/queda/expiração; outro BOCA, PC vizinho e internet IPv4/IPv6 bloqueados; reboot exige nova aprovação; firewall/Agendador Windows reais |
 | `projector` | Área estendida; placares separados SI/TII iguais ao respectivo BOCA; administrador não aparece; freeze, falha de outra banca e publicação final independentes; revelação por categoria |
