@@ -435,6 +435,43 @@ def main(profile="si"):
                 score_page=client.open(base+'admin/report/score.php?p=0&hor=10',timeout=120).read().decode('utf-8')
                 assert 'Placar aos 10 minutos. Outros horários:' in score_page
                 assert 'Placar aos 1 minuto.' not in score_page
+                # Feed both native remote-score formats into the disposable web
+                # container. Never write remote-score data to either real event.
+                old_global=detail_sql('SELECT siteglobalscore FROM sitetable WHERE contestnumber=1 AND sitenumber=1')
+                detail_sql("UPDATE sitetable SET siteglobalscore='0' WHERE contestnumber=1 AND sitenumber=1")
+                remote_file='/var/www/boca/src/private/remotescores/score_site2_2_test.dat'
+                groups_file='/var/www/boca/src/private/score.sep'
+                groups_original=raw_run(['docker','exec',names['web'],'php','-r','echo base64_encode(file_get_contents($argv[1]));',groups_file]).decode()
+                raw_run(['docker','exec',names['web'],'php','-r','file_put_contents($argv[1],"Global 1 2\\n");',groups_file])
+                remote_php=r'''$p=$argv[1]; $mode=$argv[2];
+                $team=['site'=>2,'user'=>4000,'username'=>'remototeste','usertype'=>'team',
+                  'userfullname'=>'Equipe remota de ensaio','usershortinstitution'=>'','userflag'=>'',
+                  'usersitename'=>'Sede 2','totaltime'=>0,'totalcount'=>0,'first'=>0,'problem'=>[]];
+                if ($mode==='legacy') {
+                  $team['totalcount']=1; $team['totaltime']=1; $team['first']=1;
+                  $team['problem']=[1=>['name'=>'A','color'=>'ffffff','colorname'=>'remota',
+                    'count'=>1,'solved'=>true,'time'=>1,'penalty'=>1,'judging'=>false]];
+                  $duplicate=$team; $duplicate['site']=1; $duplicate['userfullname']='Equipe duplicada de ensaio';
+                  $data=[$team,$duplicate];
+                } else {
+                  $run=['user'=>4000,'problem'=>1,'problemname'=>'A','color'=>'ffffff','colorname'=>'remota',
+                    'time'=>60,'anstime'=>60,'yes'=>'t','answer'=>1];
+                  $data=['site'=>2,'resp'=>['4000-2'=>$team],'n'=>1,'a'=>[$run],'aa'=>[]];
+                }
+                file_put_contents($p,base64_encode(serialize($data)));'''
+                try:
+                    for mode in ('legacy','current'):
+                        raw_run(['docker','exec',names['web'],'php','-r',remote_php,remote_file,mode])
+                        remote_page=client.open(base+'admin/report/score.php?p=0&hor=10',timeout=120).read().decode('utf-8')
+                        if 'Equipe remota de ensaio' not in remote_page or 'Fatal error' in remote_page:
+                            (kit.HERE/'reports'/f'remote-score-{mode}-debug.html').write_text(remote_page,encoding='utf-8')
+                        assert 'Equipe remota de ensaio' in remote_page and 'Fatal error' not in remote_page, mode
+                        assert 'Equipe duplicada de ensaio' not in remote_page, mode
+                        assert remote_page.count('alt="Amarelo:"') >= 2, mode
+                finally:
+                    raw_run(['docker','exec',names['web'],'php','-r','unlink($argv[1]);',remote_file])
+                    raw_run(['docker','exec',names['web'],'php','-r','file_put_contents($argv[1],base64_decode($argv[2]));',groups_file,groups_original])
+                    detail_sql("UPDATE sitetable SET siteglobalscore='"+old_global.replace("'","''")+"' WHERE contestnumber=1 AND sitenumber=1")
                 buttons=Buttons(); buttons.feed(client.open(base+'admin/run.php').read().decode('utf-8'))
                 button=buttons.labels['Reexecutar julgamento automático das submissões selecionadas']
                 assert button['name']=='auto' and button['value']=='Re-run autojudge for selected runs'
