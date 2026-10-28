@@ -361,13 +361,13 @@ if($redo) {
   if(trim($linesubmission) == '1') {
     $strtmp .= "<br><br><center><b>Para enviar uma solução, use a ferramenta de linha de comando:</b>\n<br>".
       "<pre>boca-submit-run USER PASSWORD PROBLEM LANGUAGE FILE</pre><br>".
-      "where USER is your username, PASSWORD is your password, <br>".
-      "PROBLEM is one of { ";
+      "em que USER é o nome de usuário, PASSWORD é a senha, <br>".
+      "PROBLEM é uma das questões { ";
 
     $prob = DBGetProblems($_SESSION["usertable"]["contestnumber"],$_SESSION["usertable"]["usertype"]=='judge');
     for ($i=0;$i<count($prob);$i++)
       $strtmp .= $prob[$i]["problem"] . " ";
-    $strtmp .= "} and<br>LANGUAGE is one of { ";
+    $strtmp .= "} e<br>LANGUAGE é uma das linguagens { ";
     $lang = DBGetLanguages($_SESSION["usertable"]["contestnumber"]);
     for ($i=0;$i<count($lang);$i++)
       $strtmp .= $lang[$i]["name"] . " ";

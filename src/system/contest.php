@@ -178,9 +178,9 @@ for ($i=0; $i<count($cs); $i++) {
         </td>
       </tr>
   <tr><td width="35%" align=right>
-    Your PHP config. allows at most:</td>
+    A configuração do PHP permite no máximo:</td>
   <td width="65%">
-    <?php echo ini_get('post_max_size').'B(max. post) and '.ini_get('upload_max_filesize').'B(max. filesize)'; ?>
+    <?php echo ini_get('post_max_size').' (requisição) e '.ini_get('upload_max_filesize').' (arquivo)'; ?>
   </td></tr>
       <tr>
 							<td width="35%" align=right>URL do local principal da competição (IP/pasta do BOCA):</td>

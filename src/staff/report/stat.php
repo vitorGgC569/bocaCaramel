@@ -92,8 +92,8 @@ shell_exec("python3 ../../admin/report/piechart.py accepted_runs_by_problems.txt
 
 
 echo "<center><table><tr>";
-echo "<td><img alt='runs by problems' src=runs_by_problems.png width=500></td></tr>\n";
-echo "<td><img alt='accepted runs by problems' src=accepted_runs_by_problems.png width=500></td>\n";
+echo "<td><img alt='submissões por questão' src=runs_by_problems.png width=500></td></tr>\n";
+echo "<td><img alt='submissões aceitas por questão' src=accepted_runs_by_problems.png width=500></td>\n";
 echo "</table> </center>";
 
 
@@ -234,8 +234,8 @@ shell_exec("python3 ../../admin/report/piechart.py accepted_runs_by_language.txt
 
 
 echo "<center><table><tr>";
-echo "<td><img alt='all runs by language' src=all_runs_by_language.png width=500></td></tr>\n";
-echo "<td><img alt='accepted runs by language' src=accepted_runs_by_language.png width=500></td>\n";
+echo "<td><img alt='submissões por linguagem' src=all_runs_by_language.png width=500></td></tr>\n";
+echo "<td><img alt='submissões aceitas por linguagem' src=accepted_runs_by_language.png width=500></td>\n";
 echo "</table> </center>";
 
 //----------------------------------------------------------
@@ -311,7 +311,7 @@ shell_exec("python3 ../../admin/report/piechart.py all_runs_by_answer.txt 'Todas
 echo "</table></center>";
 
 echo "</td>";
-echo "<td><img alt='all runs by answer' src=all_runs_by_answer.png width=500></td></tr>\n";
+echo "<td><img alt='submissões por resposta' src=all_runs_by_answer.png width=500></td></tr>\n";
 
 echo "</table></center>\n";
 

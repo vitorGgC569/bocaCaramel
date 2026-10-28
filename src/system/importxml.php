@@ -167,7 +167,7 @@ if(isset($_POST["Submit"])) {
 <br>
 <br>
 <center><b>
-To import a pre-defined contest, just fill in the import file field.</b></center>
+Para importar uma competição existente, selecione o arquivo de importação.</b></center>
 <br>
 <body onload="document.form1.name.focus()">
 <script language="JavaScript" src="../sha256.js"></script>

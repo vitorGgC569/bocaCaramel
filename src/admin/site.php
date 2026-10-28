@@ -575,7 +575,7 @@ for ($i=0; $i< $n; $i++) {
     <table border="0">
       <tr>
 <td nowrap width="50%" align=right>
-(Do not use this button unless really necessary)
+(Use este botão apenas quando necessário)
   <button type="submit" name="endat" value="Stop At" onClick="conf()">Encerrar em</button>:
 </td>
 <?php

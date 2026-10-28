@@ -47,6 +47,8 @@ No ensaio TII posterior, o relatório de estatísticas exibiu as descrições em
 
 O ensaio TII também enviou um backup pela equipe, baixou e comparou o conteúdo e o excluiu, conferindo os estados traduzidos na administração. O mesmo ensaio verificou Builder, linguagens, dúvidas, pedidos, relatório, restauração e submissões YES e WA; passaram os 56 testes de unidade e a sintaxe PHP.
 
+Após a revisão das instruções de importação, envio e julgamento, o ensaio isolado de TII conferiu os avisos renderizados, Builder, quatro linguagens, restauração, pedidos, dúvidas, backups e submissões YES e WA. Os 56 testes de unidade e a sintaxe PHP passaram.
+
 Essas evidências não homologam as salas físicas. Os seis ensaios a seguir devem ser realizados presencialmente em cada laboratório; não registre atestados sem executá-los.
 
 ## Uma ficha presencial por laboratório

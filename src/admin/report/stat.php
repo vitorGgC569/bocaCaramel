@@ -92,8 +92,8 @@ shell_exec("python3 piechart.py accepted_runs_by_problems.txt 'Submissões aceit
 
 
 echo "<center><table><tr>";
-echo "<td><img alt='runs by problems' src=runs_by_problems.png width=600></td></tr>\n";
-echo "<td><img alt='accepted runs by problems' src=accepted_runs_by_problems.png width=600></td>\n";
+echo "<td><img alt='submissões por questão' src=runs_by_problems.png width=600></td></tr>\n";
+echo "<td><img alt='submissões aceitas por questão' src=accepted_runs_by_problems.png width=600></td>\n";
 echo "</table> </center>";
 //----------------------------------------------------------
 echo "<center><h3>Submissões por questão e resposta</h3></center>\n";
@@ -226,8 +226,8 @@ shell_exec("python3 piechart.py accepted_runs_by_language.txt 'Submissões aceit
 
 
 echo "<center><table><tr>";
-echo "<td><img alt='all runs by language' src=all_runs_by_language.png width=600></td></tr>\n";
-echo "<td><img alt='accepted runs by language' src=accepted_runs_by_language.png width=600></td>\n";
+echo "<td><img alt='submissões por linguagem' src=all_runs_by_language.png width=600></td></tr>\n";
+echo "<td><img alt='submissões aceitas por linguagem' src=accepted_runs_by_language.png width=600></td>\n";
 echo "</table> </center>";
 
 
@@ -302,7 +302,7 @@ shell_exec("python3 piechart.py all_runs_by_answer.txt 'Todas as submissões por
 
 
 echo "<center><table><tr>";
-echo "<td><img alt='all runs by answer' src=all_runs_by_answer.png width=600></td></tr>\n";
+echo "<td><img alt='submissões por resposta' src=all_runs_by_answer.png width=600></td></tr>\n";
 echo "</table></center>\n";
 
 //----------------------------------------------------------

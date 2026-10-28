@@ -316,8 +316,8 @@ function computeHASH()
 </script>
 
 <br><br><center><b>Clique no número de um usuário para editar seus dados.<br>
-To import the users, just fill in the import file field.<br>
-The file must be in the format defined in the admin's manual.</b></center>
+Para importar usuários, selecione o arquivo de importação.<br>
+O arquivo deve seguir o formato definido no manual da administração.</b></center>
 
 <form name="form1" enctype="multipart/form-data" method="post" action="user.php">
   <input type=hidden name="confirmation" value="noconfirm" />

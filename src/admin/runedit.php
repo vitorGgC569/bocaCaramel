@@ -224,7 +224,7 @@ if (($s=DBSiteInfo($_SESSION["usertable"]["contestnumber"],$_SESSION["usertable"
         ForceLoad("../index.php");
 
 if ($a["timestamp"] < $s["sitelastmileanswer"]) echo "checked"; ?>>
-(do not change this unless you know exactly what you are doing)
+(Altere somente se souber exatamente o efeito desta opção)
         </td>
       </tr>
       <tr> 
@@ -232,7 +232,7 @@ if ($a["timestamp"] < $s["sitelastmileanswer"]) echo "checked"; ?>>
         <td width="83%">
           <input class=checkbox type=checkbox name="updatescore" value="yes"
 <?php if ($a["timestamp"] < $s["sitelastmilescore"]) echo "checked"; ?>>
-(do not change this unless you know exactly what you are doing)
+(Altere somente se souber exatamente o efeito desta opção)
         </td>
       </tr>
 -->

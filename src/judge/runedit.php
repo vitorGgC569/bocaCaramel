@@ -148,7 +148,7 @@ if (($s=DBSiteInfo($_SESSION["usertable"]["contestnumber"],$_SESSION["usertable"
         ForceLoad("../index.php");
 
 if ($a["timestamp"] < $s["sitelastmileanswer"]) echo "checked"; ?>>
-(do not change this unless you know exactly what you are doing)
+(Altere somente se souber exatamente o efeito desta opção)
         </td>
       </tr>
       <tr> 
@@ -156,7 +156,7 @@ if ($a["timestamp"] < $s["sitelastmileanswer"]) echo "checked"; ?>>
         <td width="83%">
           <input class=checkbox type=checkbox name="updatescore" value="yes"
 <?php if ($a["timestamp"] < $s["sitelastmilescore"]) echo "checked"; ?>>
-(do not change this unless you know exactly what you are doing)
+(Altere somente se souber exatamente o efeito desta opção)
         </td>
       </tr>
 -->
@@ -178,8 +178,8 @@ if ($a["timestamp"] < $s["sitelastmileanswer"]) echo "checked"; ?>>
 <br><br>
 <!--
 <font color=#ff0000><b>
-Remember to not leave the correct output files in a readable directory.<br>
-A malicious source code could try to find the correct output file on the disk and copy it.
+Não deixe os arquivos de saída correta em um diretório acessível.<br>
+Um código malicioso poderia localizar e copiar a saída correta no disco.
 </b></font>
 -->
   </center>
