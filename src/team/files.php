@@ -107,7 +107,7 @@ To submit a new backup file, just fill in the following fields:</b></center>
       }
     }
     function conf2(url) {
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
         document.location=url;
       } else {
         document.location='files.php';

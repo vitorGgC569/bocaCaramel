@@ -109,7 +109,7 @@ for ($i=0;$i<count($prob);$i++)
   </center>
   <script language="javascript">
     function conf() {
-      if (confirm("Confirm clarification?")) {
+      if (confirm("Confirmar envio da dúvida?")) {
         document.form1.confirmation.value='confirm';
       }
     }

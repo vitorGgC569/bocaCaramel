@@ -23,13 +23,13 @@ require 'header.php';
   <input type=hidden name="confirmation" value="noconfirm" />
   <script language="javascript" type="text/javascript">
     function conf() {
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
         document.form1.confirmation.value='confirm';
       }
     }
     function conf2() {
-      if (confirm("Confirm updating BOCA?")) {
-		  if (confirm("This operation may perform considerable changes to your BOCA system. Confirm?")) {
+      if (confirm("Confirmar a atualização do BOCA?")) {
+		  if (confirm("This operation may perform considerable changes to your BOCA system. Confirmar?")) {
 			  document.form1.confirmation.value='confirm';
 		  }
       }

@@ -23,15 +23,15 @@ $d = DBRunReport($_SESSION["usertable"]["contestnumber"],$_SESSION["usertable"][
 
 echo "<center><h2>Statistics</h2></center>\n";
 //----------------------------------------------------------
-echo "<center><h3>Runs by Problem</h3></center>\n";
+echo "<center><h3>Submissões por questão</h3></center>\n";
 echo "<center><table border=1>\n";
 echo "<tr><td><b><u>Questões</u></b></td>";
 
 echo "<td>Total</td><td>Accepted</td>";
 echo "</tr>\n";
 
-$str="All Runs by Problem";
-$str2="Accepted Runs by Problem";
+$str="All Submissões por questão";
+$str2="Accepted Submissões por questão";
 $cor = "";
 $color=array();
 $values_ac=array();
@@ -87,8 +87,8 @@ for($i=0;$i<count($values_ac);$i++){
 }
 fclose($myfile);
 
-shell_exec("python3 ../../admin/report/piechart.py runs_by_problems.txt 'Runs by Problems'");
-shell_exec("python3 ../../admin/report/piechart.py accepted_runs_by_problems.txt 'Accepted Runs by Problems'");
+shell_exec("python3 ../../admin/report/piechart.py runs_by_problems.txt 'Submissões por questãos'");
+shell_exec("python3 ../../admin/report/piechart.py accepted_runs_by_problems.txt 'Accepted Submissões por questãos'");
 
 
 echo "<center><table><tr>";
@@ -98,9 +98,9 @@ echo "</table> </center>";
 
 
 //----------------------------------------------------------
-echo "<center><h3>Runs by Problem and Answer</h3></center>\n";
+echo "<center><h3>Submissões por questão e resposta</h3></center>\n";
 echo "<center><table border=1>\n";
-echo "<tr><td><b><u>Problems x Answers</u></b></td>";
+echo "<tr><td><b><u>Questões x respostas</u></b></td>";
 // while (list($key, $val) = each($d['answer']))
 foreach($d['answer'] as $key => $val){
   echo "<td>$key</td>";
@@ -128,9 +128,9 @@ foreach($d['problem'] as $keya => $vala){
 echo "</table></center>";
 
 //----------------------------------------------------------
-echo "<center><h3>Runs by Problem and Language</h3></center>\n";
+echo "<center><h3>Submissões por questão e linguagem</h3></center>\n";
 echo "<center><table border=1>\n";
-echo "<tr><td><b><u>Problems x Languages</u></b></td>";
+echo "<tr><td><b><u>Questões x linguagens</u></b></td>";
 reset($d['language']);
 // while (list($key, $val) = each($d['language']))
 foreach($d['language'] as $key => $val){
@@ -163,15 +163,15 @@ echo "</table></center>";
 //----------------------------------------------------------
 echo "<br />";
 echo "<hr />";
-echo "<center><h3>Runs by Language</h3></center>\n";
+echo "<center><h3>Submissões por linguagem</h3></center>\n";
 echo "<center><table border=1>\n";
 echo "<tr><td><b><u>Linguagens</u></b></td>";
 
 echo "<td>Total</td><td>Accepted</td>";
 echo "</tr>\n";
 
-$str="All Runs by Language";
-$str2="Accepted Runs by Language";
+$str="All Submissões por linguagem";
+$str2="Accepted Submissões por linguagem";
 $values = array();
 $values_ac = array();
 
@@ -229,8 +229,8 @@ for($i=0;$i<count($values);$i++){
 fclose($myfile);
 
 
-shell_exec("python3 ../../admin/report/piechart.py all_runs_by_language.txt 'All Runs by Language' 'lower'");
-shell_exec("python3 ../../admin/report/piechart.py accepted_runs_by_language.txt 'Accepted Runs by Language' 'lower'");
+shell_exec("python3 ../../admin/report/piechart.py all_runs_by_language.txt 'All Submissões por linguagem' 'lower'");
+shell_exec("python3 ../../admin/report/piechart.py accepted_runs_by_language.txt 'Accepted Submissões por linguagem' 'lower'");
 
 
 echo "<center><table><tr>";
@@ -239,9 +239,9 @@ echo "<td><img alt='accepted runs by language' src=accepted_runs_by_language.png
 echo "</table> </center>";
 
 //----------------------------------------------------------
-echo "<center><h3>Runs by Language and Answer</h3></center>\n";
+echo "<center><h3>Submissões por linguagem e resposta</h3></center>\n";
 echo "<center><table border=1>\n";
-echo "<tr><td><b><u>Languages x Answers</u></b></td>";
+echo "<tr><td><b><u>Linguagens x respostas</u></b></td>";
 reset($d['answer']);
 // while (list($key, $val) = each($d['answer']))
 foreach($d['answer'] as $key => $val){
@@ -318,9 +318,9 @@ echo "</table></center>\n";
 //----------------------------------------------------------
 echo "<br />";
 echo "<hr />";
-echo "<center><h3>Runs by User and Problem</h3></center>\n";
+echo "<center><h3>Submissões por usuário e questão</h3></center>\n";
 echo "<center><table border=1>\n";
-echo "<tr><td><b><u>Users x Problems</u></b></td>";
+echo "<tr><td><b><u>Usuários x questões</u></b></td>";
 reset($d['problem']);
 // while (list($key, $val) = each($d['problem'])) {
 foreach($d['problem'] as $key => $val){

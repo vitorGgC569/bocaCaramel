@@ -25,8 +25,8 @@ if(($ct = DBContestInfo($_SESSION["usertable"]["contestnumber"])) == null)
 if (isset($_GET["delete"]) && is_numeric($_GET["delete"])) {
 	$param["number"] = $_GET["delete"];
 	if(!DBDeleteAnswer($_SESSION["usertable"]["contestnumber"], $param)) {
-		MSGError('Error deleting answer');
-		LogError('Error deleting answer');
+		MSGError('Erro ao excluir a resposta');
+		LogError('Erro ao excluir a resposta');
 	}
 	ForceLoad("answer.php");
 }
@@ -46,13 +46,13 @@ if (isset($_POST["Submit3"]) && isset($_POST["answernumber"]) && is_numeric($_PO
 <br>
   <script language="javascript">
     function conf() {
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
         document.form1.confirmation.value='confirm';
       }
     }
     function conf2(url) {
-      if (confirm("Confirm the DELETION of the ANSWER and ALL data associated to it (including the SUBMISSIONS)?")) {
-		  if (confirm("Are you REALLY sure about what you are doing? DATA CANNOT BE RECOVERED!")) {
+      if (confirm("Confirmar a exclusão da resposta e de todos os dados associados, inclusive as submissões?")) {
+		  if (confirm("Tem certeza? OS DADOS NÃO PODERÃO SER RECUPERADOS!")) {
 			  document.location=url;
 		  } else {
 			  document.location='answer.php';

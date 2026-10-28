@@ -85,7 +85,7 @@ if (isset($_POST["Submit3"]) && isset($_POST["penalty"]) && is_numeric($_POST["p
   <input type=hidden name="confirmation" value="noconfirm" />
   <script language="javascript">
     function conf() {
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
         document.form1.confirmation.value='confirm';
       }
     }

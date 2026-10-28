@@ -142,16 +142,16 @@ if(isset($_POST["Submit"])) {
 			$str = strtok(" \n\t");
 			$ar = decryptData($str,$_POST['password'],'importxml');
 			if(strtoupper(substr($ar,0,5)) != '<XML>') {
-				echo "<br>Error decrypting file. Import aborted.<br>";
+				echo "<br>Erro ao descriptografar o arquivo. Importação cancelada.<br>";
 				echo "</body></html>";
 				exit;
 			}
 		}
 		if(strtoupper(substr($ar,0,5)) == '<XML>') {
-			echo "<br>File has been loaded.<br>";
+			echo "<br>Arquivo carregado.<br>";
 //			echo "<pre>\n$ar</pre>\n";
 			if(!importFromXML($ar,$acr,0,$localsite))
-				echo "<br>Error during updating of the local database.<br>";
+				echo "<br>Erro ao atualizar o banco de dados local.<br>";
 			echo "</body></html>";
 			exit;
 		}
@@ -229,7 +229,7 @@ function computeHASH()
   </center>
   <script language="javascript">
     function conf() {
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
   	    computeHASH();
         document.form1.confirmation.value='confirm';
       }

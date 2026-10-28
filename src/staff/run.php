@@ -194,7 +194,7 @@ echo "</table>";
   <br>
   <script language="javascript">
     function conf() {
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
         document.form1.confirmation.value='confirm';
       }
     }

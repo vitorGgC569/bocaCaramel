@@ -39,8 +39,8 @@ if (isset($_GET["delete"]) && is_numeric($_GET["delete"]) && isset($_GET["input"
 	$param['number']=$_GET["delete"];
 	$param['inputfilename']=myrawurldecode($_GET["input"]);
 	if(!DBDeleteProblem ($_SESSION["usertable"]["contestnumber"], $param)) {
-		MSGError('Error deleting problem');
-		LogError('Error deleting problem');
+		MSGError('Erro ao excluir a questão');
+		LogError('Erro ao excluir a questão');
 	}
 	ForceLoad("problem.php");
 }
@@ -57,7 +57,7 @@ if(isset($_POST['Submit5']) && $_POST['Submit5']=='Send') {
             !preg_match('/^(?:[1-9][0-9]{0,2})(?:,[1-9][0-9]?)?$/D',trim($_POST['timelimit'])) ||
             strlen(trim($_POST['fullname']))<1 || strlen($_POST['fullname'])>100 ||
             preg_match('/[\r\n]/',$_POST['fullname'])) {
-            MSGError('Informe nome, basename Java valido e limite inteiro de 1 a 999 segundos (opcional: ,repeticoes).');
+            MSGError('Informe o nome, o nome-base Java válido e o limite inteiro de 1 a 999 segundos (opcional: ,repetições).');
             ForceLoad('buildproblem.php'); exit;
         }
 		if ($_FILES["probleminput"]["name"] != "") {
@@ -130,7 +130,7 @@ if(isset($_POST['Submit5']) && $_POST['Submit5']=='Send') {
 					@unlink($tfile);
 					cleardir($dir);
 					ob_end_flush();
-					MSGError('Could not read problem template file ' . $rfile);
+					MSGError('Não foi possível ler o arquivo do modelo de questão: ' . $rfile);
 					ForceLoad('problem.php');
 				}
 			}
@@ -158,7 +158,7 @@ if(isset($_POST['Submit5']) && $_POST['Submit5']=='Send') {
 				@unlink($tfile);
 				cleardir($dir);
 				ob_end_flush();
-				MSGError('Could not read problem input/output files');
+				MSGError('Não foi possível ler os arquivos de entrada e saída da questão');
 				ForceLoad('problem.php');
 			}
 			$ret=create_zip($dir, glob($dir . $ds . '*'),$dir . '.zip');
@@ -167,7 +167,7 @@ if(isset($_POST['Submit5']) && $_POST['Submit5']=='Send') {
 				@unlink($tfile);
 				@unlink($dir . '.zip');
 				ob_end_flush();
-				MSGError('Could not write to zip file');
+				MSGError('Não foi possível gravar o arquivo ZIP');
 				ForceLoad('problem.php');
 			}
 			$str = file_get_contents($dir . '.zip');
@@ -186,7 +186,7 @@ if(isset($_POST['Submit5']) && $_POST['Submit5']=='Send') {
 		} else {
 			@unlink($tfile);
 			ob_end_flush();
-			MSGError('Could not write to temporary directory');
+			MSGError('Não foi possível gravar na pasta temporária');
 		}
 	}
 	ForceLoad('problem.php');
@@ -298,8 +298,8 @@ for ($i=0; $i<count($prob); $i++) {
 <br>
   <script language="javascript">
     function conf2(url) {
-      if (confirm("Confirm the DELETION of the PROBLEM and ALL data associated to it?")) {
-		  if (confirm("Are you REALLY sure about what you are doing? DATA CANNOT BE RECOVERED!")) {
+      if (confirm("Confirmar a exclusão da questão e de todos os dados associados?")) {
+		  if (confirm("Tem certeza? OS DADOS NÃO PODERÃO SER RECUPERADOS!")) {
 			  document.location=url;
 		  } else {
 			  document.location='problem.php';
@@ -309,7 +309,7 @@ for ($i=0; $i<count($prob); $i++) {
       }
     }
     function conf3(url) {
-      if (confirm("Confirm the UNDELETION of the PROBLEM?")) {
+      if (confirm("Confirmar a recuperação da questão?")) {
 		  document.location=url;
 	  } else {
 		  document.location='problem.php';

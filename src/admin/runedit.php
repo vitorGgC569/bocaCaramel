@@ -27,7 +27,7 @@ if (isset($_POST["giveup"]) && $_POST["giveup"]=="Renew" &&
         $sitenumber = myhtmlspecialchars($_POST["sitenumber"]);
         $number = myhtmlspecialchars($_POST["number"]);
         if (DBGiveUpRunAutojudging($_SESSION["usertable"]["contestnumber"], $sitenumber, $number))
-            MSGError("Run renewed.");
+            MSGError("Submissão reenviada para julgamento.");
         ForceLoad($runphp);
 }
 
@@ -40,7 +40,7 @@ if (isset($_POST["delete"]) && $_POST["delete"]=="Delete" &&
 
                 if (DBRunDelete($number, $sitenumber, $_SESSION["usertable"]["contestnumber"],
                              $_SESSION["usertable"]["usernumber"], $_SESSION["usertable"]["usersitenumber"]))
-                        MSGError("Run deleted.");
+                        MSGError("Submissão excluída.");
         }
         ForceLoad($runphp);
 }
@@ -55,7 +55,7 @@ if (isset($_POST["answer"]) && isset($_POST["open"]) && $_POST["open"]=="Open ru
 
 			DBGiveUpRunAutojudging($_SESSION["usertable"]["contestnumber"], $sitenumber, $number);
 			if (DBChiefRunGiveUp($_POST["number"], $_POST["sitenumber"], $_SESSION["usertable"]["contestnumber"]))
-				MSGError("Run returned.");
+				MSGError("Submissão devolvida.");
 			ForceLoad($runphp);
 	}
 }
@@ -91,7 +91,7 @@ $runnumber = myhtmlspecialchars($_GET["runnumber"]);
 
 if (($a = DBChiefGetRunToAnswer($runnumber, $runsitenumber, 
 		$_SESSION["usertable"]["contestnumber"])) === false) {
-	MSGError("Another judge got it first.");
+	MSGError("Outro juiz já selecionou este item.");
 	ForceLoad($runphp);
 }
 
@@ -241,7 +241,7 @@ if ($a["timestamp"] < $s["sitelastmileanswer"]) echo "checked"; ?>>
   <br>
   <script language="javascript">
     function conf() {
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
         document.form1.confirmation.value='confirm';
       }
     }

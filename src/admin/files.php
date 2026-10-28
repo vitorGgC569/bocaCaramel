@@ -31,7 +31,7 @@ if (isset($_GET["delete"]) && is_numeric($_GET["delete"])) {
 <br>
   <script language="javascript">
     function conf2(url) {
-      if (confirm("Confirm DELETION of file?")) {
+      if (confirm("Confirmar a exclusão do arquivo?")) {
         document.location=url;
       } else {
         document.location='files.php';

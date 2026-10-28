@@ -31,7 +31,7 @@ if (isset($_POST["Submit3"]) && isset($_POST["langnumber"]) && is_numeric($_POST
     isset($_POST["langname"]) && $_POST["langname"] != "") {
 	if(strpos(trim($_POST["langname"]),' ')!==false) {
 		$_POST["confirmation"]='';
-		MSGError('Language name cannot have spaces');
+		MSGError('O nome da linguagem não pode conter espaços');
 	} else {
 	if ($_POST["confirmation"] == "confirm") {
 		$param = array();
@@ -47,8 +47,8 @@ if (isset($_POST["Submit3"]) && isset($_POST["langnumber"]) && is_numeric($_POST
 <br>
   <script language="javascript">
     function conf2(url) {
-      if (confirm("Confirm the DELETION of the LANGUAGE and ALL data associated to it (including the SUBMISSIONS)?")) {
-		  if (confirm("Are you REALLY sure about what you are doing? DATA CANNOT BE RECOVERED!")) {
+      if (confirm("Confirmar a exclusão da linguagem e de todos os dados associados, inclusive as submissões?")) {
+		  if (confirm("Tem certeza? OS DADOS NÃO PODERÃO SER RECUPERADOS!")) {
 			  document.location=url;
 		  } else {
 			  document.location='language.php';
@@ -80,7 +80,7 @@ if (count($lang) == 0) echo "<br><center><b><font color=\"#ff0000\">NO LANGUAGES
 
 ?>
 
-<br><br><center><b>Clicking on a language number will DELETE it.<br>
+<br><br><center><b>Clique no número de uma linguagem para excluí-la.<br>
 WARNING: deleting a language will remove EVERYTHING related to it.<br>
 It is NOT recommended to change anything while the contest is running.<br>
 </b></center>
@@ -89,7 +89,7 @@ It is NOT recommended to change anything while the contest is running.<br>
   <input type=hidden name="confirmation" value="noconfirm" />
   <script language="javascript">
     function conf() {
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
         document.form1.confirmation.value='confirm';
       }
     }

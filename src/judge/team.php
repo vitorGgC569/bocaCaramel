@@ -170,7 +170,7 @@ $strtmp .= "	  </select>\n".
 "  </center>\n".
 "  <script language=\"javascript\">\n".
 "    function conf() {\n".
-"      if (confirm(\"Confirm submission?\")) {\n".
+"      if (confirm(\"Confirmar envio?\")) {\n".
 "        document.form1.confirmation.value='confirm';\n".
 "      }\n".
 "    }\n".

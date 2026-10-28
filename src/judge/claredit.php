@@ -27,7 +27,7 @@ if (isset($_POST["answer"]) && isset($_POST["giveup"]) && $_POST["giveup"]=="Can
 
 	DBClarGiveUp($number, $sitenumber, $_SESSION["usertable"]["contestnumber"], 
 			$_SESSION["usertable"]["usernumber"], $_SESSION["usertable"]["usersitenumber"]);
-	MSGError("Clarification returned.");
+	MSGError("Dúvida devolvida.");
 	ForceLoad("clar.php");
 }
 
@@ -45,7 +45,7 @@ if (isset($_POST["answer"]) && isset($_POST["Submit"]) && ($_POST["Submit"]=="An
 		if (trim($ans)=="") {
 			DBClarGiveUp($number, $sitenumber, $_SESSION["usertable"]["contestnumber"], 
 				$_SESSION["usertable"]["usernumber"], $_SESSION["usertable"]["usersitenumber"]);
-			MSGError("Clarification returned.");
+			MSGError("Dúvida devolvida.");
 		} else {
 			if (isset($_POST["answerall"])) $type='all';
 			else if (isset($_POST["answersite"])) $type='site';
@@ -71,7 +71,7 @@ $clarnumber = myhtmlspecialchars($_GET["clarnumber"]);
 
 if (($a = DBGetClarToAnswer($clarnumber, $clarsitenumber, 
 		$_SESSION["usertable"]["contestnumber"])) === false) {
-	MSGError("Another judge got it first.");
+	MSGError("Outro juiz já selecionou este item.");
 	ForceLoad("clar.php");
 }
 
@@ -136,7 +136,7 @@ if (($a = DBGetClarToAnswer($clarnumber, $clarsitenumber,
   </center>
   <script language="javascript">
     function conf() {
-//      if (confirm("Confirm clarification?")) {
+//      if (confirm("Confirmar envio da dúvida?")) {
         document.form1.confirmation.value='confirm';
 //      }
     }

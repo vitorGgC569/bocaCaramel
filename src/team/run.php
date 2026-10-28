@@ -167,7 +167,7 @@ if (isset($_POST["problem"]) && isset($_POST["language"]) &&
 	  echo "\nRESULT: UNAUTHORIZED COMPUTER";
 	  exit;
 	}
-	MSGError("Could not save computer info");
+	MSGError("Não foi possível salvar as informações do computador");
       }
     }
     

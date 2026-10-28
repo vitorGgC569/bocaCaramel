@@ -104,7 +104,7 @@ function computeHASH()
   </center>
   <script language="javascript">
     function conf() {
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
   	    computeHASH();
         document.form1.confirmation.value='confirm';
       }

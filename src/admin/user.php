@@ -25,7 +25,7 @@ if (isset($_GET["site"]) && isset($_GET["user"]) && is_numeric($_GET["site"]) &&
 if (isset($_POST["usersitenumber"]) && isset($_POST["usernumber"]) && is_numeric($_POST["usersitenumber"]) && 
     is_numeric($_POST["usernumber"]) && isset($_POST["confirmation"]) && $_POST["confirmation"] == "delete") {
 	if (!DBDeleteUser($_SESSION["usertable"]["contestnumber"], $_POST["usersitenumber"], $_POST["usernumber"]))
-		MSGError("User could not be removed.");
+		MSGError("Não foi possível remover o usuário.");
         ForceLoad("user.php");
 }
 
@@ -67,7 +67,7 @@ if (isset($_POST["username"]) && isset($_POST["userfullname"]) && isset($_POST["
 	$passcheck = $_POST["passwordo"];
 	$a = DBUserInfo($_SESSION["usertable"]["contestnumber"], $_SESSION["usertable"]["usersitenumber"], $_SESSION["usertable"]["usernumber"], null, false);
 	if(myhash($a['userpassword'] . session_id()) != $passcheck) {
-		MSGError('Admin password is incorrect');
+		MSGError('A senha de administrador está incorreta');
 	} else {
 		if ($_POST["passwordn1"] == $_POST["passwordn2"]) {
 			$param['pass'] = bighexsub($_POST["passwordn1"],$a['userpassword']);
@@ -97,7 +97,7 @@ else if (isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_FILES["imp
 				$userlist=array();
 				if(strtolower(substr($name,-4))==".tsv") {
 					for ($i=0; $i < count($ar) && strpos($ar[$i], "File_Version\t1") === false; $i++) ;
-					if($i >= count($ar)) MSGError('File format not recognized');
+					if($i >= count($ar)) MSGError('Formato de arquivo não reconhecido');
 					$oklines=0;
 					for ($i++; $i < count($ar); $i++) {
                         $x = explode("\t",trim($ar[$i]));
@@ -162,7 +162,7 @@ else if (isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_FILES["imp
 					MSGError($oklines . ' users included/updated successfully');
 				} else {
 					for ($i=0; $i < count($ar) && strpos($ar[$i], "[user]") === false; $i++) ;
-					if($i >= count($ar)) MSGError('File format not recognized');
+					if($i >= count($ar)) MSGError('Formato de arquivo não reconhecido');
 					for ($i++; $i < count($ar) && $ar[$i][0] != "["; $i++) {
                         $x = trim($ar[$i]);
                         if (strpos($x, "user") !== false && strpos($x, "user") == 0) {
@@ -225,7 +225,7 @@ else
 
   <script language="javascript">
     function conf2(url) {
-      if (confirm("Are you sure?")) {
+      if (confirm("Tem certeza?")) {
         document.location=url;
       } else {
         document.location='user.php';
@@ -315,7 +315,7 @@ function computeHASH()
 }
 </script>
 
-<br><br><center><b>Clicking on a user number will bring the user data for edition.<br>
+<br><br><center><b>Clique no número de um usuário para editar seus dados.<br>
 To import the users, just fill in the import file field.<br>
 The file must be in the format defined in the admin's manual.</b></center>
 
@@ -333,7 +333,7 @@ The file must be in the format defined in the admin's manual.</b></center>
   </center>
   <script language="javascript">
     function conf() {
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
         document.form1.confirmation.value='confirm';
       }
     }
@@ -357,7 +357,7 @@ Note that any changes will overwrite the already defined data.<br>
   <script language="javascript">
     function conf3() {
       computeHASH();
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
         document.form3.confirmation.value='confirm';
       }
     }
@@ -379,19 +379,19 @@ if (isset($u)) {
    <center>
     <table border="0">
       <tr> 
-        <td width="35%" align=right>User Site Number:</td>
+        <td width="35%" align=right>Número do local do usuário:</td>
         <td width="65%">
 	  <input type="text" name="usersitenumber" <?php if(!$main) echo "readonly "; echo "value=\"" . $usite . "\""; ?> size="20" maxlength="20" />
         </td>
       </tr>
       <tr> 
-        <td width="35%" align=right>User Number:</td>
+        <td width="35%" align=right>Número do usuário:</td>
         <td width="65%">
 	  <input type="text" name="usernumber" value="<?php if(isset($u)) echo $u["usernumber"]; ?>" size="20" maxlength="20" />
         </td>
       </tr>
       <tr> 
-        <td width="35%" align=right>Username:</td>
+        <td width="35%" align=right>Usuário:</td>
         <td width="65%">
 	  <input type="text" name="username" value="<?php if(isset($u)) echo $u["username"]; ?>" size="20" maxlength="20" />
         </td>
@@ -436,13 +436,13 @@ if (isset($u)) {
         </td>
       </tr>
       <tr> 
-        <td width="35%" align=right>User Full Name:</td>
+        <td width="35%" align=right>Nome completo do usuário:</td>
         <td width="65%">
 	  <input type="text" name="userfullname" value="<?php if(isset($u)) echo $u["userfullname"]; ?>" size="50" maxlength="200" />
         </td>
       </tr>
       <tr> 
-        <td width="35%" align=right>User Description:</td>
+        <td width="35%" align=right>Descrição do usuário:</td>
         <td width="65%">
 	  <input type="text" name="userdesc" value="<?php if(isset($u)) { 
 if($u['usershortinstitution']!='')
@@ -456,19 +456,19 @@ echo $u["userdesc"]; } ?>" size="50" maxlength="300" />
         </td>
       </tr>
       <tr> 
-        <td width="35%" align=right>User IP:</td>
+        <td width="35%" align=right>IP do usuário:</td>
         <td width="65%">
 	  <input type="text" name="userip" value="<?php if(isset($u)) echo $u["userpermitip"]; ?>" size="20" maxlength="20" />
         </td>
       </tr>
       <tr> 
-        <td width="35%" align=right>Password:</td>
+        <td width="35%" align=right>Senha:</td>
         <td width="65%">
 	  <input type="password" name="passwordn1" value="" size="20" maxlength="200" />
         </td>
       </tr>
       <tr> 
-        <td width="35%" align=right>Retype Password:</td>
+        <td width="35%" align=right>Repita a senha:</td>
         <td width="65%">
 	  <input type="password" name="passwordn2" value="" size="20" maxlength="200" />
         </td>
@@ -483,7 +483,7 @@ echo $u["userdesc"]; } ?>" size="50" maxlength="300" />
         </td>
       </tr>
       <tr> 
-        <td width="35%" align=right>Admin (this user) Password:</td>
+        <td width="35%" align=right>Senha do administrador (seu usuário):</td>
         <td width="65%">
 	  <input type="password" name="passwordo" value="" size="20" maxlength="200" />
         </td>

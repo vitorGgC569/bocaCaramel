@@ -27,14 +27,14 @@ if ($main) {
     $param = array();
     $param['number'] = $_GET["Number"];
     if(($n = DBNewSite($_SESSION["usertable"]["contestnumber"],null,$param)) === false) {
-      MSGError("Error creating site");
+      MSGError("Erro ao criar o local");
       $n = 1;
     }
     ForceLoad("site.php?site=$n");
   }
   if(isset($_GET["new"]) && $_GET["new"]=="1") {
     if(($n = DBNewSite($_SESSION["usertable"]["contestnumber"])) === false) {
-      MSGError("Error creating site");
+      MSGError("Erro ao criar o local");
       $n = 1;
     }      
     ForceLoad("site.php?site=$n");
@@ -72,7 +72,7 @@ if (isset($_POST["Logins"]) && $_POST["Logins"] == "Disable logins") {
 if (isset($_POST["Submit2"]) && $_POST["Submit2"] == "Start Now") {
 	if ($_POST["confirmation"] == "confirm") {
 		if(!DBSiteStartNow ($_SESSION["usertable"]["contestnumber"], $site))
-			MSGError("Site is already running");
+			MSGError("O local já está em funcionamento");
 	}
 	ForceLoad("site.php?site=$site");
 }
@@ -109,7 +109,7 @@ if (isset($_POST["SubmitDB"]) && $_POST["SubmitDB"] == "Delete ALL bkps") {
 if (isset($_POST["Submit3"]) && $_POST["Submit3"] == "Stop Now") {
 	if ($_POST["confirmation"] == "confirm") {
 		if(DBSiteEndNow ($_SESSION["usertable"]["contestnumber"], $site))
-			MSGError("Site has been finished");
+			MSGError("O local foi encerrado");
 	}
 	ForceLoad("site.php?site=$site");
 }
@@ -121,10 +121,10 @@ if (isset($_POST["endat"]) && $_POST["endat"] == "Stop At") {
 	    checkdate($_POST["enddatem"], $_POST["enddated"], $_POST["enddatey"])) {
 		$te = mktime ($_POST["enddateh"], $_POST["enddatemin"], 0, $_POST["enddatem"], $_POST["enddated"], $_POST["enddatey"]);
 		if($te > time())
-			MSGError("Impossible to stop at a future time. Still running");
+			MSGError("Não é possível encerrar em um horário futuro. O local continua ativo");
 		else {
 			if(DBSiteEndNow ($_SESSION["usertable"]["contestnumber"], $site, $te))
-				MSGError("Site has been finished");
+				MSGError("O local foi encerrado");
 		}
 	}
 	ForceLoad("site.php?site=$site");
@@ -193,7 +193,7 @@ if ($main && isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_POST["
 				$userlist=array();
 				if(strtolower(substr($name,-4))==".tsv") {
 					for ($i=0; $i<count($ar) && strpos($ar[$i], "File_Version\t1") === false; $i++) ;
-					if($i >= $count($ar)) MSGError('File format not recognized');
+					if($i >= $count($ar)) MSGError('Formato de arquivo não reconhecido');
 					$oklines=0;
 					for ($i++; $i<count($ar); $i++) {
                         $x = explode("\t",trim($ar[$i]));
@@ -272,7 +272,7 @@ if ($main && isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_POST["
 	  exit;
 					}
 				} else {
-					MSGError('File format not recognized');
+					MSGError('Formato de arquivo não reconhecido');
 				}
         }
         ForceLoad("site.php");
@@ -284,13 +284,13 @@ if ($main && isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_POST["
   <input type=hidden name="confirmation" value="noconfirm" />
   <script language="javascript" type="text/javascript">
     function conf() {
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
         document.form1.confirmation.value='confirm';
       }
     }
     function conf2() {
-      if (confirm("Confirm DELETING EVERYTHING?")) {
-		  if (confirm("This operation has no come back. DATA WILL BE LOST. Confirm?")) {
+      if (confirm("Confirmar a exclusão de todos os dados?")) {
+		  if (confirm("This operation has no come back. DATA WILL BE LOST. Confirmar?")) {
 			  document.form1.confirmation.value='confirm';
 		  }
       }
@@ -439,7 +439,7 @@ echo "):</td>";
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Username of the chief judge (if any):</td>
+        <td width="35%" align=right>Usuário do juiz chefe (se houver):</td>
         <td width="65%">
           <input type="text" name="chiefname" value="<?php echo $st["sitechiefname"]; ?>" size="20" maxlength="20" />
         </td>

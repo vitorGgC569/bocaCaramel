@@ -24,7 +24,7 @@ $runnumber = myhtmlspecialchars($_GET["runnumber"]);
 
 if (($a = DBChiefGetRunToAnswer($runnumber, $runsitenumber, 
 		$_SESSION["usertable"]["contestnumber"])) === false) {
-	MSGError("Another judge got it first.");
+	MSGError("Outro juiz já selecionou este item.");
 	ForceLoad($runphp);
 }
 
@@ -155,7 +155,7 @@ if ($a["timestamp"] < $s["sitelastmileanswer"]) echo "checked"; ?>>
 <!--
   <script language="javascript">
     function conf() {
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
         document.form1.confirmation.value='confirm';
       }
     }

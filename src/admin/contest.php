@@ -110,14 +110,14 @@ if (isset($_POST["Submit3"]) && isset($_POST["penalty"]) && is_numeric($_POST["p
 						continue;
 					}
 					if(substr($key,10,5) != '#####') {
-						MSGError('Invalid key in the file -- not importing any keys');
+						MSGError('Chave inválida no arquivo. Nenhuma chave foi importada');
 						$dd=0;
 						break;
 					}
 					if(isset($param['unlockkey']) && $param['unlockkey'] != '') {
 						$pass=decryptData(substr($key,15),$param['unlockkey'],'includekeys');
 						if(substr($pass,0,5) != '#####') {
-							MSGError('Invalid key in the file -- not importing any keys');
+							MSGError('Chave inválida no arquivo. Nenhuma chave foi importada');
 							$dd=0;
 							break;
 						}
@@ -152,7 +152,7 @@ if (isset($_POST["Submit3"]) && isset($_POST["penalty"]) && is_numeric($_POST["p
   <input type=hidden name="confirmation" value="noconfirm" />
   <script language="javascript">
     function conf() {
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
         document.form1.confirmation.value='confirm';
       }
     }

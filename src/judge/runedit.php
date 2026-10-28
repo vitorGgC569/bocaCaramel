@@ -30,7 +30,7 @@ if (isset($_POST["answer"]) && isset($_POST["giveup"]) && $_POST["giveup"]=="Can
                     $_SESSION["usertable"]["contestnumber"],
 		    $_SESSION["usertable"]["usernumber"],
 		    $_SESSION["usertable"]["usersitenumber"]);
-	MSGError("Run returned.");
+	MSGError("Submissão devolvida.");
 	ForceLoad("run.php");
 }
 
@@ -64,7 +64,7 @@ $runnumber = myhtmlspecialchars($_GET["runnumber"]);
 
 if (($a = DBGetRunToAnswer($runnumber, $runsitenumber, 
 		$_SESSION["usertable"]["contestnumber"])) === false) {
-	MSGError("Another judge got it first.");
+	MSGError("Outro juiz já selecionou este item.");
 	ForceLoad("run.php");
 }
 
@@ -165,7 +165,7 @@ if ($a["timestamp"] < $s["sitelastmileanswer"]) echo "checked"; ?>>
   <br>
   <script language="javascript">
     function conf() {
-//      if (confirm("Confirm?")) {
+//      if (confirm("Confirmar?")) {
         document.form1.confirmation.value='confirm';
 //      }
     }

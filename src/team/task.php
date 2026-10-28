@@ -102,7 +102,7 @@ if (count($task) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUM PEDID
   </center>
   <script language="javascript">
     function conf() {
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
         document.form1.confirmation.value='confirm';
       }
     }

@@ -30,7 +30,7 @@ if (isset($_POST["delete"]) && $_POST["delete"]=="Delete" &&
 
 		if (DBClarDelete($number, $sitenumber, $_SESSION["usertable"]["contestnumber"],
 	                     $_SESSION["usertable"]["usernumber"], $_SESSION["usertable"]["usersitenumber"]))
-			MSGError("Clarification deleted.");
+			MSGError("Dúvida excluída.");
 	}
 	ForceLoad("clar.php");
 }
@@ -43,7 +43,7 @@ if (isset($_POST["answer"]) && isset($_POST["open"]) && $_POST["open"]=="Open th
 	        $number = myhtmlspecialchars($_POST["number"]);
 
 		if (DBChiefClarGiveUp($number, $sitenumber, $_SESSION["usertable"]["contestnumber"]))
-			MSGError("Clarification returned.");
+			MSGError("Dúvida devolvida.");
 		ForceLoad("clar.php");
 	}
 }
@@ -63,7 +63,7 @@ if (isset($_POST["answer"]) && isset($_POST["Submit"]) && $_POST["Submit"]=="Ans
                 if (trim($ans)=="") {
                         DBClarGiveUp($number, $sitenumber, $_SESSION["usertable"]["contestnumber"],
                                 $_SESSION["usertable"]["usernumber"], $_SESSION["usertable"]["usersitenumber"]);
-                        MSGError("Clarification returned.");
+                        MSGError("Dúvida devolvida.");
                 } else {
 		        DBChiefUpdateClar($_SESSION["usertable"]["contestnumber"],
 	                     $_SESSION["usertable"]["usersitenumber"],
@@ -85,7 +85,7 @@ $clarnumber = myhtmlspecialchars($_GET["clarnumber"]);
 
 if (($a = DBChiefGetClarToAnswer($clarnumber, $clarsitenumber, 
 		$_SESSION["usertable"]["contestnumber"])) === false) {
-	MSGError("Another judge got it first.");
+	MSGError("Outro juiz já selecionou este item.");
 	ForceLoad("clar.php");
 }
 
@@ -151,7 +151,7 @@ if (($a = DBChiefGetClarToAnswer($clarnumber, $clarsitenumber,
   </center>
   <script language="javascript">
     function conf() {
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
         document.form1.confirmation.value='confirm';
       }
     }

@@ -44,7 +44,7 @@ if (isset($_GET["done"]) && is_numeric($_GET["done"]) && isset($_GET["site"]) &&
 <br>
   <script language="javascript">
     function conf2(url) {
-//      if (confirm("Confirm?")) {
+//      if (confirm("Confirmar?")) {
         document.location=url;
 //      } else {
 //        document.location='task.php';

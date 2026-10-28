@@ -335,8 +335,8 @@ if(is_writable($webcastdir)) {
 	@file_put_contents($webcastdir . $ds . 'time',$timefile,LOCK_EX);
 	@file_put_contents($webcastdir . $ds . 'icpc',$icpcfile,LOCK_EX);
 	if(@create_zip($webcastdir,array('.'),$webcastdir . ".zip") != 1) {
-		LOGError("Cannot create score webcast.zip file");
-		MSGError("Cannot create score webcast.zip file");
+		LOGError("Não foi possível criar o arquivo webcast.zip do placar");
+		MSGError("Não foi possível criar o arquivo webcast.zip do placar");
 	} else {
 	  echo file_get_contents($webcastdir . ".zip");
 	  //sleep(30);
@@ -345,8 +345,8 @@ if(is_writable($webcastdir)) {
 	  exit;
 	}
 } else {
-	LOGError('Error creating the folder for the ZIP file: '. $webcastdir);
-	MSGError('Error creating the folder for the ZIP file: '.$webcastdir);
+	LOGError('Erro ao criar a pasta do arquivo ZIP: '. $webcastdir);
+	MSGError('Erro ao criar a pasta do arquivo ZIP: '.$webcastdir);
 	ForceLoad("../index.php");
 }
 ?>

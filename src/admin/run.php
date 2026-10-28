@@ -175,13 +175,13 @@ else {
   <br>
   <script language="javascript">
     function conf() {
-      if (confirm("Confirm?")) {
+      if (confirm("Confirmar?")) {
         document.form1.confirmation.value='confirm';
       }
     }
   </script>
   <center>
-<b>Click on the number of a run to edit it or select them with<br />the checkboxes and use the buttons to work on multiple runs:</b><br /><br />
+<b>Clique no número de uma submissão para editá-la ou selecione várias<br />pelas caixas de seleção e use os botões para processá-las:</b><br /><br />
       <input type="submit" name="auto" value="Re-run autojudge for selected runs" onClick="conf()">
       <input type="submit" name="open" value="Open selected runs for rejudging" onClick="conf()">
 <br><br>

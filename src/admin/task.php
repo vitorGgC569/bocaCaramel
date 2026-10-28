@@ -59,7 +59,7 @@ if (isset($_GET["done"]) && is_numeric($_GET["done"]) && isset($_GET["site"]) &&
 <br>
   <script language="javascript">
     function conf2(url) {
-//      if (confirm("Confirm?")) {
+//      if (confirm("Confirmar?")) {
         document.location=url;
 //      } else {
 //        document.location='task.php';
@@ -70,7 +70,7 @@ if (isset($_GET["done"]) && is_numeric($_GET["done"]) && isset($_GET["site"]) &&
  <tr>
   <td><b><a href="task.php?order=task">Task #</a></b></td>
   <td><b>Tempo</b></td>
-  <td><b><a href="task.php?order=user">User / Site</a></b></td>
+  <td><b><a href="task.php?order=user">Usuário / local</a></b></td>
   <td><b><a href="task.php?order=description">Description</a></b></td>
   <td><b>Arquivo</b></td>
   <td><b><a href="task.php?order=staff">Staff / Site</a></b></td>
