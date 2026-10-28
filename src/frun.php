@@ -105,14 +105,14 @@ function DBUpdateRunC($contest, $usersite, $usernumber, $runsite, $runnumber, $a
 				  "DBUpdateRunC(get answer)");
 	if ($a == null) {
 		DBExec($c, "rollback work", "DBUpdateRunC(rollback)");
-		MSGError("Problem with the answer table. Contact an admin now!");
+		MSGError("Problema na tabela de respostas. Contate a administração.");
 		LogLevel("Unable to judge a run because the answer was not found (run=$runnumber, site=$runsite, ".
 				 "contest=$contest, answer=$answer).",0);
 		return false;
 	}
 	if ($a["fake"] == 't') {
 		DBExec($c, "rollback work", "DBUpdateRunC(rollback)");
-		MSGError("You must choose a valid answer.");
+		MSGError("Selecione uma resposta válida.");
 		LogLevel("Unable to judge a run because of the fake answer (run=$runnumber, site=$runsite, ".
 				 "contest=$contest, answer=$answer).",0);
 		return false;
@@ -138,7 +138,7 @@ function DBUpdateRunC($contest, $usersite, $usernumber, $runsite, $runnumber, $a
 			DBExec($c, "rollback work", "DBUpdateRunC(rollback)");
 			LogLevel("Unable to judge a run (maybe it was already judged or catched by a chief) " .
 					 "(run=$runnumber, site=$runsite, contest=$contest).",2);
-			MSGError("Unable to judge the run (maybe it was already judged or catched by a chief)");
+			MSGError("Não foi possível julgar a submissão; ela pode já ter sido julgada ou reservada pelo juiz chefe.");
 		}
 		return false;
 	}
@@ -740,7 +740,7 @@ function DBNewRun($param,$c=null,$allowinsert=true) {
 	if (DBnlines($r) != 1) {
 		DBExec($c, "rollback work", "DBNewRun(rollback-site)");
 		LOGError("Unable to find a unique site/contest in the database. SQL=(" . $sql . ")");
-		MSGError("Unable to find a unique site/contest in the database.");
+		MSGError("Não foi possível identificar o local e a competição no banco de dados.");
 		return false;
 	}
 	$a = DBRow($r,0);
@@ -785,13 +785,13 @@ function DBNewRun($param,$c=null,$allowinsert=true) {
 		if ($dif < 0) { if(!isset($param['allowneg'])) {
 			DBExec($c, "rollback work", "DBNewRun(rollback-started)");
 			LOGError("Tried to submit a run but the contest is not started. SQL=(" . $sql . ")");
-			MSGError("The contest is not started yet!");
+			MSGError("A competição ainda não começou!");
 			return 0;
 		} }
 		if (!$b["siterunning"]) {
 			DBExec($c, "rollback work", "DBNewRun(rollback-over)");
 			LOGError("Tried to submit a run but the contest is over. SQL=(" . $sql . ")");
-			MSGError("The contest is over!");
+			MSGError("A competição terminou!");
 			return 0;
 		}
 	} else {
@@ -802,7 +802,7 @@ function DBNewRun($param,$c=null,$allowinsert=true) {
 	    if ($dif >= $b['siteduration']) {
 	    DBExec($c, "rollback work", "DBNewRun(rollback-over)");
 	    LOGError("Tried to submit a run but the contest is over. SQL=(" . $sql . ")");
-	    MSGError("The contest is over!");
+	    MSGError("A competição terminou!");
 	    return 0;
 	    }
 	  */

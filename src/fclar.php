@@ -146,7 +146,7 @@ function DBUpdateClarC($contest, $usersite, $usernumber, $clarsite, $clarnumber,
 		DBExec($c, "rollback work", "DBUpdateClarC(rollback)");
 		LogLevel("Unable to answer a clar (maybe it was already answered or catched by a chief) " .
 			"(clar=$clarnumber, site=$clarsite, contest=$contest).",0);
-		MSGError("Unable to answer the clarification (maybe it was already answered or catched by a chief)");
+		MSGError("Não foi possível responder à dúvida; ela pode já ter sido respondida ou reservada pelo juiz chefe.");
 		return false;
 	}
 
@@ -175,13 +175,13 @@ function DBUpdateClarC($contest, $usersite, $usernumber, $clarsite, $clarnumber,
 	      } else {
 		DBExec($c, "rollback work", "DBUpdateClarC(rollback promoted)");
 		LOGError("CLAR number $clarnumber site $clarsite contest $contest should be promoted (delete)");
-		MSGError("Clarification not update (error promoting it for answer all)");
+		MSGError("Não foi possível atualizar a dúvida para responder a todos.");
 		return false;
 	      }
 	    } else {
 	      DBExec($c, "rollback work", "DBUpdateClarC(rollback promoted2)");
 	      LOGError("CLAR number $clarnumber site $clarsite contest $contest should be promoted (insert)");
-	      MSGError("Clarification not update (error2 promoting it for answer all)");
+	      MSGError("Não foi possível atualizar a dúvida para responder a todos (erro 2).");
 	      return false;
 	    }
 	} else 
@@ -324,7 +324,7 @@ function DBNewClar($param,$c=null,$allowupdate=true) {
 		if (DBnlines($r) != 1) {
 			DBExec($c, "rollback work", "DBNewClar(rollback-site)");
 			LOGError("Unable to find a unique site/contest in the database. SQL=(" . $sql . ")");
-			MSGError("Unable to find a unique site/contest in the database. Contact an admin now!");
+			MSGError("Não foi possível identificar o local e a competição no banco de dados. Contate a administração.");
 			exit;
 		}
 		$a = DBRow($r,0);
@@ -358,13 +358,13 @@ function DBNewClar($param,$c=null,$allowupdate=true) {
 		if ($dif < 0) {
 			DBExec($c, "rollback work", "DBNewClar(rollback-started)");
 			LOGError("Tried to submit a clarification but the contest is not started. SQL=(" . $sql . ")");
-			MSGError("The contest is not started yet!");
+			MSGError("A competição ainda não começou!");
 			return false;
 		}
 		if (!$b["siterunning"]) {
 			DBExec($c, "rollback work", "DBNewClar(rollback-over)");
 			LOGError("Tried to submit a clarification but the contest is over. SQL=(" . $sql . ")");
-			MSGError("The contest is over!");
+			MSGError("A competição terminou!");
 			return false;
 		}
 	} else {

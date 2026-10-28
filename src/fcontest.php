@@ -213,7 +213,7 @@ function DBAllUserNames($contest,$site=-1) {
 	$n = DBnlines($r);
 	if ($n == 0) {
 		LOGError("Unable to find users in the database. SQL=(" . $sql . ")");
-		MSGError("Unable to find users in the database!");
+		MSGError("Não foi possível localizar usuários no banco de dados!");
 	}
 
 	$a = array();
@@ -232,7 +232,7 @@ function DBAllUserInfo($contest,$site=-1) {
 	$n = DBnlines($r);
 	if ($n == 0) {
 		LOGError("Unable to find users in the database. SQL=(" . $sql . ")");
-		MSGError("Unable to find users in the database!");
+		MSGError("Não foi possível localizar usuários no banco de dados!");
 	}
 
 	$a = array();
@@ -254,7 +254,7 @@ function DBAllSiteTime($contest, $site) {
 	$n = DBnlines($r);
 	if ($n == 0) {
 		LOGError("Unable to find Site times in the database. SQL=(" . $sql . ")");
-		MSGError("Unable to find site times in the database!");
+		MSGError("Não foi possível localizar os horários do local no banco de dados!");
 	}
 
 	$a = array();
@@ -270,7 +270,7 @@ function DBUserInfo($contest, $site, $user, $c=null,$hashpass=true) {
 	$a = DBGetRow ($sql, 0, $c);
 	if ($a == null) {
 		LOGError("Unable to find the user in the database. SQL=(" . $sql . ")");
-		MSGError("Unable to find the user in the database. Contact an admin now!");
+		MSGError("Não foi possível localizar o usuário no banco de dados. Contate a administração.");
 	}
 	$a['changepassword']=true;
 	if(substr($a['userpassword'],0,1)=='!') {
@@ -353,7 +353,7 @@ function DBSiteInfo($contest, $site, $c=null, $msg=true) {
 	if(DBnLines($r) < 1) {
 	  if($msg) {
 		LOGError("Unable to find the site in the database (site=$site, contest=$contest). SQL=(" . $sql . ")");
-		MSGError("Unable to find the site in the database. Contact an admin now!");
+		MSGError("Não foi possível localizar o local no banco de dados. Contate a administração.");
           } else return null;
 	}
 	$a = DBRow($r, 0);
@@ -404,7 +404,7 @@ function DBAllSiteInfo($contest, $c=null) {
 	$n = DBnlines($r);
 	if ($n == 0) {
 		LOGError("Unable to find sites in the database. SQL=(" . $sql . ")");
-		MSGError("Unable to find sites in the database!");
+		MSGError("Não foi possível localizar locais no banco de dados!");
 	}
 	$a = array();
 	for ($i=0;$i<$n;$i++) {
@@ -419,7 +419,7 @@ function DBAllContestInfo() {
 	$n = DBnlines($r);
 	if ($n == 0) {
 		LOGError("Unable to find contests in the database. SQL=(" . $sql . ")");
-		MSGError("Unable to find contests in the database!");
+		MSGError("Não foi possível localizar competições no banco de dados!");
 	}
 	$a = array();
 	for ($i=0;$i<$n;$i++) {
@@ -442,7 +442,7 @@ function DBGetActiveContest() {
        $a = DBGetRow ($sql, 0);
        if ($a == null) {
                LOGError("Unable to find active contests in the database. SQL=(" . $sql . ")");
-               MSGError("Unable to find active contests in the database.");
+               MSGError("Não foi possível localizar competições ativas no banco de dados.");
        }
        return $a;
 }
@@ -474,7 +474,7 @@ function DBSiteEndNow ($contest, $site, $w=0) {
 			"runsitenumber=$site and not runstatus ~ 'deleted'", 0);
 	if($a["t"] >= $t) {
 		LOGLevel("Unable to stop a contest before an existing run",2);
-		MSGError("Impossible to stop a contest before an existing run");
+		MSGError("Não é possível encerrar a competição antes de uma submissão existente");
 		DBExec($c, "commit work");
 		return false;
 	}
@@ -841,7 +841,7 @@ function DBUpdateContest ($param, $c=null) {
 	if ($active == 1) {
 		if (getenv('SEMINFO_PROFILE') && PHP_SAPI !== 'cli') {
 			if ($cw) DBExec($c, "rollback work");
-			MSGError('SEMINFO: use manage.py activate; configuracao e ensaios precisam ser confirmados.');
+			MSGError('SEMINFO: use manage.py activate; a configuração e os ensaios precisam ser confirmados.');
 			return false;
 		}
 		$ret=2;
