@@ -193,7 +193,11 @@ if ($main && isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_POST["
 				$userlist=array();
 				if(strtolower(substr($name,-4))==".tsv") {
 					for ($i=0; $i<count($ar) && strpos($ar[$i], "File_Version\t1") === false; $i++) ;
-					if($i >= $count($ar)) MSGError('Formato de arquivo não reconhecido');
+					if($i >= count($ar)) {
+						MSGError('Formato de arquivo não reconhecido');
+						ForceLoad('site.php');
+						exit;
+					}
 					$oklines=0;
 					for ($i++; $i<count($ar); $i++) {
                         $x = explode("\t",trim($ar[$i]));
@@ -253,7 +257,10 @@ if ($main && isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_POST["
 						}
 					}
 						MSGError($oklines . ' sede(s) incluída(s) ou atualizada(s) com sucesso.');
-					if(count($userlist) > 0) {
+                } else {
+					MSGError('Formato de arquivo não reconhecido');
+				}
+				if(count($userlist) > 0) {
 ?>
 <center>
 <br><u><b>ANOTE OS USUÁRIOS E AS SENHAS E MANTENHA-OS EM SIGILO</b></u><br><br>
@@ -270,9 +277,6 @@ if ($main && isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_POST["
 </table><br><br><u><b>ANOTE OS USUÁRIOS E AS SENHAS E MANTENHA-OS EM SIGILO</b></u></center></body></html>
 <?php
 	  exit;
-					}
-				} else {
-					MSGError('Formato de arquivo não reconhecido');
 				}
         }
         ForceLoad("site.php");

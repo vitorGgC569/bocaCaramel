@@ -496,6 +496,24 @@ def main(profile="si"):
                 payload=urllib.parse.urlencode({button['name']:button['value'],f'cbox_{runnumber}_1':'1','confirmation':'confirm'}).encode()
                 result=client.open(urllib.request.Request(base+'admin/run.php',payload),timeout=30).read().decode('utf-8')
                 assert 'submissão(ões) enviada(s) novamente ao julgamento automático.' in result
+                # Import sites only in this disposable database. Invalid TSV must
+                # fail cleanly; both supported formats must reveal the password
+                # actually stored for the generated site connection account.
+                for filename,content,site in [('invalido.tsv',b'cabecalho invalido\n',None),
+                                              ('sedes.tsv',b'File_Version\t1\n91\tSede sintetica TSV\n',91),
+                                              ('sedes.tab',b'92\tx\tSede sintetica TAB\tx\tx\tx\tx\tx\n',92)]:
+                    payload,kind=multipart({'Submit':'Import','confirmation':'confirm'}, {'importfile':(filename,content)})
+                    page=client.open(urllib.request.Request(base+'admin/site.php',payload,{'Content-Type':kind}),timeout=30).read().decode('utf-8')
+                    assert 'Fatal error' not in page and 'Warning:' not in page,filename
+                    if site is None:
+                        assert 'Formato de arquivo não reconhecido' in page
+                        continue
+                    match=re.search(r'<tr><td>site'+str(site)+r'</td><td>([^<]+)</td></tr>',page)
+                    assert match and 'ANOTE OS USUÁRIOS E AS SENHAS' in page,filename
+                    stored=detail_sql(f"SELECT userpassword FROM usertable WHERE contestnumber=1 AND usersitenumber=1 AND username='site{site}'")
+                    assert stored.lstrip('!')==hashlib.sha256(match.group(1).encode()).hexdigest(),filename
+                    assert detail_sql(f'SELECT count(*) FROM sitetable WHERE contestnumber=1 AND sitenumber={site}')=='1'
+                print('Importação de sedes: TSV inválido e credenciais de TSV/TAB OK',flush=True)
                 print('Relatório apresenta resultados em português: OK',flush=True)
                 print('Submissões e resultados visíveis para a equipe: OK',flush=True)
                 report={'passed':True,'profile':profile,'synthetic_environment':True,
