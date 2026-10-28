@@ -1,6 +1,6 @@
 # Guia visual SEMINFO 2026
 
-Caramel Contest | IF Goiano - Campus Urutaí | Evento: 29/10/2026 | Edição: 18/10/2026.
+Caramel Contest | IF Goiano - Campus Urutaí | Evento: 29/10/2026 | Texto revisado em 28/10/2026.
 
 ## 1. Comece aqui: atalhos, categoria e abas
 
@@ -20,7 +20,7 @@ Caramel Contest | IF Goiano - Campus Urutaí | Evento: 29/10/2026 | Edição: 18
 
 **Mapa:** BOCA: p. 12. Instalação pela TI: p. 13. Pendrives: p. 14. Falhas: p. 15.
 
-*Capturas atuais da central/BOCA em 18/10. A tela do cliente tem legenda de ensaio virtual. Valores pendentes ainda precisam ser definidos. Nenhuma senha foi fotografada.*
+*Capturas de 18/10; textos revisados em 28/10. A tela do cliente é de ensaio virtual. As imagens não contêm senhas.*
 
 ## 2. Preparação da sala: kit e rede
 
@@ -60,35 +60,31 @@ Caramel Contest | IF Goiano - Campus Urutaí | Evento: 29/10/2026 | Edição: 18
 
 **Caminho:** Prova e questões → Abrir BOCA de preparação → aguardar “BOCA pronto” → Criar pacote de questão. Se aparecer login, entre como admin; o editor será aberto.
 
-![Tela 04 - criador nativo](recursos/telas-2026-10-18/recortes/04-criador.png)
-
-| Campo do BOCA | O que escolher |
+| Campo ou botão | O que informar / fazer |
 |---|---|
-| Problem Fullname | Título da questão. |
-| Problem Basename | Nome esperado da classe Java com main; por exemplo A ou Main. Sem extensão. |
-| Description file | Enunciado em PDF ou TXT. |
-| Problem input file | Arquivo com os casos de entrada. |
-| Problem correct output file | Arquivo com as saídas corretas para essas entradas. |
-| Timelimit (in sec) | Limite em segundos inteiros. A opção após vírgula é o número de repetições; use só se planejado pela banca. |
-| Send / Clear | Send gera e baixa o ZIP. Clear limpa o formulário antes do envio. |
+| Nome completo | Título da questão. |
+| Basename / arquivo esperado | Nome da classe Java; por exemplo, A para A.java. |
+| Tempo / Repetições | Limite em segundos e número de execuções. Confira os limites com a banca. |
+| Memória e saída / Linguagens | Informe os limites e selecione as linguagens permitidas. |
+| Enunciado | Escolha o template LaTeX, um arquivo pronto ou texto manual. No template, preencha título, descrição, entrada, saída e observações. |
+| Casos de teste | Informe entrada e saída esperada para cada caso. Os públicos aparecem no PDF; os opacos ficam apenas no pacote de julgamento. Use Adicionar caso para incluir outros. |
+| Pré-visualizar PDF / Gerar ZIP | Confira o enunciado e gere o pacote. Limpar restaura o formulário. |
 
-**Depois:** guarde o ZIP e importe-o conforme a próxima página. Para pacotes com vários casos separados, use os ZIPs BOCA preparados pela responsável pelas questões. Criar o ZIP não o cadastra automaticamente na prova.
+**Depois:** guarde o ZIP e importe-o conforme a próxima página. Gerar o ZIP não cadastra a questão automaticamente na prova.
 
 ## 5. Importar ou editar as questões
 
 **Caminho:** Prova e questões → Importar ZIP ou editar questões. Use os pacotes SI no SI e os pacotes TII no TII.
 
-![Tela 05 - importação e edição](recursos/telas-2026-10-18/recortes/05-importacao.png)
-
 | Campo ou botão | O que informar / fazer |
 |---|---|
-| Number | Número da questão: 1, 2, 3… Mantenha a sequência. O registro 0 (fake) é interno; não é uma questão da prova. |
-| Short Name | Letra curta, sem espaços: A, B, C… |
-| Problem package (ZIP) | ZIP completo recebido da Cristiane ou criado na página anterior. |
-| Color name / Color (RGB HTML format) | Nome da cor e código hexadecimal correspondente. |
-| Autojudge Setting | Everything automatiza os resultados marcados; Custom permite escolher; None deixa o julgamento para revisão manual. Defina com a banca. |
-| Send / Clear / Build | Send importa; Clear limpa os campos; Build abre o criador de ZIP. |
-| Linha da questão | Confira título, Basename, enunciado, pacote e cor. Para trocar enunciado/casos/limites, reimporte o ZIP usando o mesmo Number. |
+| Número | Número da questão: 1, 2, 3… Mantenha a sequência. O registro 0 é interno e não é uma questão da prova. |
+| Nome curto | Letra sem espaços: A, B, C… |
+| Pacote da questão (ZIP) | ZIP recebido da organização ou gerado no Builder. |
+| Nome da cor / Cor | Nome e código RGB hexadecimal. |
+| Julgamento automático | Selecione Todas as respostas, Personalizado ou Nenhuma. Na edição de uma questão existente, as opções podem aparecer como Everything, Custom e None. |
+| Enviar / Limpar | Enviar importa o pacote; Limpar restaura os campos. |
+| Linha da questão | Confira título, nome do arquivo, enunciado, pacote e cor. Para trocar enunciado, casos ou limites, reimporte o ZIP usando o mesmo número. |
 
 **Atenção ao clique no número da questão:** ele inicia a exclusão; não serve para abrir o editor. Não altere uma prova em andamento. Depois de importar, volte à central e atualize o diagnóstico.
 
@@ -194,20 +190,17 @@ Caramel Contest | IF Goiano - Campus Urutaí | Evento: 29/10/2026 | Edição: 18
 
 ## 12. BOCA: para que serve cada seção
 
-![Tela 12 - menu e fila do BOCA](recursos/telas-2026-10-18/recortes/13-boca-menu.png)
-
 | Seção | Uso na rotina |
 |---|---|
-| Runs | Submissões: Run #, equipe (User), instante (Time), questão (Problem), linguagem, Status, juiz e Answer. Clique no cabeçalho para ordenar. |
-| Score | Placar oficial desta categoria; conferir antes de publicar ou revelar. |
-| Clarifications | Dúvidas e respostas sobre questões. Siga a regra da coordenação para respostas públicas. |
-| Users | Contas, nomes e controles das equipes. A entrega normal de senhas é pela central reservada. |
-| Problems / Languages | Questões/pacotes e linguagens. Cadastre e valide antes da prova. |
-| Answers | Tipos de resultado usados pelo juiz. O kit já os prepara; não alterar durante a prova. |
-| Tasks / Site | Solicitações operacionais e configuração do site. Reservadas à banca/TI. |
-| Contest / Misc | Parâmetros e ações administrativas. Defina tempos e ative pela Central SEMINFO. |
-| Logs / Reports / Backups | Auditoria, relatórios e arquivos do BOCA. Para recuperação completa, use Backup e recuperação da central. |
-| Options / Logout | Preferências do usuário e saída da conta. Não feche a sessão Windows da organização durante a prova. |
+| Submissões | Confira número, equipe, tempo, questão, linguagem, estado, juiz e resposta. Clique no cabeçalho para ordenar. |
+| Placar / Dúvidas | Consulte a classificação e responda às dúvidas conforme as regras da coordenação. |
+| Usuários | Gerencie contas e dados das equipes. Entregue senhas pela central reservada. |
+| Questões / Criar questão / Linguagens | Importe ou crie pacotes e confira as linguagens antes da prova. |
+| Respostas | Tipos de resultado usados pelo juiz; não altere durante a prova. |
+| Impressão / Local | Pedidos operacionais e configuração da sede, para a banca e TI. |
+| Competição / Diversos | Parâmetros e ações administrativas. Defina tempos e ative pela Central SEMINFO. |
+| Registros / Relatórios / Backups | Auditoria e arquivos do BOCA. Para recuperação completa, use Backup e recuperação da central. |
+| Opções / Sair | Preferências e saída da conta. Não feche a sessão Windows da organização durante a prova. |
 
 **Resultados:** YES/AC = aceito; WA = resposta errada; CE = erro de compilação; RE = erro de execução; TLE = tempo excedido; PE = apresentação; NMI = nome/classe divergente; CS = contatar a banca. O AutoJudge definido no pacote determina os resultados automatizados.
 
@@ -243,10 +236,12 @@ python seminfo/manage.py stage si
 
 **Necessário:** PC amd64, 8 GB de RAM ou mais, boot USB e modo Secure Boot homologado pela TI; pendrive de 32 GB ou mais. Separe dez mídias de equipe e uma reserva por sala.
 
-| Sala | ISO atual dentro de seminfo/dist/clients |
+| Sala | ISO atualizada em seminfo/dist/clients-refresh-20261028 |
 |---|---|
-| SI / Lab 3 | si/ml-seminfo-lab3-si.iso e seu .iso.sha256 |
-| TII / Lab 4 | tii/ml-seminfo-lab4-tii.iso e seu .iso.sha256 |
+| SI / Lab 3 | si/ml-seminfo-lab3-si-atualizada.iso |
+| TII / Lab 4 | tii/ml-seminfo-lab4-tii-atualizada.iso |
+
+Confira o .iso.sha256 correspondente. As imagens estão no kit local, não no Git; o link antigo é de outra versão. O teste de boot físico ainda está pendente.
 
 **Em Linux, pela TI:** identifique modelo, série e dispositivo físico antes de gravar. A gravação apaga o USB escolhido; `/dev/sdX` é apenas um marcador a substituir pelo dispositivo conferido.
 
@@ -263,7 +258,7 @@ sudo bash seminfo/client/write-usb.sh --device /dev/sdX /caminho/ISO-DA-SALA.iso
 5. Só então grave as demais mídias a partir da ISO limpa. Não clone a /home de um USB já usado: cada dispositivo precisa de identidade própria.
 6. Etiquete SI-01…SI-10, SI-RESERVA, TII-01…TII-10 e TII-RESERVA; preencha `inventario-pendrives.csv`.
 
-**Fundo:** Claro ou Espresso é sorteado uma vez a cada boot; permanece durante a sessão. Após reiniciar, pode repetir a mesma imagem. Os trabalhos persistem em /home; não há persistência geral do sistema.
+**Fundo:** a ISO atualizada usa Espresso para SI e Claro para TII, de forma fixa. Os trabalhos persistem em /home; não há persistência geral do sistema.
 
 ## 15. Resolver falhas e encerrar com segurança
 
@@ -278,9 +273,9 @@ sudo bash seminfo/client/write-usb.sh --device /dev/sdX /caminho/ISO-DA-SALA.iso
 | Código recusado ou equipe sem acesso | Confira sala, IP, dispositivo e código atual. Reabra o pedido após reinício/troca. Não libere internet para contornar. |
 | Referência reprovada | Abra detalhes; revise código, classe Java, saídas, limites e pacote; reenvie o conjunto completo. |
 | USB não preserva arquivo | Não distribua. Refazer gravação/persistência e repetir o desligamento no hardware real. |
-| Placar divergente/indisponível | Use Score do BOCA da categoria. A outra sala não deve depender desta falha. |
+| Placar divergente/indisponível | Use o Placar do BOCA da categoria. A outra sala não deve depender desta falha. |
 | Falha durante cópia/restauração | Chame a TI com a mensagem e a categoria. Não trate operação interrompida como concluída nem restaure sobre prova ocupada. |
 
-**No fim:** concluir julgamentos/rejulgamentos → conferir Score → publicar por categoria → revelar, se planejado → criar backup conferido → copiar para outra mídia → registrar ocorrências.
+**No fim:** concluir julgamentos/rejulgamentos → conferir o Placar → publicar por categoria → revelar, se planejado → criar backup conferido → copiar para outra mídia → registrar ocorrências.
 
 **Arquivos de apoio:** `dados-evento.csv`, `ocorrencias.csv`, `inventario-pendrives.csv` e a ficha de homologação. IPs, tempos, questões e ensaios presenciais ainda pendentes devem ser concluídos pela organização. Este manual não concede aprovação.

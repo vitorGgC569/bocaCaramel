@@ -4,6 +4,8 @@
 - **output/pdf/roteiro-banca.pdf:** rotina da banca, 3 páginas, para deixar junto à mesa.
 - **output/pdf/ficha-homologacao.pdf:** formulário de impressão por sala, 2 páginas. Nenhum ensaio vem aprovado.
 
+O texto do manual foi atualizado em 28/10 para os rótulos atuais do Builder e do BOCA. O roteiro rápido ainda menciona alguns rótulos antigos em inglês; para os nomes atuais, consulte o manual atualizado. As capturas remanescentes são históricas, de 18/10, e podem diferir da interface.
+
 As fontes editáveis são `manual-if.md`, `roteiro-banca.md` e `ficha-homologacao.md`. Os arquivos HTML permitem consultar as mesmas instruções no navegador com as imagens locais.
 
 ## Capturas
