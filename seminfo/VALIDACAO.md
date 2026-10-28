@@ -51,6 +51,8 @@ Após a revisão das instruções de importação, envio e julgamento, o ensaio 
 
 Foi corrigida a verificação HTTP usada antes da ativação: ela identifica o formulário de acesso do BOCA por campos estáveis, sem depender do texto antigo em inglês. O ensaio TII confirmou a página real traduzida; o teste isolado de rede confirmou a verificação através do gate, além de autorização TLS, revogação e separação das bancas. Passaram 57 testes de unidade e o fluxo de criação e julgamento com YES e WA.
 
+O ensaio `seminfo/tests/contest_setup.py` foi ampliado e passou em SI e TII pela sequência `manage.activate`: serviços saudáveis, compiladores, quatro referências aprovadas para a questão editada, revisão, verificação HTTP e ativação do BOCA descartável. Em seguida, ambas as categorias receberam soluções YES e WA. A rede, o horário e os registros de homologação usados nessa etapa são sintéticos e ficam somente em diretório temporário; a URL do probe é direcionada à porta descartável e a configuração temporal do BOCA de ensaio permite submissões imediatas. Esses registros não comprovam os testes físicos nem substituem a configuração real.
+
 Essas evidências não homologam as salas físicas. Os seis ensaios a seguir devem ser realizados presencialmente em cada laboratório; não registre atestados sem executá-los.
 
 ## Uma ficha presencial por laboratório

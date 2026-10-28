@@ -51,7 +51,7 @@ def login(base,username,password,role,contest=None):
     response=client.open(base+'index.php?'+urllib.parse.urlencode({'name':username,'password':hashed,**extra})).read().decode()
     if f"{role}/index.php" not in response:raise AssertionError('Login HTTP falhou: '+role)
     page=client.open(base+role+'/index.php').read().decode()
-    if 'Fatal error' in page or 'Session expired' in page:raise AssertionError('Sessao HTTP invalida: '+role)
+    if any(message in page for message in ('Fatal error','Session expired','A sessão expirou')):raise AssertionError('Sessão HTTP inválida: '+role)
     return client
 
 

@@ -66,7 +66,9 @@ def main(profile="si"):
             return raw_run([target(a) for a in args],**kwargs)
         raw_run(['docker','network','create',network])
         try:
-            raw_run(['docker','run','-d','--name',names['db'],'--network',network,'--network-alias','boca-db','--env-file',env,lock['images']['db']['reference']])
+            raw_run(['docker','run','-d','--name',names['db'],'--network',network,'--network-alias','boca-db',
+                     '--health-cmd','pg_isready -U postgres','--health-interval','2s','--health-retries','20',
+                     '--env-file',env,lock['images']['db']['reference']])
             kit.wait_database(names['db'])
             raw_run(['docker','run','-d','--name',names['web'],'--network',network,'--env-file',env,
                      '-e','BOCA_DB_HOST=boca-db','-e','BOCA_DB_SUPER_USER=postgres','-p','127.0.0.1::80',
@@ -188,7 +190,50 @@ def main(profile="si"):
                     assert set(manifest['reference_files_sha256'])=={'1/sources.json','1/validation.json'}
                     checked=json.loads((backup/'restore-verified.json').read_text())
                     assert checked['reference_files_sha256']==manifest['reference_files_sha256']
-                assert control(profile,'activate')['ok']
+                # Restore a valid reference set for the edited synthetic package.
+                synthetic_sources={
+                    'Main.c':'#include <stdio.h>\nint main(){puts("99");}\n',
+                    'Main.cpp':'#include <iostream>\nint main(){std::cout << 99 << "\\n";}\n',
+                    'A.java':'public class A {public static void main(String[] args){System.out.println(99);}}\n',
+                    'Main.py3':'print(99)\n',
+                }
+                refs99=[{'name':name,'content':base64.b64encode(code.encode()).decode()} for name,code in synthetic_sources.items()]
+                approved=problems.validate(profile,{'problem':1,'revision':changed['revision'],'sources':refs99})
+                assert approved['passed'] and approved['complete'],approved['results']
+                reviewed=problems.assert_reviewable(profile)
+                raw_run(['docker','run','-d','--privileged','--name',names['jail'],
+                         '--network',network,'--network-alias','boca-jail','--env-file',env,
+                         '-e','BOCA_DB_HOST=boca-db','-e','BOCA_JAIL_HOST=boca-jail',
+                         lock['images']['jail']['reference']])
+                mapping[f'boca-{profile}-boca-jail-1']=names['jail']
+                for _ in range(90):
+                    if all(kit.inspect(names[k])['State'].get('Health',{}).get('Status')=='healthy' for k in ('db','web','jail')):break
+                    time.sleep(1)
+                else:raise RuntimeError('Serviços isolados não ficaram saudáveis')
+                # These attestations exist solely under the temporary test directory.
+                # They simulate the physical prerequisites; they do not homologate a lab.
+                synthetic_cfg=json.loads((local/profile/'lab.json').read_text(encoding='utf-8'))
+                synthetic_cfg.update(server_ip='192.0.2.2',subnet='192.0.2.0/24',
+                                     timing_confirmed=True,duration_minutes=120,
+                                     freeze_minutes_before_end=0,stop_answering_minutes_before_end=0)
+                records={key:{'config_sha256':kit.config_hash(synthetic_cfg),
+                              'server_source_sha256':kit.source_hash(),
+                              'client_source_sha256':kit.client_source_hash(),
+                              'operator':'ensaio isolado'} for key in kit.CHECKS}
+                records['problems_reviewed']['problems_sha256']=reviewed
+                kit.write_json(local/profile/'attestations.json',records)
+                port=kit.inspect(names['web'])['NetworkSettings']['Ports']['80/tcp'][0]['HostPort']
+                base=f'http://127.0.0.1:{port}/boca/'
+                class ActivationProbeOpener:
+                    def open(self,url,timeout):
+                        assert url=='http://192.0.2.2:8000/boca/'
+                        return real_opener.open(base,timeout=timeout)
+                with patch.object(kit,'config',return_value=synthetic_cfg), \
+                     patch.object(kit.urllib.request,'build_opener',return_value=ActivationProbeOpener()):
+                    kit.activate(profile)
+                active=raw_run(['docker','exec',names['db'],'psql','-U','postgres','-d','bocadb','-Atc',"SELECT contestactive FROM contesttable WHERE contestnumber=1"]).decode().strip()
+                assert active=='t',active
+                print('Ativação pela Central, com pré-requisitos sintéticos: OK',flush=True)
                 for _ in range(60):
                     if kit.inspect(names['web'])['State'].get('Health',{}).get('Status')=='healthy':break
                     time.sleep(1)
@@ -202,10 +247,6 @@ def main(profile="si"):
                 # Exercise the same multipart form used by a real team, not
                 # the organizer-only reference seeding API. The edited package
                 # expects 99; send one correct and one incorrect C solution.
-                raw_run(['docker','run','-d','--privileged','--name',names['jail'],
-                         '--network',network,'--network-alias','boca-jail','--env-file',env,
-                         '-e','BOCA_DB_HOST=boca-db','-e','BOCA_JAIL_HOST=boca-jail',
-                         lock['images']['jail']['reference']])
                 team=login(base,profile+'01',credentials['TEAM_01'],'team')
                 # Create a real support request and verify both the translated
                 # display and unchanged internal states through completion.
