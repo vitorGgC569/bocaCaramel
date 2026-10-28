@@ -90,7 +90,9 @@ if($ds=="") $ds = "/";
 
 $scoretmp = $_SESSION["locr"] . $ds . "private" . $ds . "scoretmp" . $ds . $_SESSION["usertable"]["usertype"] . '-' . $_SESSION["usertable"]["username"] . ".php";
 $redo = TRUE;
-if(file_exists($scoretmp)) {
+// Relatórios históricos e finais dependem dos parâmetros da consulta e não
+// devem compartilhar o cache do placar ao vivo do mesmo usuário.
+if(!$final && file_exists($scoretmp)) {
 	if(($strtmp = file_get_contents($scoretmp,FALSE,NULL,0,5000000)) !== FALSE) {
 		list($d) = sscanf($strtmp,"%*s %d");
 		if($d > time() - $actualdelay) {
@@ -423,6 +425,7 @@ if($redo) {
 			else  $strtmp .= "<br><font color=\"#ff0000\">Observação: os dados das questões estão ocultos.</font>";
 	}
 
+	if (!$final) {
 	$conf=globalconf();
 	if(isset($conf['doenc']) && $conf['doenc'])
 	  $strtmp = "<!-- " . time() . " --> <?php exit; ?>\n" . encryptData($strtmp,$conf["key"],false);
@@ -440,6 +443,7 @@ if($redo) {
 	if(isset($conf['doenc']) && $conf['doenc'])
 	  $strtmp = decryptData(substr($strtmp,strpos($strtmp,"\n")),$conf["key"]);
 	else $strtmp = substr($strtmp,strpos($strtmp,"\n"));
+	}
 }
 echo $strtmp;
 ?>
