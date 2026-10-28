@@ -197,12 +197,12 @@ Caramel Contest | IF Goiano - Campus Urutaí | Evento: 29/10/2026 | Texto revisa
 | Usuários | Gerencie contas e dados das equipes. Entregue senhas pela central reservada. |
 | Questões / Criar questão / Linguagens | Importe ou crie pacotes e confira as linguagens antes da prova. |
 | Respostas | Tipos de resultado usados pelo juiz; não altere durante a prova. |
-| Impressão / Local | Pedidos operacionais e configuração da sede, para a banca e TI. |
+| Ajuda e impressão / Local | Pedidos de ajuda e impressão e configuração da sede, para a banca e TI. |
 | Competição / Diversos | Parâmetros e ações administrativas. Defina tempos e ative pela Central SEMINFO. |
 | Registros / Relatórios / Backups | Auditoria e arquivos do BOCA. Para recuperação completa, use Backup e recuperação da central. |
 | Opções / Sair | Preferências e saída da conta. Não feche a sessão Windows da organização durante a prova. |
 
-**Resultados:** YES/AC = aceito; WA = resposta errada; CE = erro de compilação; RE = erro de execução; TLE = tempo excedido; PE = apresentação; NMI = nome/classe divergente; CS = contatar a banca. O AutoJudge definido no pacote determina os resultados automatizados.
+**Resultados:** YES/AC = aceito; WA = resposta errada; CE = erro de compilação; RE = erro de execução; TLE = tempo excedido; PE = apresentação; NMI = nome/classe divergente; CS = contatar a banca. A opção de julgamento automático na tela de questões determina quais resultados são tratados automaticamente.
 
 ## 13. TI: instalar uma mesa a partir do kit
 

@@ -137,8 +137,8 @@
     {
       "file": "output/pdf/manual-if.pdf",
       "source": "manual-if.md",
-      "source_sha256": "5581d2b752fc5e6ddc2cb88a998d99e9467b4f12c2d9ee25d1b1df537fb903d3",
-      "pdf_sha256": "7f9ae590f85c5f67e96333295cd7a831f24ba2d0f1b62dc1395e4b87bc9851bf"
+      "source_sha256": "1de6efe2fc1d9058277212b5151739bf94db1d1571f92441e11b1c6828fce56a",
+      "pdf_sha256": "f0be974e0f70831787ed6d7a687e7a4e418e6eae05937ed1f2325d7a9d74d9c3"
     },
     {
       "file": "output/pdf/roteiro-banca.pdf",
