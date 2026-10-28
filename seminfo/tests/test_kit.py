@@ -5,7 +5,7 @@ import sys
 import tempfile
 import subprocess
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
 HERE=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(HERE))
@@ -19,6 +19,17 @@ def config():
     c=json.loads((HERE/'labs/si.json').read_text(encoding='utf-8'))
     c.update(server_ip='192.168.50.2',subnet='192.168.50.0/24',team_ips=[f'192.168.50.{i}' for i in range(10,20)],timing_confirmed=True,duration_minutes=100,freeze_minutes_before_end=20)
     return c
+
+
+class ConnectivityTests(unittest.TestCase):
+    def test_probe_rejects_a_page_without_the_boca_login_form(self):
+        response=MagicMock()
+        response.__enter__.return_value.read.return_value=b'BOCA Online Contest Administrator'
+        opener=MagicMock()
+        opener.open.return_value=response
+        with patch.object(manage.urllib.request, 'build_opener', return_value=opener):
+            with self.assertRaisesRegex(ValueError, 'não corresponde'):
+                manage.probe_web('127.0.0.1')
 
 
 class ConfigurationTests(unittest.TestCase):

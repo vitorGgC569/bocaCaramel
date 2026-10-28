@@ -82,7 +82,7 @@ class CategoryTests(unittest.TestCase):
             self.assertIn('congelado',tii_page);self.assertNotIn('final publicado',tii_page)
             hub.snapshot['tii']['received']-=31
             self.assertIn('SI Equipe',get('/projector/si'))
-            stale=get('/projector/tii');self.assertNotIn('TII Equipe',stale);self.assertIn('indisponivel',stale)
+            stale=get('/projector/tii');self.assertNotIn('TII Equipe',stale);self.assertIn('indisponível',stale)
             with self.assertRaises(urllib.error.HTTPError) as error:get('/projector/general')
             self.assertEqual(error.exception.code,410)
             self.assertNotIn('SI Equipe',error.exception.read().decode())

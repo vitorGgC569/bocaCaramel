@@ -49,6 +49,8 @@ O ensaio TII também enviou um backup pela equipe, baixou e comparou o conteúdo
 
 Após a revisão das instruções de importação, envio e julgamento, o ensaio isolado de TII conferiu os avisos renderizados, Builder, quatro linguagens, restauração, pedidos, dúvidas, backups e submissões YES e WA. Os 56 testes de unidade e a sintaxe PHP passaram.
 
+Foi corrigida a verificação HTTP usada antes da ativação: ela identifica o formulário de acesso do BOCA por campos estáveis, sem depender do texto antigo em inglês. O ensaio TII confirmou a página real traduzida; o teste isolado de rede confirmou a verificação através do gate, além de autorização TLS, revogação e separação das bancas. Passaram 57 testes de unidade e o fluxo de criação e julgamento com YES e WA.
+
 Essas evidências não homologam as salas físicas. Os seis ensaios a seguir devem ser realizados presencialmente em cada laboratório; não registre atestados sem executá-los.
 
 ## Uma ficha presencial por laboratório

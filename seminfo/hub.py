@@ -44,10 +44,10 @@ def import_desk(path, manager_profile=None):
     if not isinstance(data,dict) or data.get('profile') not in ('si','tii') or not isinstance(data.get('label'),str) or not 1<=len(data['label'])<=120:
         raise ValueError('Arquivo de pareamento inválido; exporte o descritor pela central da banca')
     if not re.fullmatch('[a-z0-9-]{1,32}', data['id']):
-        raise ValueError('Identificador de laboratorio invalido')
+        raise ValueError('Identificador de laboratório inválido')
     address(data['server_ip'])
     if not isinstance(data.get('fingerprint'),str) or not re.fullmatch('[0-9a-f]{64}', data['fingerprint']) or not isinstance(data.get('score_token'),str) or len(data['score_token'])<32:
-        raise ValueError('Credencial da banca invalida')
+        raise ValueError('Credencial da banca inválida')
     if 'control_token' in data and (not isinstance(data['control_token'],str) or len(data['control_token'])<32):
         raise ValueError('Credencial administrativa incompleta')
     folder = kit.LOCAL/'hub'
@@ -77,7 +77,7 @@ class Hub:
             raise ValueError('Esta banca gerencia somente sua categoria; a outra é apenas para consulta de placar')
         token=d.get('control_token') if control else d['score_token']
         if not token:
-            raise ValueError('Este painel tem permissao somente para projetores')
+            raise ValueError('Este painel tem permissão somente para projetores')
         result,_=self.transport(d['server_ip'],d['fingerprint'],path,
             {'profile':d['profile'],**(data or {})},token=token)
         return result
@@ -90,7 +90,7 @@ class Hub:
                     raise ValueError('Placar de outra banca')
                 return desk,{'score':score,'received':time.monotonic()}
             except (OSError,ValueError,KeyError):
-                return desk,{'error':'Banca indisponivel; classificacao nao atualizada'}
+                return desk,{'error':'Banca indisponível; classificação não atualizada'}
         with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
             snapshot=dict(pool.map(fetch,self.catalog['desks']))
         with self.lock:
@@ -140,7 +140,7 @@ class Panel(Handler):
             try:
                 title='Placar — '+desks[selected]['label']
                 if selected not in scores:
-                    raise ValueError('Banca indisponivel; aguardando placar atualizado desta categoria')
+                    raise ValueError('Banca indisponível; aguardando placar atualizado desta categoria')
                 rows=[t|{'desk':selected} for t in scores[selected]['teams']]
                 body='<h1>'+html.escape(title)+'</h1>'+score_table(rows,desks)
                 body+='<p>Placar congelado nesta categoria.</p>' if scores[selected].get('frozen') else ''
@@ -183,19 +183,19 @@ class Panel(Handler):
     def do_POST(self):
         try:
             if not self.authorized() or self.path not in ('/decision','/shutdown'):
-                raise ValueError('Sessao invalida')
+                raise ValueError('Sessão inválida')
             if self.headers.get('Origin') not in (None,'http://127.0.0.1:17861'):
-                raise ValueError('Origem invalida')
+                raise ValueError('Origem inválida')
             data=parse_qs(self.body().decode())
             if not hmac.compare_digest(data.get('csrf',[''])[0],self.server.token):
-                raise ValueError('Formulario invalido')
+                raise ValueError('Formulário inválido')
             if self.path=='/shutdown':
                 self.reply(200,{'ok':True})
                 self.server.hub.stop_event.set()
                 return
             desk=data['desk'][0]
             if desk not in self.server.hub.catalog['desks']:
-                raise ValueError('Laboratorio invalido')
+                raise ValueError('Laboratório inválido')
             if data.get('action',[''])[0]=='revoke' and data.get('confirmed',[''])[0]!='yes':
                 records=self.server.hub.call(desk,'/control/list',control=True)['records']
                 record=next((r for r in records if r['id']==data.get('id',[''])[0]),None)
@@ -263,13 +263,13 @@ def start(open_browser=True):
     with (folder/'service.log').open('ab') as log:
         process=subprocess.Popen([sys.executable,str(kit.HERE/'hub.py'),'--serve',str(folder.resolve())],stdout=log,stderr=log,stdin=subprocess.DEVNULL,**options)
     for _ in range(50):
-        if process.poll() is not None:raise ValueError('Central nao iniciou; confira local/hub/service.log')
+        if process.poll() is not None:raise ValueError('Central não iniciou; confira local/hub/service.log')
         if panel.exists():
             if open_browser:webbrowser.open(panel.read_text())
             return
         time.sleep(.1)
     process.terminate()
-    raise ValueError('Central nao respondeu')
+    raise ValueError('Central não respondeu')
 
 
 def stop():

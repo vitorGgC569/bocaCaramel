@@ -73,6 +73,9 @@ except OSError:ok=False
 assert ok==(sys.argv[3]=='yes'),(sys.argv[1],sys.argv[2],ok)
 """,ip,str(port),'yes' if expected else 'no')
         time.sleep(.5)
+        # The desk itself must pass the activation probe through the real gate
+        # with the translated BOCA login fixture.
+        execute(0,"import sys;sys.path.insert(0,'/kit/seminfo');import manage;manage.probe_web(sys.argv[1])",ips[0])
         probe(ips[0],False)
         request(ips[0]);state=wait_for(lambda s:bool(s['code']))
         assert state['ip']==ips[2] and not state['approved']
@@ -87,7 +90,7 @@ assert ok==(sys.argv[3]=='yes'),(sys.argv[1],sys.argv[2],ok)
         # A participant can submit through the gate, including POST payloads.
         execute(2,"""import urllib.request,sys
 url='http://'+sys.argv[1]+':8000/boca/'
-assert b'BOCA Login' in urllib.request.urlopen(url).read()
+assert b'Acesso ao BOCA' in urllib.request.urlopen(url).read()
 assert urllib.request.urlopen(url,b'source-code').read()==b'source-code'
 """,ips[0])
         control(0,'/control/decision',{'id':record['id'],'action':'revoke'})

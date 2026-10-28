@@ -79,6 +79,16 @@ def main(profile="si"):
             assert control(profile,'prepare')['ok']
             port=kit.inspect(names['web'])['NetworkSettings']['Ports']['80/tcp'][0]['HostPort']
             base=f'http://127.0.0.1:{port}/boca/'
+            # Probe the actual localized login page through the same HTTP check
+            # used before activation; only the disposable port is redirected.
+            real_opener=urllib.request.build_opener(urllib.request.ProxyHandler({}))
+            class ProbeOpener:
+                def open(self,url,timeout):
+                    assert url=='http://127.0.0.1:8000/boca/'
+                    return real_opener.open(base,timeout=timeout)
+            with patch.object(kit.urllib.request,'build_opener',return_value=ProbeOpener()):
+                kit.probe_web('127.0.0.1')
+            print('Verificação HTTP do BOCA traduzido: OK',flush=True)
             client=login(base,'admin',credentials['BOCA_PASSWORD'],'admin',contest=1)
             with client.open(base+'index.php?contest=1&destination=builder') as response:
                 assert response.url.endswith('admin/buildproblem.php')

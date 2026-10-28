@@ -95,31 +95,31 @@ def config(profile):
 
 def validate(c, *, network=False, timing=False):
     if c.get('profile') not in ('si', 'tii'):
-        raise ValueError('Perfil invalido')
+        raise ValueError('Perfil inválido')
     expected_lab, expected_wallpaper = {'si': (3, 'lab3-si.png'), 'tii': (4, 'lab4-tii.png')}[c['profile']]
     if (c.get('lab'), c.get('wallpaper')) != (expected_lab, expected_wallpaper):
-        raise ValueError('Laboratorio/banner nao corresponde ao perfil')
+        raise ValueError('Laboratório/banner não corresponde ao perfil')
     for key in ('contest_id', 'site_id', 'teams', 'penalty_minutes'):
         if type(c.get(key)) is not int or c[key] < 1:
-            raise ValueError(f'{key}: inteiro positivo obrigatorio')
+            raise ValueError(f'{key}: inteiro positivo obrigatório')
     if c['teams'] > 10:
         raise ValueError('Limite de dez equipes')
     if c.get('languages') != ['C', 'C++20', 'Java', 'Python3']:
         raise ValueError('Linguagens do evento: C, C++20, Java, Python3')
     if c.get('wallpaper') not in ('lab3-si.png', 'lab4-tii.png'):
-        raise ValueError('Wallpaper invalido')
+        raise ValueError('Wallpaper inválido')
     start = dt.datetime.fromisoformat(c['start'])
     if start.utcoffset() != dt.timedelta(hours=-3) or start.date() != dt.date(2026, 10, 29):
-        raise ValueError('Inicio deve ser 29/10/2026 com fuso -03:00')
+        raise ValueError('Início deve ser 29/10/2026 com fuso -03:00')
     if network:
         if not c.get('server_ip') or not c.get('subnet'):
-            raise ValueError('Preencha server_ip e subnet com os enderecos reais do laboratorio')
+            raise ValueError('Preencha server_ip e subnet com os endereços reais do laboratório')
         ip = ipaddress.IPv4Address(c.get('server_ip') or '')
         subnet = ipaddress.IPv4Network(c.get('subnet') or '', strict=True)
         if ip.is_loopback or ip.is_multicast or ip.is_unspecified or subnet.prefixlen == 0 or ip not in subnet:
-            raise ValueError('IPv4 da mesa/sub-rede invalido')
+            raise ValueError('IPv4 da mesa/sub-rede inválido')
         if ip in (subnet.network_address, subnet.broadcast_address):
-            raise ValueError('A mesa precisa de um endereco de host')
+            raise ValueError('A mesa precisa de um endereço de host')
         ips = c.get('team_ips', [])
         if c.get('admission', True) is False and c.get('shared_subnet', True) and len(ips) != c['teams']:
             raise ValueError('Rede compartilhada exige um IPv4 reservado por equipe')
@@ -132,25 +132,25 @@ def validate(c, *, network=False, timing=False):
         for value in c.get('control_ips',[]):
             remote=ipaddress.IPv4Address(value)
             if remote.is_unspecified or remote.is_multicast or remote.is_loopback:
-                raise ValueError('IP da central invalido')
+                raise ValueError('IP da central inválido')
         other = LOCAL / ('tii' if c['profile']=='si' else 'si') / 'lab.json'
         if other.exists():
             paired = json.loads(other.read_text(encoding='utf-8-sig'))
             if paired.get('server_ip') == str(ip) or str(ip) in paired.get('team_ips', []):
-                raise ValueError('IP da mesa conflita com o outro laboratorio')
+                raise ValueError('IP da mesa conflita com o outro laboratório')
             if set(ips).intersection(paired.get('team_ips', [])) or paired.get('server_ip') in ips:
-                raise ValueError('IPs de equipes conflitam com o outro laboratorio')
+                raise ValueError('IPs de equipes conflitam com o outro laboratório')
     if timing or c.get('timing_confirmed') is True:
         duration, freeze = c.get('duration_minutes'), c.get('freeze_minutes_before_end')
         stop = c.get('stop_answering_minutes_before_end')
         if c.get('timing_confirmed') is not True:
-            raise ValueError('Confirme timing_confirmed apos definir os tempos')
+            raise ValueError('Confirme timing_confirmed após definir os tempos')
         if type(duration) is not int or duration <= 0:
-            raise ValueError('Duracao obrigatoria, sem valor automatico')
+            raise ValueError('Duração obrigatória, sem valor automático')
         if type(freeze) is not int or not 0 <= freeze < duration:
-            raise ValueError('Freeze deve estar entre zero e duracao-1')
+            raise ValueError('O congelamento deve estar entre zero e duração menos um')
         if type(stop) is not int or not 0 <= stop < duration:
-            raise ValueError('Stop answering invalido')
+            raise ValueError('Tempo de encerramento das respostas inválido')
     return c
 
 
@@ -295,14 +295,14 @@ def wait_database(container):
         if p.returncode == 0:
             return
         time.sleep(1)
-    raise RuntimeError('PostgreSQL nao ficou pronto')
+    raise RuntimeError('PostgreSQL não ficou pronto')
 
 
 def restore_into(container, folder, password):
     # Fresh database only. Never --clean an existing contest.
     result = sql(container, "SELECT datname FROM pg_database WHERE datname='bocadb';")
     if b'bocadb' in result:
-        raise RuntimeError('Destino ja contem bocadb; restauracao recusada')
+        raise RuntimeError('Destino já contém bocadb; restauração recusada')
     escaped = password.replace("'", "''")
     sql(container, f"CREATE ROLE bocauser LOGIN PASSWORD '{escaped}';\nCREATE DATABASE bocadb OWNER bocauser;")
     run(['docker', 'cp', folder / 'database.dump', f'{container}:/tmp/seminfo.dump'])
@@ -327,11 +327,11 @@ def check_restore(folder):
         restore_into(name, folder, secrets.token_urlsafe(24))
         actual = fingerprint(name)
         if actual != m['fingerprint']:
-            raise RuntimeError('Restauracao diverge: contagens/hashes ou large objects diferentes')
+            raise RuntimeError('Restauração diverge: contagens/hashes ou large objects diferentes')
         write_json(folder / 'restore-verified.json', {'dump_sha256': m['dump_sha256'], 'fingerprint': actual,
                    'reference_files_sha256': references,
                    'verified_utc': dt.datetime.now(dt.timezone.utc).isoformat()})
-        print('Restauracao isolada aprovada: todas as tabelas e large objects conferem.')
+        print('Restauração isolada aprovada: todas as tabelas e large objects conferem.')
     finally:
         subprocess.run(['docker', 'rm', '-f', name], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, **hidden_process_options())
         subprocess.run(['docker', 'volume', 'rm', volume], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, **hidden_process_options())
@@ -415,7 +415,7 @@ def wait_web(profile):
         if state.get('Health', {}).get('Status') == 'healthy':
             return
         time.sleep(2)
-    raise RuntimeError('BOCA nao ficou saudavel; consulte os logs locais')
+    raise RuntimeError('BOCA não ficou saudável; consulte os logs locais')
 
 
 def migrate(profile):
@@ -424,7 +424,7 @@ def migrate(profile):
         start(profile)
         return
     if any(x.get('Name') == f'boca-{profile}_db-data' for x in inspect(db)['Mounts']):
-        print('Banco ja usa volume nomeado. Migracao desnecessaria.')
+        print('Banco já usa volume nomeado. Migração desnecessária.')
         start(profile)
         return
     folder = backup(profile, resume=False)
@@ -450,22 +450,22 @@ def migrate(profile):
     if (folder / 'private').exists():
         run(['docker', 'cp', str(folder / 'private') + '/.', f'boca-{profile}-boca-web-1:/var/www/boca/src/private'])
     start(profile)
-    print('Migracao concluida; volumes antigos e backup mantidos.')
+    print('Migração concluída; volumes antigos e backup mantidos.')
 
 
 def restore(profile, folder):
     folder = Path(folder).resolve()
     manifest = json.loads((folder / 'manifest.json').read_text(encoding='utf-8'))
     if manifest['profile'] != profile:
-        raise ValueError('Backup de outro perfil; restauracao recusada')
+        raise ValueError('Backup de outro perfil; restauração recusada')
     check_restore(folder)
     db = f'boca-{profile}-boca-db-1'
     # Refuse even to replace credentials if this destination already has data.
     if exists(db):
         if not inspect(db)['State']['Running']:
-            raise ValueError('Destino tem container parado; examine seus dados antes da recuperacao')
+            raise ValueError('Destino tem container parado; examine seus dados antes da recuperação')
         if b'bocadb' in sql(db,"SELECT datname FROM pg_database WHERE datname='bocadb';"):
-            raise ValueError('Destino ja contem bocadb; use uma mesa vazia')
+            raise ValueError('Destino já contém bocadb; use uma mesa vazia')
     references = check_reference_backup(folder,manifest)
     for relative, checksum in references.items():
         existing = LOCAL/profile/'reference-solutions'/relative
@@ -488,21 +488,21 @@ def restore(profile, folder):
     creds=json.loads((LOCAL / profile / 'credentials.json').read_text(encoding='utf-8'))
     restore_into(db,folder,creds['BOCA_DB_PASSWORD'])
     if fingerprint(db) != manifest['fingerprint']:
-        raise RuntimeError('Recuperacao diverge; web/juiz permanecem parados')
+        raise RuntimeError('Recuperação diverge; web/juiz permanecem parados')
     compose(profile,'create','boca-web')
     if (folder / 'private').exists():
         run(['docker','cp',str(folder/'private')+'/.',f'boca-{profile}-boca-web-1:/var/www/boca/src/private'])
     start(profile)
-    print('Recuperacao aprovada. Confira IP, relogio e placar antes de retomar.')
+    print('Recuperação aprovada. Confira IP, relógio e placar antes de retomar.')
 
 
 def start(profile):
     db = f'boca-{profile}-boca-db-1'
     if exists(db) and not any(x.get('Name') == f'boca-{profile}_db-data' for x in inspect(db)['Mounts']):
-        raise RuntimeError('Instalacao antiga encontrada: execute migrate antes de start')
+        raise RuntimeError('Instalação antiga encontrada: execute migrate antes de start')
     lock = json.loads((DIST / 'server.lock.json').read_text(encoding='utf-8'))
     if lock['source_sha256'] != source_hash():
-        raise RuntimeError('Codigo mudou depois do build; execute build-server')
+        raise RuntimeError('Código mudou depois do build; execute build-server')
     for image in lock['images'].values():
         if inspect(image['reference'])['Id'] != image['id']:
             raise RuntimeError('Imagem local diverge do manifesto')
@@ -527,10 +527,12 @@ def probe_web(address):
         opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
         with opener.open(url, timeout=10) as response:
             body = response.read(131072)
-        if b'BOCA Login' not in body or b'BOCA Online Contest Administrator' not in body:
-            raise ValueError('Resposta HTTP nao corresponde ao login BOCA em '+url)
+        # Use stable form fields, independent of the login page's language.
+        markers = (b'BOCA Online Contest Administrator', b'name="name"', b'name="password"')
+        if not all(marker in body for marker in markers):
+            raise ValueError('Resposta HTTP não corresponde ao login BOCA em '+url)
     except OSError as exc:
-        raise ValueError('BOCA nao acessivel em '+url+': '+str(exc)) from exc
+        raise ValueError('BOCA não acessível em '+url+': '+str(exc)) from exc
 
 
 def control(profile, action, extra=None):
@@ -550,7 +552,7 @@ def control(profile, action, extra=None):
     try:
         return json.loads(output)
     except json.JSONDecodeError:
-        raise RuntimeError('BOCA nao devolveu JSON valido; consulte o log privado do container') from None
+        raise RuntimeError('BOCA não devolveu JSON válido; consulte o log privado do container') from None
 
 
 def verify(profile):
@@ -570,7 +572,7 @@ def verify(profile):
               'ok': True, 'database': status, 'compiler_versions': versions,
               'verified_utc': dt.datetime.now(dt.timezone.utc).isoformat()}
     write_json(LOCAL / profile / 'verification.json', report)
-    print('Verificacao automatica aprovada: equipes, usuarios, linguagens e cinco executaveis do juiz.')
+    print('Verificação automática aprovada: equipes, usuários, linguagens e cinco executáveis do juiz.')
     return report
 
 
@@ -584,7 +586,7 @@ def attest(profile, check, operator, note):
         from problems import assert_reviewable
         data[check]['problems_sha256'] = assert_reviewable(profile)
     write_json(path, data)
-    print('Validacao presencial registrada; nao substitui a execucao do teste.')
+    print('Validação presencial registrada; não substitui a execução do teste.')
 
 
 def activate(profile):
@@ -592,7 +594,7 @@ def activate(profile):
     for service in ('boca-db','boca-web','boca-jail'):
         name=f'boca-{profile}-{service}-1'
         if not exists(name) or not inspect(name)['State']['Running'] or inspect(name)['State'].get('Health',{}).get('Status')!='healthy':
-            raise ValueError('Inicie a stack e aguarde banco, web e juiz saudaveis antes de ativar')
+            raise ValueError('Inicie a stack e aguarde banco, web e juiz saudáveis antes de ativar')
     verify(profile)
     path = LOCAL / profile / 'attestations.json'
     records = json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
@@ -600,7 +602,7 @@ def activate(profile):
                or records.get(key, {}).get('server_source_sha256') != source_hash()
                or records.get(key, {}).get('client_source_sha256') != client_source_hash()]
     if missing:
-        raise ValueError('Ativacao bloqueada. Ensaios pendentes/desatualizados: ' + ', '.join(missing))
+        raise ValueError('Ativação bloqueada. Ensaios pendentes/desatualizados: ' + ', '.join(missing))
     from problems import assert_reviewable
     if records['problems_reviewed'].get('problems_sha256') != assert_reviewable(profile):
         raise ValueError('As questões mudaram desde a revisão. Valide as referências e registre a revisão atual.')
@@ -608,7 +610,7 @@ def activate(profile):
     result = control(profile, 'activate')
     if not result.get('ok'):
         raise RuntimeError(str(result))
-    print('Contest ativado com os tempos confirmados. Inicio: ' + c['start'])
+    print('Prova ativada com os tempos confirmados. Início: ' + c['start'])
 
 
 def export(profile):
@@ -625,7 +627,7 @@ def publish_score(profile):
     folder=export(profile)
     metadata=json.loads((folder/'metadata.json').read_text())
     if not metadata['final']:
-        raise ValueError('Publicacao final exige prova encerrada, juiz sem pendencias e paridade BOCA')
+        raise ValueError('Publicação final exige prova encerrada, juiz sem pendências e paridade BOCA')
     write_json(LOCAL/profile/'score-release.json',{'config_sha256':config_hash(config(profile)),
         'server_source_sha256':source_hash(),'export':str(folder),'published_utc':dt.datetime.now(dt.timezone.utc).isoformat()})
     print('Placar final desta sala liberado para projetores. Publique todas as salas para liberar o geral final.')
@@ -693,17 +695,17 @@ def main():
                 break
             except (RuntimeError,OSError,subprocess.TimeoutExpired):
                 time.sleep(5)
-        else:raise RuntimeError('Docker nao iniciou; tarefa agendada tentara novamente')
+        else:raise RuntimeError('Docker não iniciou; tarefa agendada tentará novamente')
         from admission_setup import running
         start(profile)
-        if not running(profile):raise RuntimeError('Banca nao iniciou')
+        if not running(profile):raise RuntimeError('Banca não iniciou')
         while running(profile):time.sleep(5)
-        raise RuntimeError('Banca encerrou; tarefa agendada tentara novamente')
+        raise RuntimeError('Banca encerrou; tarefa agendada tentará novamente')
     elif args.action == 'stage':
         initialize(profile)
         db=f'boca-{profile}-boca-db-1'
         if exists(db) and not any(x.get('Name')==f'boca-{profile}_db-data' for x in inspect(db)['Mounts']):
-            raise ValueError('Instalacao antiga encontrada; use migrate')
+            raise ValueError('Instalação antiga encontrada; use migrate')
         compose(profile,'up','-d','boca-db')
         wait_database(db)
         compose(profile,'run','--rm','--no-deps','-T','--entrypoint','php','boca-web','/opt/seminfo/bootstrap.php')
@@ -720,11 +722,11 @@ def main():
         if os.name=='nt' and config(profile).get('server_ip') and config(profile).get('subnet'):
             run(['powershell','-NoProfile','-ExecutionPolicy','Bypass','-File',HERE/'install-admission.ps1','-Profile',profile],capture=False)
         else:
-            print('Autoinicio/firewall da mesa aguardam IP/sub-rede confirmados; use install-admission.ps1 na mesa final.')
-        print('Usuarios preparados; contest permanece inativo.')
+            print('Autoinício/firewall da mesa aguardam IP/sub-rede confirmados; use install-admission.ps1 na mesa final.')
+        print('Usuários preparados; contest permanece inativo.')
     elif args.action == 'check':
         validate(config(profile), network=args.network, timing=args.timing)
-        print('Configuracao valida para os requisitos solicitados.')
+        print('Configuração válida para os requisitos solicitados.')
     elif args.action == 'start': start(profile)
     elif args.action == 'admission-panel':
         from admission_setup import panel

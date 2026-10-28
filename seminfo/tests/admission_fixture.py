@@ -23,7 +23,7 @@ for name in ('admission-cert.pem','admission-key.pem','admission-control.txt','a
 
 class Backend(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
-        payload=b'BOCA Login - BOCA Online Contest Administrator - fixture'
+        payload=b'BOCA Online Contest Administrator - Acesso ao BOCA <input name="name"><input name="password">'
         self.send_response(200);self.send_header('Content-Length',str(len(payload)));self.end_headers();self.wfile.write(payload)
     def do_POST(self):
         payload=self.rfile.read(int(self.headers.get('Content-Length','0')))

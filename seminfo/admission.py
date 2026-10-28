@@ -46,11 +46,11 @@ class Registry:
             if ip not in net or str(ip) == self.config['server_ip'] or ip in (net.network_address, net.broadcast_address):
                 raise ValueError('IP fora da rede da banca')
             if data.get('profile') != self.config['profile']:
-                raise ValueError('Banca de outro laboratorio')
+                raise ValueError('Banca de outro laboratório')
             if any(not HEX.fullmatch(str(data.get(k, ''))) for k in ('device', 'secret', 'nonce')):
-                raise ValueError('Identidade invalida')
+                raise ValueError('Identidade inválida')
             if type(data.get('team')) is not int or not 1 <= data['team'] <= self.config['teams']:
-                raise ValueError('Equipe invalida')
+                raise ValueError('Equipe inválida')
             now = self.clock()
             self.records = {k: r for k, r in self.records.items() if now-r['seen'] < PENDING_SECONDS}
             key = hashlib.sha256((data['device']+data['nonce']).encode()).hexdigest()
@@ -58,7 +58,7 @@ class Registry:
             secret_hash = hashlib.sha256(data['secret'].encode()).hexdigest()
             if old:
                 if old['ip'] != str(ip) or old['team'] != data['team'] or not hmac.compare_digest(old['secret_hash'], secret_hash):
-                    raise ValueError('Solicitacao mudou; solicite novamente')
+                    raise ValueError('Solicitação mudou; solicite novamente')
                 old['seen'] = now
                 return self.public(old)
             if len(self.records) >= 128:
@@ -89,7 +89,7 @@ class Registry:
             record = self.records.get(str(data.get('id', '')))
             secret_hash = hashlib.sha256(str(data.get('secret', '')).encode()).hexdigest()
             if not record or record['ip'] != address or not hmac.compare_digest(record['secret_hash'], secret_hash):
-                raise ValueError('Solicitacao nao autenticada')
+                raise ValueError('Solicitação não autenticada')
             now = self.clock()
             record['seen'] = now
             if record['status'] == 'approved' and record['until'] > now:
@@ -100,21 +100,21 @@ class Registry:
         with self.lock:
             record = self.records.get(key)
             if not record:
-                raise ValueError('Solicitacao nao existe')
+                raise ValueError('Solicitação não existe')
             if action == 'approve':
                 if self.clock()-record['seen'] > 30:
                     raise ValueError('Dispositivo desconectado; aguarde uma consulta recente')
                 if not hmac.compare_digest(record['code'], code.strip().upper()):
-                    raise ValueError('Confira o codigo exibido no PC da equipe')
+                    raise ValueError('Confira o código exibido no PC da equipe')
                 for other in self.records.values():
                     if other['id'] != key and other['status'] == 'approved' and other['until'] > self.clock():
                         if other['team'] == record['team'] or other['ip'] == record['ip']:
-                            raise ValueError('Equipe/IP ja aprovado; revogue o anterior primeiro')
+                            raise ValueError('Equipe/IP já aprovado; revogue o anterior primeiro')
                 record['status'], record['until'] = 'approved', self.clock()+LEASE_SECONDS
             elif action == 'revoke':
                 record['status'], record['until'] = 'revoked', 0
             else:
-                raise ValueError('Acao invalida')
+                raise ValueError('Ação inválida')
             self.log(action, record)
             if self.on_change:
                 try:
@@ -122,7 +122,7 @@ class Registry:
                 except Exception:
                     record['status'],record['until']='revoked',0
                     self.log('firewall-failed',record)
-                    raise RuntimeError('Firewall da mesa recusou a alteracao; acesso bloqueado')
+                    raise RuntimeError('Firewall da mesa recusou a alteração; acesso bloqueado')
 
     def allowed(self, address):
         with self.lock:
@@ -182,10 +182,10 @@ class Handler(BaseHTTPRequestHandler):
 
     def body(self, maximum=8192):
         if self.headers.get('Transfer-Encoding') or len(self.headers.get_all('Content-Length', [])) > 1:
-            raise ValueError('Enquadramento HTTP invalido')
+            raise ValueError('Enquadramento HTTP inválido')
         length = int(self.headers.get('Content-Length', '0'))
         if not 0 < length <= maximum:
-            raise ValueError('Tamanho invalido')
+            raise ValueError('Tamanho inválido')
         payload = self.rfile.read(length)
         if len(payload) != length:
             raise ValueError('Corpo incompleto')
@@ -197,14 +197,14 @@ class Enrollment(Handler):
         try:
             data = json.loads(self.body())
             if not isinstance(data, dict):
-                raise ValueError('JSON invalido')
+                raise ValueError('JSON inválido')
             reg = self.server.registry
             if self.path.startswith('/control/'):
                 auth = self.headers.get('Authorization', '')
                 control = hmac.compare_digest(auth, 'Bearer '+self.server.control_token)
                 score_only = hmac.compare_digest(auth, 'Bearer '+self.server.score_token)
                 if data.get('profile') != reg.config['profile'] or not (control or (score_only and self.path == '/control/score')):
-                    self.reply(403, {'error': 'Autorizacao administrativa invalida'})
+                    self.reply(403, {'error': 'Autorização administrativa inválida'})
                     return
                 if self.path == '/control/list':
                     with reg.lock:
@@ -215,16 +215,16 @@ class Enrollment(Handler):
                 elif self.path == '/control/score':
                     result = self.server.score_provider()
                 else:
-                    raise ValueError('Rota invalida')
+                    raise ValueError('Rota inválida')
             elif self.path == '/request':
                 result = reg.register(data, self.client_address[0])
             elif self.path == '/lease':
                 result = reg.poll(data, self.client_address[0])
             else:
-                raise ValueError('Rota invalida')
+                raise ValueError('Rota inválida')
             self.reply(200, result)
         except (ValueError, TypeError, KeyError, RuntimeError, OSError):
-            self.reply(400, {'error': 'Pedido recusado; confira laboratorio, equipe e rede com a banca'})
+            self.reply(400, {'error': 'Pedido recusado; confira laboratório, equipe e rede com a banca'})
 
 
 PAGE = '''<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width">
@@ -285,12 +285,12 @@ class Admin(Handler):
     def do_POST(self):
         try:
             if self.path not in ('/decision','/shutdown') or not self.authorized():
-                raise ValueError('Sessao invalida')
+                raise ValueError('Sessão inválida')
             if self.headers.get('Origin') not in (None, f'http://127.0.0.1:{self.server.server_port}'):
-                raise ValueError('Origem invalida')
+                raise ValueError('Origem inválida')
             data = parse_qs(self.body().decode())
             if not hmac.compare_digest(data.get('csrf', [''])[0], self.server.token):
-                raise ValueError('Formulario invalido')
+                raise ValueError('Formulário inválido')
             if self.path == '/shutdown':
                 self.reply(200, {'ok': True})
                 self.server.stop_event.set()
@@ -323,11 +323,11 @@ class Gate(Handler):
 
     def proxy(self, head=False):
         if not self.server.registry.allowed(self.client_address[0]):
-            self.reply(403, {'error': 'Acesso pendente ou revogado. Solicite autorizacao na janela SEMINFO.'})
+            self.reply(403, {'error': 'Acesso pendente ou revogado. Solicite autorização na janela SEMINFO.'})
             return
         parsed = urlsplit(self.path)
         if parsed.scheme or parsed.netloc or not (parsed.path == '/boca' or parsed.path.startswith('/boca/')):
-            self.reply(404, {'error': 'Rota indisponivel'})
+            self.reply(404, {'error': 'Rota indisponível'})
             return
         upstream = http.client.HTTPConnection('127.0.0.1', self.server.backend_port, timeout=10)
         started = False
@@ -353,7 +353,7 @@ class Gate(Handler):
                     self.wfile.write(chunk)
         except (OSError, ValueError, http.client.HTTPException):
             if not started:
-                self.reply(502, {'error': 'BOCA indisponivel; procure a banca'})
+                self.reply(502, {'error': 'BOCA indisponível; procure a banca'})
         finally:
             upstream.close()
 

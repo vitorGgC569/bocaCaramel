@@ -96,7 +96,7 @@ def start(profile):
         for _ in range(600):
             if not running(profile):break
             time.sleep(.1)
-        else:raise ValueError('Banca anterior nao encerrou; inicie novamente depois de parar a instancia antiga')
+        else:raise ValueError('Banca anterior não encerrou; inicie novamente depois de parar a instância antiga')
     folder = kit.LOCAL/profile
     panel = folder/'admission-panel.txt'
     if panel.exists():
@@ -109,7 +109,7 @@ def start(profile):
     # is 40 s; do not kill a healthy startup after only five seconds.
     for _ in range(600):
         if process.poll() is not None:
-            raise ValueError('Servico da banca nao iniciou. Confira portas 8000/8443/17860 e admission-service.log')
+            raise ValueError('Serviço da banca não iniciou. Confira portas 8000/8443/17860 e admission-service.log')
         if panel.exists():
             kit.write_json(folder/'admission-process.json', {'pid': process.pid, 'url': panel.read_text(),'source_sha256':kit.source_hash()})
             if running(profile):
@@ -117,7 +117,7 @@ def start(profile):
                 return
         time.sleep(.1)
     process.terminate()
-    raise ValueError('Servico da banca nao respondeu')
+    raise ValueError('Serviço da banca não respondeu')
 
 
 def panel(profile):
