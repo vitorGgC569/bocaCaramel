@@ -323,7 +323,7 @@ for ($i=0; $i<count($cs); $i++) {
     echo ">" . $cs[$i]["sitenumber"] . "</option>\n";
 }
 if($main) {
-	echo "<option value=\"new\">new</option>\n";
+	echo "<option value=\"new\">nova</option>\n";
 }  
 echo "</select>\n";
 
@@ -345,7 +345,7 @@ if($ct["contestlocalsite"]==$site) echo "(local site)";
 	if($main) {
 ?>
       <tr>
-<td width="35%" align=right>IP (plus boca path):</td>
+<td width="35%" align=right>IP e caminho do BOCA:</td>
         <td width="65%">
           <input type="text" name="ip" value="<?php echo $st["siteip"]; ?>" size="50" maxlength="200" />
         </td>
@@ -354,7 +354,7 @@ if($ct["contestlocalsite"]==$site) echo "(local site)";
 	} else {
 ?>
       <tr>
-<td width="35%" align=right>IP (plus boca path):</td>
+<td width="35%" align=right>IP e caminho do BOCA:</td>
         <td width="65%">
           <?php echo $st["siteip"]; ?>
         </td>
@@ -365,7 +365,7 @@ if($ct["contestlocalsite"]==$site) echo "(local site)";
 ?>
       <tr>
 <?php
-echo "        <td nowrap width=\"35%\" align=right>Start date (contest=" . dateconv($ct["conteststartdate"]) . "):</td>";
+echo "        <td nowrap width=\"35%\" align=right>Data de início (competição=" . dateconv($ct["conteststartdate"]) . "):</td>";
 ?>
         <td width="65%"> hh:mm
           <input type="text" name="startdateh" value="<?php echo date("H", $st["sitestartdate"]); ?>" size="2" maxlength="2" />
@@ -392,13 +392,13 @@ if (!$st["siterunning"]) {
 		$w = (int) ($st["currenttime"]/60);
 	echo "      <tr>\n";
 	echo "        <td nowrap width=\"35%\" align=right><b>Duração real:</b></td>\n";
-	echo "        <td width=\"65%\"><b>" . $w . " minutes</b></td>\n";
+	echo "        <td width=\"65%\"><b>" . $w . " minutos</b></td>\n";
 	echo "      </tr>\n";
 }
 ?>
       <tr>
 <?php
-echo "        <td width=\"35%\" align=right>Duration (contest=";
+echo "        <td width=\"35%\" align=right>Duração (competição=";
 echo $ct["contestduration"]/60;
 echo "):</td>";
 ?>
@@ -408,7 +408,7 @@ echo "):</td>";
       </tr>
       <tr>
 <?php
-echo "        <td width=\"35%\" align=right>Stop answering (contest=";
+echo "        <td width=\"35%\" align=right>Fim das respostas (competição=";
 echo $ct["contestlastmileanswer"]/60;
 echo "):</td>";
 ?>
@@ -418,7 +418,7 @@ echo "):</td>";
       </tr>
       <tr>
 <?php
-echo "        <td width=\"35%\" align=right>Stop scoreboard (contest=";
+echo "        <td width=\"35%\" align=right>Congelamento do placar (competição=";
 echo $ct["contestlastmilescore"]/60;
 echo "):</td>";
 ?>

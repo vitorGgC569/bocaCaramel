@@ -169,9 +169,9 @@ $ans = DBGetAnswers($_SESSION["usertable"]["contestnumber"]);
 for ($i=0;$i<count($ans);$i++)
 	if ($a["answer"] == $ans[$i]["number"]) {
 //	  if($ans[$i]["fake"] != "t") $isfak = false;
-       	  echo "<option selected value=\"" . $ans[$i]["number"] . "\">" . $ans[$i]["desc"] . "</option>\n";
+	  echo "<option selected value=\"" . $ans[$i]["number"] . "\">" . displayRunAnswer($ans[$i]["desc"]) . "</option>\n";
 	} else
-	        echo "<option value=\"" . $ans[$i]["number"] . "\">" . $ans[$i]["desc"] . "</option>\n";
+	        echo "<option value=\"" . $ans[$i]["number"] . "\">" . displayRunAnswer($ans[$i]["desc"]) . "</option>\n";
 	echo "</select>";
 //	if(!$isfak) {
         if($a["judgesite"] != "" && $a["judge"] != "") {
@@ -191,9 +191,9 @@ for ($i=0;$i<count($ans);$i++)
 //	  if($ans[$i]["fake"] != "t") {
           if($a["judgesite1"] != "" && $a["judge1"] != "") {
    	   $uu = DBUserInfo ($_SESSION["usertable"]["contestnumber"], $a["judgesite1"], $a["judge1"]);
-   	   echo $ans[$i]["desc"] . " [judge=" . $uu["username"] . " (" . $a["judgesite1"] . ")]";
+	   echo displayRunAnswer($ans[$i]["desc"]) . " [judge=" . $uu["username"] . " (" . $a["judgesite1"] . ")]";
 	  } else
-	   echo $ans[$i]["desc"];
+	   echo displayRunAnswer($ans[$i]["desc"]);
         }
 ?>
         </td>
@@ -208,9 +208,9 @@ for ($i=0;$i<count($ans);$i++)
 //	  if($ans[$i]["fake"] != "t") {
           if($a["judgesite2"] != "" && $a["judge2"] != "") {
    	   $uu = DBUserInfo ($_SESSION["usertable"]["contestnumber"], $a["judgesite2"], $a["judge2"]);
-   	   echo $ans[$i]["desc"] . " [judge=" . $uu["username"] . " (" . $a["judgesite2"] . ")]";
+	   echo displayRunAnswer($ans[$i]["desc"]) . " [judge=" . $uu["username"] . " (" . $a["judgesite2"] . ")]";
 	  } else
-	   echo $ans[$i]["desc"];
+	   echo displayRunAnswer($ans[$i]["desc"]);
 	}
 ?>
         </td>

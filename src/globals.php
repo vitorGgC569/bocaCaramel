@@ -537,6 +537,20 @@ function match_network ($nets, $ip) {
     }
     return false;
 }
+// Traduz apenas as descrições padrão; respostas personalizadas permanecem intactas.
+function displayRunAnswer($answer) {
+    $labels = array(
+        'Not answered yet' => 'Ainda sem resposta',
+        'YES' => 'Sim (YES)',
+        'NO - Compilation error' => 'Não — erro de compilação (CE)',
+        'NO - Runtime error' => 'Não — erro de execução (RE)',
+        'NO - Time limit exceeded' => 'Não — limite de tempo excedido (TLE)',
+        'NO - Presentation error' => 'Não — erro de apresentação (PE)',
+        'NO - Wrong answer' => 'Não — resposta incorreta (WA)',
+        'NO - Contact staff' => 'Não — contate a organização (CS)',
+        'NO - Name mismatch' => 'Não — nome incorreto (NMI)');
+    return isset($labels[$answer]) ? $labels[$answer] : $answer;
+}
 function displayRunStatus($status) {
     $labels = array('openrun' => 'Aguardando julgamento', 'judging' => 'Em julgamento',
                     'judged' => 'Julgada', 'judged+' => 'Aguardando novo julgamento',

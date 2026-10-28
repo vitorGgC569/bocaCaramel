@@ -113,7 +113,7 @@ for ($i=0; $i<count($run); $i++) {
   if ($run[$i]["answer"] == "") {
     echo "  <td>&nbsp;</td>\n";
   } else {
-    echo "  <td>" . $run[$i]["answer"];
+    echo "  <td>" . displayRunAnswer($run[$i]["answer"]);
     if($run[$i]['yes']=='t') {
           echo " <img alt=\"".$run[$i]["colorname"]."\" width=\"10\" ".
 			  "src=\"" . balloonurl($run[$i]["color"]) ."\" />";

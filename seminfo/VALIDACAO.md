@@ -41,6 +41,8 @@ Após a tradução das mensagens de erro de banco, importação, parâmetros e b
 
 Na revisão dos menus do juiz e das telas de sede e usuários, o ensaio TII conferiu os rótulos e valores de formulários renderizados, o acesso, o Builder, as quatro linguagens, a restauração, os pedidos, as dúvidas e as submissões YES e WA. Os 56 testes de unidade e a sintaxe PHP passaram.
 
+Na revisão dos resultados, o ensaio TII confirmou que a equipe vê as descrições em português para YES e WA enquanto os códigos originais permanecem no banco. O teste também conferiu Builder, quatro linguagens, restauração, pedido e dúvida; passaram os 56 testes de unidade e a sintaxe PHP.
+
 Essas evidências não homologam as salas físicas. Os seis ensaios a seguir devem ser realizados presencialmente em cada laboratório; não registre atestados sem executá-los.
 
 ## Uma ficha presencial por laboratório

@@ -54,7 +54,7 @@ ob_end_flush();
 require_once('version.php');
 
 ?>
-<title>BOCA Online Contest Administrator <?php echo $BOCAVERSION; ?> - Login</title>
+<title>BOCA Online Contest Administrator <?php echo $BOCAVERSION; ?> - Acesso</title>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel=stylesheet href="Css.php" type="text/css">

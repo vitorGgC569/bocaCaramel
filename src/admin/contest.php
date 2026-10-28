@@ -252,14 +252,14 @@ echo $contest;
     echo "<tr><td width=\"35%\" align=right>Última atualização do local principal:</td><td width=\"65%\">" . dateconv($exd[3]) . "</td></tr>\n";
 ?>
       <tr>
-							<td width="35%" align=right>Unlock password (only use it within a <b>rede segura</b>):</td>
+							<td width="35%" align=right>Senha de desbloqueio (use somente em uma <b>rede segura</b>):</td>
         <td width="65%">
           <input type="password" name="unlockkey" value="" size="40" maxlength="200" />
 		   <?php if(strlen($ct["contestunlockkey"]) > 1) echo "<b><= has been set</b>"; ?>
         </td>
       </tr>
       <tr>
-							<td width="35%" align=right>Keys (only use it within a <b>rede segura</b>):</td>
+							<td width="35%" align=right>Chaves (use somente em uma <b>rede segura</b>):</td>
         <td width="65%">
           <input type="file" name="keyfile" size="40">
 		   <?php if(strlen($ct["contestkeys"]) > 32) echo "<b><= has been set</b>"; ?>

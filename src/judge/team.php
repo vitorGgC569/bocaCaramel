@@ -108,7 +108,7 @@ if($redo) {
 			$strtmp .= "  <td>Ainda sem resposta";
 		}
 		else {
-			$strtmp .= "  <td>" . $run[$i]["answer"]; 
+			$strtmp .= "  <td>" . displayRunAnswer($run[$i]["answer"]);
 			if(false) {
 				if(strpos($run[$i]["autoanswer"],"OKs") > 0)
 					$strtmp .= ' ' . substr($run[$i]["autoanswer"],strrpos($run[$i]["autoanswer"],'('));
@@ -129,7 +129,7 @@ if($redo) {
 		
 		if ($run[$i]["anstime"]>$_SESSION["usertable"]["userlastlogin"]-$st["sitestartdate"] && $run[$i]["anstime"] < $st['sitelastmileanswer'] &&
 			$run[$i]["ansfake"]!="t" && !isset($_SESSION["popups"]['run' . $i . '-' . $run[$i]["anstime"]])) {
-			$_SESSION["popups"]['run' . $i . '-' . $run[$i]["anstime"]] = "Run ".$run[$i]["number"]." result: ".$run[$i]["answer"]. "<br>";
+			$_SESSION["popups"]['run' . $i . '-' . $run[$i]["anstime"]] = "Submissão ".$run[$i]["number"]." — resultado: ".displayRunAnswer($run[$i]["answer"]). "<br>";
 		}
 	}
 $strtmp .= "</table>";

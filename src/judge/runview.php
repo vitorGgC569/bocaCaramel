@@ -102,9 +102,9 @@ for ($i=0;$i<count($ans);$i++)
 //	  if($ans[$i]["fake"] != "t") {
           if($a["judgesite1"] != "" && $a["judge1"] != "") {
    	   $uu = DBUserInfo ($_SESSION["usertable"]["contestnumber"], $a["judgesite1"], $a["judge1"]);
-   	   echo $ans[$i]["desc"] . " [judge=" . $uu["username"] . " (" . $a["judgesite1"] . ")]";
+	   echo displayRunAnswer($ans[$i]["desc"]) . " [judge=" . $uu["username"] . " (" . $a["judgesite1"] . ")]";
 	  } else
-	   echo $ans[$i]["desc"];
+	   echo displayRunAnswer($ans[$i]["desc"]);
         }
 ?>
         </td>
@@ -119,9 +119,9 @@ for ($i=0;$i<count($ans);$i++)
 //	  if($ans[$i]["fake"] != "t") {
           if($a["judgesite2"] != "" && $a["judge2"] != "") {
    	   $uu = DBUserInfo ($_SESSION["usertable"]["contestnumber"], $a["judgesite2"], $a["judge2"]);
-   	   echo $ans[$i]["desc"] . " [judge=" . $uu["username"] . " (" . $a["judgesite2"] . ")]";
+	   echo displayRunAnswer($ans[$i]["desc"]) . " [judge=" . $uu["username"] . " (" . $a["judgesite2"] . ")]";
 	  } else
-	   echo $ans[$i]["desc"];
+	   echo displayRunAnswer($ans[$i]["desc"]);
 	}
 ?>
         </td>

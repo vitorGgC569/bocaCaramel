@@ -121,7 +121,7 @@ for ($i=0; $i<count($cs); $i++) {
   echo ">" . $cs[$i]["contestnumber"] . ($cs[$i]["contestactive"]=="t"?"*":"") ."</option>\n";
 }
 ?>
-<option value="new">new</option>
+<option value="new">nova</option>
 </select>
         </td>
       </tr>

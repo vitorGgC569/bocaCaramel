@@ -336,7 +336,7 @@ if($redo) {
       $strtmp .= "  <td>Ainda sem resposta";
     }
     else {
-      $strtmp .= "  <td>" . $run[$i]["answer"];
+      $strtmp .= "  <td>" . displayRunAnswer($run[$i]["answer"]);
       if(false) {
 	if(strpos($run[$i]["autoanswer"],"OKs") > 0)
 	  $strtmp .= ' ' . substr($run[$i]["autoanswer"],strrpos($run[$i]["autoanswer"],'('));

@@ -131,9 +131,9 @@ echo "<a href=\"../filedownload.php?". filedownload($a["sourceoid"], $a["sourcen
 $ans = DBGetAnswers($_SESSION["usertable"]["contestnumber"]);
 for ($i=0;$i<count($ans);$i++)
         if ($a["answer"] == $ans[$i]["number"])
-                echo "<option selected value=\"" . $ans[$i]["number"] . "\">" . $ans[$i]["desc"] . "</option>\n";
+                echo "<option selected value=\"" . $ans[$i]["number"] . "\">" . displayRunAnswer($ans[$i]["desc"]) . "</option>\n";
         else
-                echo "<option value=\"" . $ans[$i]["number"] . "\">" . $ans[$i]["desc"] . "</option>\n";
+                echo "<option value=\"" . $ans[$i]["number"] . "\">" . displayRunAnswer($ans[$i]["desc"]) . "</option>\n";
 ?>
           </select>
         </td>

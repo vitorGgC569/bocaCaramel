@@ -247,6 +247,7 @@ def main(profile="si"):
                 assert int(rows[0]['runanswer']) == 1 and int(rows[1]['runanswer']) == 6, rows
                 team_page=team.open(base+'team/run.php').read().decode('utf-8')
                 assert 'correta.c' in team_page and 'errada.c' in team_page
+                assert 'Sim (YES)' in team_page and 'resposta incorreta (WA)' in team_page
                 print('Submissões e resultados visíveis para a equipe: OK',flush=True)
                 report={'passed':True,'server_source_sha256':kit.source_hash(),'native_create_import_edit':True,
                         'cpp20_template':True,'references_four_languages':good['results'],

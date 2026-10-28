@@ -83,7 +83,7 @@ for ($i=0; $i<count($ans); $i++) {
     } else {
       echo "  <td nowrap>".$ans[$i]["number"]." (simulada)</td>\n";
     }
-    echo " <td nowrap>" . $ans[$i]["desc"] . "</td>\n";
+    echo " <td nowrap>" . displayRunAnswer($ans[$i]["desc"]) . "</td>\n";
     
     if ($ans[$i]["short"]=="") echo "  <td nowrap>&lt;VAZIO&gt;</td>\n";
     else echo "  <td nowrap>".$ans[$i]["short"]."</td>\n";

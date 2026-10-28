@@ -82,7 +82,7 @@ for ($i=0; $i<count($run); $i++) {
 	echo "  <td>&nbsp;</td>\n";
 
   if ($run[$i]["answer"] == "") $run[$i]["answer"] = "&nbsp;";
-  echo "  <td>" . $run[$i]["answer"] . "</td>\n";
+  echo "  <td>" . displayRunAnswer($run[$i]["answer"]) . "</td>\n";
   echo " </tr>\n";
 }
 
