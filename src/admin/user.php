@@ -249,6 +249,8 @@ else
   <td><b>Descrição</b></td>
  </tr>
 <?php
+$userTypeLabels = array('team' => 'Equipe', 'judge' => 'Juiz', 'admin' => 'Administrador',
+                        'staff' => 'Apoio', 'score' => 'Placar', 'site' => 'Sede');
 for ($i=0; $i < count($usr); $i++) {
   echo " <tr>\n";
   if(($usr[$i]["usersitenumber"] == $_SESSION["usertable"]["usersitenumber"] || $main==true) && 
@@ -265,7 +267,8 @@ for ($i=0; $i < count($usr); $i++) {
   echo "  <td nowrap>" . $usr[$i]["usersitenumber"] . "</td>\n";
   echo "  <td nowrap>" . $usr[$i]["username"] . "&nbsp;</td>\n";
   echo "  <td nowrap>" . $usr[$i]["usericpcid"] . "&nbsp;</td>\n";
-  echo "  <td nowrap>" . $usr[$i]["usertype"] . "&nbsp;</td>\n";
+  $type = $usr[$i]["usertype"];
+  echo "  <td nowrap>" . htmlspecialchars($userTypeLabels[$type] ?? $type, ENT_QUOTES, 'UTF-8') . "&nbsp;</td>\n";
   if ($usr[$i]["userpermitip"]!="")
     echo "  <td nowrap>" . $usr[$i]["userpermitip"] . "*&nbsp;</td>\n";
   else

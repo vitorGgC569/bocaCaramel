@@ -117,6 +117,7 @@ def main(profile="si"):
             assert team_number.isdecimal(),team_number
             user_page=client.open(base+'admin/user.php?site=1&user='+team_number).read().decode('utf-8')
             assert 'value=\"team\">Equipe</option>' in user_page and 'value=\"judge\">Juiz</option>' in user_page
+            assert '>Equipe&nbsp;</td>' in user_page and '>Administrador&nbsp;</td>' in user_page
             assert 'Para importar usuários, selecione o arquivo de importação.' in user_page
             buttons=Buttons(); buttons.feed(page)
             login_sql="SELECT sitepermitlogins FROM sitetable WHERE contestnumber=1 AND sitenumber=1"
