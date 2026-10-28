@@ -46,7 +46,7 @@ for ($i=0; $i<count($clar); $i++) {
   else
     echo "  <td nowrap>" . $clar[$i]["number"] . "(" . $clar[$i]["site"] . ")</td>\n";
   echo "  <td nowrap>" . dateconvminutes($clar[$i]["timestamp"]) . "</td>\n";
-  echo "  <td nowrap>" . $clar[$i]["problem"] . "</td>\n";
+  echo "  <td nowrap>" . displayClarProblem($clar[$i]["problem"], $clar[$i]["problemnumber"]) . "</td>\n";
   echo "  <td nowrap>" . displayClarStatus($clar[$i]["status"]) . "</td>\n";
   if ($clar[$i]["question"] == "") $clar[$i]["question"] = "&nbsp;";
   if ($clar[$i]["answer"] == "") $clar[$i]["answer"] = "&nbsp;";

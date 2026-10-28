@@ -51,7 +51,7 @@ for ($i=0; $i<count($clar); $i++) {
   echo " <tr>\n";
 //  echo "  <td nowrap>" . $clar[$i]["number"] . "</td>\n";
   echo "  <td nowrap>" . dateconvminutes($clar[$i]["timestamp"]) . "</td>\n";
-  echo "  <td nowrap>" . $clar[$i]["problem"] . "</td>\n";
+  echo "  <td nowrap>" . displayClarProblem($clar[$i]["problem"], $clar[$i]["problemnumber"]) . "</td>\n";
 //  echo "  <td nowrap>" . $clar[$i]["status"] . "</td>\n";
   if ($clar[$i]["question"] == "") $clar[$i]["question"] = "&nbsp;";
   echo "  <td>";
@@ -83,7 +83,7 @@ if (count($clar) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUMA DÚV
 <?php
 $prob = DBGetAllProblems($_SESSION["usertable"]["contestnumber"]);
 for ($i=0;$i<count($prob);$i++)
-	echo "<option value=\"" . $prob[$i]["number"] . "\">" . $prob[$i]["problem"] . "</option>\n";
+	echo "<option value=\"" . $prob[$i]["number"] . "\">" . displayClarProblem($prob[$i]["problem"], $prob[$i]["number"]) . "</option>\n";
 ?>
 	  </select>
         </td>

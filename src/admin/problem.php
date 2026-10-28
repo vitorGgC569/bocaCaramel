@@ -351,7 +351,7 @@ for ($i=0; $i<count($prob); $i++) {
 	  //echo "</td>\n";
   } else {
     echo "  <td nowrap>" . $prob[$i]["number"] . " (interno)</td>\n";
-    echo "  <td nowrap>" . $prob[$i]["name"] . "</td>\n";
+    echo "  <td nowrap>" . displayClarProblem($prob[$i]["name"], $prob[$i]["number"]) . "</td>\n";
   }
   echo "  <td nowrap>" . $prob[$i]["fullname"] . "&nbsp;</td>\n";
   echo "  <td nowrap>" . $prob[$i]["basefilename"] . "&nbsp;</td>\n";

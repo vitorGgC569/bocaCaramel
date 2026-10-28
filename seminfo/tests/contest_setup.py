@@ -342,7 +342,10 @@ def main(profile="si"):
                             assert 'a configuração do php permite no máximo:' in text and 'expiração da sessão:' in text
                             assert 'your php config' not in text and 'session expiration' not in text
                         if path=='admin/problem.php':
-                            assert '(interno)' in text and '(fake)' not in text
+                            assert '(interno)' in text and '(fake)' not in text and 'geral' in text
+                        if path in ('team/clar.php','judge/clar.php'):
+                            assert '<option value="0">Geral</option>' in html
+                            assert '<option value="1">A</option>' in html
                         if path=='judge/runchief.php':
                             assert 'juiz chefe (' in text and 'dúvidas (' in text and 'submissões (' in text
                         text_audit[path]=' '.join(' '.join(visible.parts).split())
@@ -369,17 +372,20 @@ def main(profile="si"):
                 assert 'Concluído' in page
                 print('Pedido de ajuda: equipe, atendimento e conclusão OK',flush=True)
                 # Clarification status labels must not alter the stored BOCA code.
-                payload=urllib.parse.urlencode({'message':'Dúvida de teste','problem':'1','Submit':'Enviar','confirmation':'confirm'}).encode()
+                payload=urllib.parse.urlencode({'message':'Dúvida geral de teste','problem':'0','Submit':'Enviar','confirmation':'confirm'}).encode()
                 team.open(urllib.request.Request(base+'team/clar.php',payload),timeout=30).read()
-                sql="SELECT clarnumber FROM clartable WHERE contestnumber=1 ORDER BY clarnumber DESC LIMIT 1"
+                sql="SELECT clarnumber FROM clartable WHERE contestnumber=1 AND clarproblem=0 ORDER BY clarnumber DESC LIMIT 1"
                 number=raw_run(['docker','exec',names['db'],'psql','-U','postgres','-d','bocadb','-Atc',sql]).decode().strip()
                 assert number.isdecimal(),number
                 page=client.open(base+'admin/clar.php').read().decode('utf-8')
-                assert 'Aguardando resposta' in page and 'Ainda sem resposta' in page
+                assert 'Aguardando resposta' in page and 'Ainda sem resposta' in page and '>Geral</td>' in page
+                assert '>Geral</td>' in team.open(base+'team/clar.php').read().decode('utf-8')
+                assert '>Geral</td>' in judge.open(base+'judge/clar.php').read().decode('utf-8')
+                assert '>Geral</td>' in client.open(base+'admin/report/clar.php').read().decode('utf-8')
                 payload=urllib.parse.urlencode({'answer':'Resposta de teste','Submit':'Answer','number':number,'sitenumber':'1','confirmation':'confirm'}).encode()
                 client.open(urllib.request.Request(base+'admin/claredit.php',payload),timeout=30).read()
                 page=team.open(base+'team/clar.php').read().decode('utf-8')
-                assert 'Resposta de teste' in page
+                assert 'Resposta de teste' in page and '>Geral</td>' in page
                 page=client.open(base+'admin/clar.php').read().decode('utf-8')
                 assert 'Respondida' in page
                 print('Dúvida: envio, estado e resposta OK',flush=True)

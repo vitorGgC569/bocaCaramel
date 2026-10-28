@@ -119,7 +119,7 @@ if (($a = DBChiefGetClarToAnswer($clarnumber, $clarsitenumber,
       <tr> 
         <td width="20%" align=right><b>Questão:</b></td>
         <td width="80%"> 
-		<?php echo $a["problemname"]; ?>
+		<?php echo displayClarProblem($a["problemname"], $a["problemnumber"]); ?>
         </td>
       </tr>
       <tr> 

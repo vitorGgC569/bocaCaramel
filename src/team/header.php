@@ -99,7 +99,7 @@ if(!isset($_SESSION["popuptime"]) || $_SESSION["popuptime"] < time()-120) {
 			if ($clar[$i]["anstime"]>$_SESSION["usertable"]["userlastlogin"]-$st["sitestartdate"] && 
 				$clar[$i]["anstime"] < $st['siteduration'] &&
 				trim($clar[$i]["answer"])!='' && !isset($_SESSION["popups"]['clar' . $i . '-' . $clar[$i]["anstime"]])) {
-				$_SESSION["popups"]['clar' . $i . '-' . $clar[$i]["anstime"]] = "(Dúvida sobre a questão ".$clar[$i]["problem"]." respondida)\n";
+				$_SESSION["popups"]['clar' . $i . '-' . $clar[$i]["anstime"]] = "(Dúvida sobre a questão ".displayClarProblem($clar[$i]["problem"], $clar[$i]["problemnumber"])." respondida)\n";
 			}
 		}
 		$run = DBUserRuns($_SESSION["usertable"]["contestnumber"],

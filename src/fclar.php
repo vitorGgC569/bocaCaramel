@@ -79,7 +79,7 @@ function DBUserClars($contest,$site,$user) {
 
 	$c = DBConnect();
 	$r = DBExec($c, "select distinct c.clarsitenumber as site, c.clarnumber as number, c.clardatediff as timestamp, " .
-                                        "p.problemname as problem, c.clarstatus as status, c.clardata as question, " .
+                                        "p.problemname as problem, p.problemnumber as problemnumber, c.clarstatus as status, c.clardata as question, " .
                                         "c.claranswer as answer, c.updatetime as updatetime, c.clardatediffans as anstime " .
                              "from clartable as c, problemtable as p " .
                              "where c.contestnumber=$contest and p.contestnumber=c.contestnumber and " .
@@ -105,7 +105,7 @@ function DBUserClars($contest,$site,$user) {
 function DBJudgedClars($contest,$site,$user) {
 	$c = DBConnect();
 	$r = DBExec($c, "select distinct c.clarsitenumber as site, c.clarnumber as number, c.clardatediff as timestamp, " .
-                                        "p.problemname as problem, c.clarstatus as status, c.clardata as question, " .
+                                        "p.problemname as problem, p.problemnumber as problemnumber, c.clarstatus as status, c.clardata as question, " .
                                         "c.claranswer as answer, c.updatetime " .
                              "from clartable as c, problemtable as p " .
                              "where c.contestnumber=$contest and p.contestnumber=c.contestnumber and " .
@@ -508,7 +508,7 @@ function DBOpenClarsInSites($contest,$site) {
 function DBOpenClarsSNS($contest,$site,$st,$order='clar') {
 	$c = DBConnect();
 	$sql = "select distinct c.clarnumber as number, c.clardatediff as timestamp, c.claranswer as answer, " .
-                                "p.problemname as problem, c.clarstatus as status, c.clardata as question, " .
+                                "p.problemname as problem, p.problemnumber as problemnumber, c.clarstatus as status, c.clardata as question, " .
 				"c.clarsitenumber as site, c.clarjudge as judge, c.clarjudgesite as judgesite, " .
 				"c.usernumber as user " .
                              "from clartable as c, problemtable as p " .

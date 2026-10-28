@@ -70,7 +70,7 @@ for ($i=0; $i<count($clar); $i++) {
   echo "  <td nowrap>" . $clar[$i]["site"] . "</td>\n";
   echo "  <td nowrap>" . $clar[$i]["user"] . "</td>\n";
   echo "  <td nowrap>" . dateconvminutes($clar[$i]["timestamp"]) . "</td>\n";
-  echo "  <td nowrap>" . $clar[$i]["problem"] . "</td>\n";
+  echo "  <td nowrap>" . displayClarProblem($clar[$i]["problem"], $clar[$i]["problemnumber"]) . "</td>\n";
   if ($clar[$i]["judge"] == $_SESSION["usertable"]["usernumber"] &&
       $clar[$i]["judgesite"] == $_SESSION["usertable"]["usersitenumber"] && $clar[$i]["status"] == "answering")
     $color="ff7777";

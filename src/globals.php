@@ -557,6 +557,12 @@ function displayRunStatus($status) {
                     'deleted' => 'Excluída', 'gone' => 'Removida');
     return isset($labels[$status]) ? $labels[$status] : $status;
 }
+// The built-in problem zero represents general clarifications. Keep its stored
+// name and number unchanged; only localize its label on screen.
+function displayClarProblem($name, $number) {
+	return (string)$number === '0' && $name === 'General' ? 'Geral' : $name;
+}
+
 function displayClarStatus($status) {
     $labels = array('openclar' => 'Aguardando resposta', 'answering' => 'Em atendimento',
                     'answered' => 'Respondida', 'answeredsite' => 'Respondida à sede',
