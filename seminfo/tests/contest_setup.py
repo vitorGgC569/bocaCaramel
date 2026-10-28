@@ -207,6 +207,21 @@ def main(profile="si"):
                 page=team.open(base+'team/task.php').read().decode('utf-8')
                 assert 'Concluído' in page
                 print('Pedido de ajuda: equipe, atendimento e conclusão OK',flush=True)
+                # Clarification status labels must not alter the stored BOCA code.
+                payload=urllib.parse.urlencode({'message':'Dúvida de teste','problem':'1','Submit':'Enviar','confirmation':'confirm'}).encode()
+                team.open(urllib.request.Request(base+'team/clar.php',payload),timeout=30).read()
+                sql="SELECT clarnumber FROM clartable WHERE contestnumber=1 ORDER BY clarnumber DESC LIMIT 1"
+                number=raw_run(['docker','exec',names['db'],'psql','-U','postgres','-d','bocadb','-Atc',sql]).decode().strip()
+                assert number.isdecimal(),number
+                page=client.open(base+'admin/clar.php').read().decode('utf-8')
+                assert 'Aguardando resposta' in page and 'Ainda sem resposta' in page
+                payload=urllib.parse.urlencode({'answer':'Resposta de teste','Submit':'Answer','number':number,'sitenumber':'1','confirmation':'confirm'}).encode()
+                client.open(urllib.request.Request(base+'admin/claredit.php',payload),timeout=30).read()
+                page=team.open(base+'team/clar.php').read().decode('utf-8')
+                assert 'Resposta de teste' in page
+                page=client.open(base+'admin/clar.php').read().decode('utf-8')
+                assert 'Respondida' in page
+                print('Dúvida: envio, estado e resposta OK',flush=True)
                 for filename,source in [('correta.c',b'#include <stdio.h>\nint main(){puts("99");}\n'),
                                         ('errada.c',b'#include <stdio.h>\nint main(){puts("0");}\n')]:
                     payload,kind=multipart({'problem':'1','language':'1','Submit':'Send','confirmation':'confirm'},
@@ -222,6 +237,7 @@ def main(profile="si"):
                 answer_query="SELECT shortname FROM answertable WHERE contestnumber=1 AND answernumber="
                 verdicts=[raw_run(['docker','exec',names['db'],'psql','-U','postgres','-d','bocadb','-Atc',answer_query+str(int(r['runanswer']))]).decode().strip() for r in rows]
                 print('Envio HTTP da equipe: '+str(verdicts),flush=True)
+                assert 'Julgada' in client.open(base+'admin/run.php').read().decode('utf-8')
                 assert int(rows[0]['runanswer']) == 1 and int(rows[1]['runanswer']) == 6, rows
                 team_page=team.open(base+'team/run.php').read().decode('utf-8')
                 assert 'correta.c' in team_page and 'errada.c' in team_page

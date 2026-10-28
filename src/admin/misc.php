@@ -29,7 +29,7 @@ require 'header.php';
     }
     function conf2() {
       if (confirm("Confirmar a atualização do BOCA?")) {
-		  if (confirm("This operation may perform considerable changes to your BOCA system. Confirmar?")) {
+		  if (confirm("Esta operação pode fazer alterações significativas no BOCA. Confirmar?")) {
 			  document.form1.confirmation.value='confirm';
 		  }
       }

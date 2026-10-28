@@ -432,7 +432,7 @@ function DBContestInfo($contest, $c=null) {
 	$a = DBGetRow ($sql, 0, $c);
 	if ($a == null) {
 		LOGError("Unable to find the contest $contest in the database. SQL=(" . $sql . ")");
-		MSGError("Unable to find the contest $contest in the database. Contact an admin now!");
+		MSGError("Não foi possível encontrar a competição $contest no banco de dados. Contate a administração.");
 		return null;
 	}
 	return $a;
@@ -690,8 +690,8 @@ function DBUpdateSite ($param,$c=null) {
 		$a = DBGetRow ("select * from sitetable where contestnumber=$contestnumber and sitenumber=$sitenumber", 0, $c);
 		if ($a == null) {
 			DBExec($c, "rollback work", "DBUpdateSite(rollback-errorsite)");
-			MSGError("DBUpdateSite update error: impossible to create a site in the DB");
-			LOGLevel("DBUpdateSite update error: impossible to create a site in the DB",0);
+			MSGError("Não foi possível criar a sede no banco de dados.");
+			LOGLevel("Não foi possível criar a sede no banco de dados.",0);
 			return false;
 		}
 	}
@@ -834,7 +834,7 @@ function DBUpdateContest ($param, $c=null) {
 	}
 	$a = DBGetRow("select * from contesttable where contestnumber=$number for update", 0, $c, "DBUpdateContest(get for update)");
 	if($a == null) {
-		MSGError("Error updating contest $number -- not found");
+		MSGError("Não foi possível atualizar a competição $number: ela não foi encontrada.");
 		LOGError("DBUpdateContest contest $number not found");
 		return false;
 	}
@@ -976,7 +976,7 @@ function DBRenewSiteTime($param, $c=null) {
 		if(!isset($param[$i]['enddate'])) $param[$i]['enddate']=0;
 
 		if($param[$i]['contest'] != $param[0]['contest'] || $param[$i]['site'] != $param[0]['site']) {
-			MSGError("DBRenewSiteTime param error: contest and site have to match over all instances");
+			MSGError("As identificações da competição e da sede devem coincidir em todas as instâncias.");
 			return false;
 		}
 	}
@@ -1316,7 +1316,7 @@ function DBNewUser($param, $c=null) {
 	if($n == 0) {
 	  if($cw)
 	    DBExec ($c, "rollback work","DBNewUser(no-site)");
-	  MSGError("DBNewUser param error: site $site does not exist");
+	  MSGError("Não foi possível criar o usuário: a sede $site não existe.");
 	  return false;
 	}
 	if($pass != myhash("") && $type != "admin" && $changepass != "t" && substr($pass,0,1) != "!") $pass='!'.$pass;
@@ -1335,7 +1335,7 @@ function DBNewUser($param, $c=null) {
 		   if($aa==null) {
 		     if($cw)
 		   	DBExec ($c, "rollback work");
-		     MSGError("Site $site does not exist");
+		     MSGError("A sede $site não existe.");
 		     return false;
 		   }
 			$sql = "insert into usertable (contestnumber, usersitenumber, usernumber, username, usericpcid, userfullname, " .

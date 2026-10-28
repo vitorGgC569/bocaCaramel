@@ -79,7 +79,7 @@ for ($i=0; $i<count($clar); $i++) {
   else if ($clar[$i]["status"] == "openclar") $color="ffff88";
   else $color="ffffff";
 
-  echo "  <td nowrap bgcolor=\"#$color\">" . $clar[$i]["status"] . "</td>\n";
+  echo "  <td nowrap bgcolor=\"#$color\">" . displayClarStatus($clar[$i]["status"]) . "</td>\n";
   if ($clar[$i]["judge"] != "") {
     $u = DBUserInfo ($_SESSION["usertable"]["contestnumber"], $clar[$i]["judgesite"], $clar[$i]["judge"]);
     echo "  <td nowrap>" . $u["username"] . " (" . $clar[$i]["judgesite"] . ")</td>\n";
@@ -94,7 +94,7 @@ for ($i=0; $i<count($clar); $i++) {
 //  echo $clar[$i]["question"];
   echo "  <textarea name=\"m$i\" cols=\"60\" rows=\"8\" readonly>". unsanitizeText($clar[$i]["question"]) ."</textarea>\n";
   echo "</td>\n";
-  if (trim($clar[$i]["answer"]) == "") $clar[$i]["answer"] = "Not answered yet";
+  if (trim($clar[$i]["answer"]) == "") $clar[$i]["answer"] = "Ainda sem resposta";
   echo "  <td>";
 //  echo "  <pre>" . $clar[$i]["answer"] . "</pre>";
 //  echo $clar[$i]["answer"];

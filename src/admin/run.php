@@ -130,7 +130,7 @@ for ($i=0; $i<count($run); $i++) {
   else if ($run[$i]["status"] == "openrun") $color="ffff88";
   else $color="ffffff";
 
-  echo "  <td nowrap bgcolor=\"#$color\">" . $run[$i]["status"] . "</td>\n";
+  echo "  <td nowrap bgcolor=\"#$color\">" . displayRunStatus($run[$i]["status"]) . "</td>\n";
   if ($run[$i]["judge"] != "") {
 	echo "  <td nowrap>" . $us[$run[$i]["judgesite"] .'-'. $run[$i]["judge"]] . " (" . $run[$i]["judgesite"] . ")";
   } else

@@ -64,7 +64,7 @@ for ($i=0; $i<count($clar); $i++) {
   else if ($clar[$i]["status"] == "openclar") $color="ffff88";
   else $color="ffffff";
 
-  echo "  <td nowrap bgcolor=\"#$color\">" . $clar[$i]["status"] . "</td>\n";
+  echo "  <td nowrap bgcolor=\"#$color\">" . displayClarStatus($clar[$i]["status"]) . "</td>\n";
  
   if ($clar[$i]["question"] == "") $clar[$i]["question"] = "&nbsp;";
 

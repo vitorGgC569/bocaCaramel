@@ -147,7 +147,7 @@ echo $run[$i]["number"] . "</td>";
   else if ($run[$i]["status"] == "openrun") $color="ffff88";
   else $color="ffffff";
 
-  echo "  <td nowrap bgcolor=\"#$color\">" . $run[$i]["status"] . "</td>\n";
+  echo "  <td nowrap bgcolor=\"#$color\">" . displayRunStatus($run[$i]["status"]) . "</td>\n";
 /*  
 if ($run[$i]["judge"] != "") {
 	$u = DBUserInfo ($_SESSION["usertable"]["contestnumber"], $run[$i]["judgesite"], $run[$i]["judge"]);

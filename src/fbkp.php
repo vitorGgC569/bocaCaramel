@@ -101,7 +101,7 @@ function DBNewBkp($contest, $site, $user, $filename, $filepath, $size) {
         if($a['n']>100) {
 		DBExec($c, "rollback work", "DBNewBkp(rollback-toomany)");
 		LOGError("Too many bkps from user=$user, site=$site, contest=$contest.",2);
-		MSGError("Too many bkp files. Try remove some of them before uploading another.");
+		MSGError("Há muitos arquivos de backup. Remova algum antes de enviar outro.");
 		return false;
 	}
 

@@ -127,7 +127,7 @@ else if (isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_FILES["imp
 								}
 						}
 					}
-					MSGError($oklines . ' users included/updated successfully');
+					MSGError($oklines . ' usuários incluídos ou atualizados com sucesso');
 				} else if(strtolower(substr($name,-4))==".tab") {
 					$oklines=0;
 					for ($i=0; $i<count($ar); $i++) {
@@ -159,7 +159,7 @@ else if (isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_FILES["imp
 								}
 						}
 					}
-					MSGError($oklines . ' users included/updated successfully');
+					MSGError($oklines . ' usuários incluídos ou atualizados com sucesso');
 				} else {
 					for ($i=0; $i < count($ar) && strpos($ar[$i], "[user]") === false; $i++) ;
 					if($i >= count($ar)) MSGError('Formato de arquivo não reconhecido');
@@ -364,7 +364,7 @@ As alterações substituirão os dados já cadastrados.<br>
 <?php 
 if (isset($u)) {
   echo "    function conf4() {\n";
-  echo "      if (confirm('Confirm the deletion?')) {\n";
+  echo "      if (confirm('Confirmar a exclusão?')) {\n";
   echo "       document.form3.confirmation.value='delete';\n";
   echo "      }\n";
   echo "    }\n";

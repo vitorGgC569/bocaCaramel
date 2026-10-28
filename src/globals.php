@@ -309,7 +309,7 @@ function InvalidSession($where) {
 	$msg = "Session expired on $where";
 	LOGLevel($msg,3);
 	unset($_SESSION["usertable"]);
-	MSGError("Session expired. You must log in again.");
+	MSGError("A sessão expirou. Entre novamente.");
 }
 //trata o caso de tentativa de burlar as regras
 function IntrusionNotify($where) {
@@ -536,6 +536,18 @@ function match_network ($nets, $ip) {
         }
     }
     return false;
+}
+function displayRunStatus($status) {
+    $labels = array('openrun' => 'Aguardando julgamento', 'judging' => 'Em julgamento',
+                    'judged' => 'Julgada', 'judged+' => 'Aguardando novo julgamento',
+                    'deleted' => 'Excluída', 'gone' => 'Removida');
+    return isset($labels[$status]) ? $labels[$status] : $status;
+}
+function displayClarStatus($status) {
+    $labels = array('openclar' => 'Aguardando resposta', 'answering' => 'Em atendimento',
+                    'answered' => 'Respondida', 'answeredsite' => 'Respondida à sede',
+                    'answeredall' => 'Respondida a todos', 'deleted' => 'Excluída');
+    return isset($labels[$status]) ? $labels[$status] : $status;
 }
 // Rótulos apresentados ao operador; os códigos e descrições armazenados permanecem iguais.
 function displayTaskStatus($status) {

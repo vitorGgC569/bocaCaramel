@@ -429,7 +429,7 @@ if($redo) {
 	$randnum = session_id() . "_" . rand();
 	if(file_put_contents($scoretmp . "_" . $randnum, $strtmp,LOCK_EX)===FALSE) {
 		if($_SESSION["usertable"]["usertype"] == 'admin') {
-			MSGError("Cannot write to the score cache file -- performance might be compromised");
+			MSGError("Não foi possível gravar o cache do placar; o desempenho pode ser afetado.");
 		}
 		LOGError("Cannot write to the ".$_SESSION["usertable"]["usertype"]."-score cache file -- performance might be compromised");
 	} else {

@@ -127,7 +127,7 @@ if (isset($_POST["Submit3"]) && isset($_POST["penalty"]) && is_numeric($_POST["p
 				}
 				if($dd > 0) {
 					$param['keys']=implode(',',$ar);
-					MSGError(count($ar) . ' keys are being imported from the file');
+					MSGError(count($ar) . ' chaves estão sendo importadas do arquivo');
 					DBClearProblemTmp($_SESSION["usertable"]["contestnumber"]);
 				}
 			}
@@ -157,15 +157,14 @@ if (isset($_POST["Submit3"]) && isset($_POST["penalty"]) && is_numeric($_POST["p
       }
     }
     function conf2() {
-      if (confirm("This will restart all start/stop related information in all the sites.\n\
-If you have a contest running, the result is unpredictable. Are you really sure?")) {
+      if (confirm("Esta operação reiniciará as informações de início e término em todas as sedes.\n\
+Se houver uma prova em andamento, o resultado será imprevisível. Confirmar?")) {
         document.form1.confirmation.value='confirm';
       }
     }
     function conf3() {
-      if (confirm("This will make your site become the main site, that is, this site will\n\
-play an active position in the contest regarding the information\n\
-flow. ARE YOU SURE?")) {
+      if (confirm("Esta sede se tornará a sede principal e coordenará o fluxo de informações da competição.\n\
+Confirmar?")) {
         document.form1.confirmation.value='confirm';
       }
     }

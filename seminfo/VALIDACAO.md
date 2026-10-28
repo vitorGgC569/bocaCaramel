@@ -35,6 +35,8 @@ Na revisão seguinte, os botões administrativos e de julgamento foram traduzido
 
 Na revisão dos pedidos e estatísticas, o teste isolado em TII criou um pedido de ajuda pela equipe, conferiu a apresentação para a administração e verificou as fases aguardando, em atendimento e concluído. O mesmo ensaio confirmou o Builder, quatro linguagens, restauração e submissões YES e WA. Os gráficos de pizza e barras foram gerados na imagem com título em português; a sintaxe PHP e os 56 testes de unidade passaram.
 
+Na revisão dos estados e mensagens de erro, um ensaio isolado de TII enviou uma dúvida pela equipe, conferiu o estado na administração e registrou uma resposta recebida pela equipe. Também verificou o estado de submissão julgada, os resultados YES e WA, o Builder, as quatro linguagens e a restauração. Os códigos internos foram preservados; passaram os 56 testes de unidade e a verificação de sintaxe PHP.
+
 Essas evidências não homologam as salas físicas. Os seis ensaios a seguir devem ser realizados presencialmente em cada laboratório; não registre atestados sem executá-los.
 
 ## Uma ficha presencial por laboratório

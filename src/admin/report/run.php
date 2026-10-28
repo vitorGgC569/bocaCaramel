@@ -56,7 +56,7 @@ for ($i=0; $i<count($run); $i++) {
     echo "<td>&nbsp;</td>\n";
     echo "<td>&nbsp;</td>\n";
     echo "<td>&nbsp;</td>\n";
-    echo "  <td nowrap>" . $run[$i]["status"] . "</td>\n";
+    echo "  <td nowrap>" . displayRunStatus($run[$i]["status"]) . "</td>\n";
     if ($run[$i]["judge"] != "") {
 	$u = DBUserInfo ($_SESSION["usertable"]["contestnumber"], $run[$i]["judgesite"], $run[$i]["judge"]);
 	echo "  <td nowrap>" . $u["username"] . " (" . $run[$i]["judgesite"] . ")</td>\n";
@@ -74,7 +74,7 @@ for ($i=0; $i<count($run); $i++) {
   echo "  <td nowrap>" . $run[$i]["language"] . "</td>\n";
   echo "  <td nowrap>" . $run[$i]["filename"] . "</td>\n";
 
-  echo "  <td nowrap>" . $run[$i]["status"] . "</td>\n";
+  echo "  <td nowrap>" . displayRunStatus($run[$i]["status"]) . "</td>\n";
   if ($run[$i]["judge"] != "") {
 	$u = DBUserInfo ($_SESSION["usertable"]["contestnumber"], $run[$i]["judgesite"], $run[$i]["judge"]);
 	echo "  <td nowrap>" . $u["username"] . " (" . $run[$i]["judgesite"] . ")</td>\n";

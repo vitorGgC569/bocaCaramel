@@ -47,7 +47,7 @@ for ($i=0; $i<count($clar); $i++) {
     echo "  <td nowrap>" . $clar[$i]["number"] . "(" . $clar[$i]["site"] . ")</td>\n";
   echo "  <td nowrap>" . dateconvminutes($clar[$i]["timestamp"]) . "</td>\n";
   echo "  <td nowrap>" . $clar[$i]["problem"] . "</td>\n";
-  echo "  <td nowrap>" . $clar[$i]["status"] . "</td>\n";
+  echo "  <td nowrap>" . displayClarStatus($clar[$i]["status"]) . "</td>\n";
   if ($clar[$i]["question"] == "") $clar[$i]["question"] = "&nbsp;";
   if ($clar[$i]["answer"] == "") $clar[$i]["answer"] = "&nbsp;";
 
@@ -56,7 +56,7 @@ for ($i=0; $i<count($clar); $i++) {
 //  echo $clar[$i]["question"];
   echo "  <textarea name=\"m$i\" cols=\"60\" rows=\"8\" readonly>". unsanitizeText($clar[$i]["question"]) ."</textarea>\n";
   echo "</td>\n";
-  if (trim($clar[$i]["answer"]) == "") $clar[$i]["answer"] = "Not answered yet";
+  if (trim($clar[$i]["answer"]) == "") $clar[$i]["answer"] = "Ainda sem resposta";
   echo "  <td>";
 //  echo "  <pre>" . $clar[$i]["answer"] . "</pre>";
 //  echo $clar[$i]["answer"];
@@ -106,7 +106,7 @@ for ($i=0; $i<count($run); $i++) {
   echo "  <td nowrap>" . dateconvminutes($run[$i]["timestamp"]) . "</td>\n";
   echo "  <td nowrap>" . $run[$i]["problem"] . "</td>\n";
   echo "  <td nowrap>" . $run[$i]["language"] . "</td>\n";
-  echo "  <td nowrap>" . $run[$i]["status"] . "</td>\n";
+  echo "  <td nowrap>" . displayRunStatus($run[$i]["status"]) . "</td>\n";
   if ($run[$i]["answer"] == "") $run[$i]["answer"] = "&nbsp;";
   echo "  <td>" . $run[$i]["answer"] . "</td>\n";
   echo " </tr>\n";

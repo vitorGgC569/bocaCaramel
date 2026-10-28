@@ -855,7 +855,7 @@ function DBNewRun($param,$c=null,$allowinsert=true) {
 			if (($oid = DB_lo_import($c, $filepath)) === false) {
 				DBExec($c, "rollback work", "DBNewRun(rollback-import)");
 				LOGError("DBNewRun: Unable to create a large object for file $filepath.");
-				MSGError("problem importing file $filepath to database. Contact an admin now!");
+				MSGError("Não foi possível importar o arquivo $filepath para o banco de dados. Contate a administração.");
 				return false;
 			}
 		} else {
@@ -863,7 +863,7 @@ function DBNewRun($param,$c=null,$allowinsert=true) {
 			if (($oid = DB_lo_import_text($c, $filepath)) == null) {
 				DBExec($c, "rollback work", "DBNewRun(rollback-import)");
 				LOGError("DBNewRun: Unable to create a large object for file.");
-				MSGError("problem importing file to database. Contact an admin now!");
+				MSGError("Não foi possível importar o arquivo para o banco de dados. Contate a administração.");
 				return false;
 			}
 		}

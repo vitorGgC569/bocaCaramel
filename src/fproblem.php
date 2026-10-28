@@ -78,7 +78,7 @@ function DBGetProblemData($contestnumber, $problemnumber, $c=null) {
   $n = DBnlines($r);
   if ($n == 0) {
     LOGError("Unable to find problem data in the database ($contestnumber, $problemnumber)");
-    MSGError("Unable to find problem data in the database. Contact an admin now!");
+    MSGError("Não foi possível encontrar os dados da questão. Contate a administração.");
     exit;
   }
   $a = array();
@@ -374,7 +374,7 @@ function DBNewProblem($contestnumber, $param, $c=null) {
 	  if (($oid1 = DB_lo_import($c, $inputfilepath)) === false) {
 	    DBExec($c, "rollback work", "DBNewProblem(rollback-input)");
 	    LOGError("Unable to create a large object for file $inputfilename.");
-	    MSGError("problem importing file to database. See log for details!");
+	    MSGError("Não foi possível importar o arquivo para o banco de dados. Consulte os registros.");
 	    exit;
 	  }
 	  if($oldoid != '') DB_lo_unlink($c,$oldoid);
@@ -392,7 +392,7 @@ function DBNewProblem($contestnumber, $param, $c=null) {
 	if (($oid1 = DB_lo_import_text($c, $inputfilepath)) == null) {
 	  DBExec($c, "rollback work", "DBNewProblem(rollback-i-import)");
 	  LOGError("Unable to import the large object for file $inputfilename.");
-	  MSGError("problem importing file to database. See log for details!");
+	  MSGError("Não foi possível importar o arquivo para o banco de dados. Consulte os registros.");
 	  exit;
 	}
 	if($oldoid != '') DB_lo_unlink($c,$oldoid);
