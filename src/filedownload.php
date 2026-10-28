@@ -43,7 +43,7 @@ else
 	$p = myhash($_GET["oid"] . $fname . $uglysalt . $cf["key"]);
 
 if($p != $_GET["check"]) {
-        echo "<html><head><title>View Page</title>";
+        echo "<html><head><title>Download de arquivo</title>";
         IntrusionNotify("Parameters modified in filedownload.php. ");
         ForceLoad("index.php");
 }
@@ -58,7 +58,7 @@ if ($_GET["oid"]>=0) {
 		echo "<html><head><title>Download de arquivo</title>";
 		DBExec($c, "rollback work");
 		LOGError ("Unable to download file (" . basename($fname) . ")");
-		MSGError ("Unable to download file (" . basename($fname) . ")");
+		MSGError ("Não foi possível baixar o arquivo (" . basename($fname) . ")");
 		ForceLoad("index.php");
 	}
 
@@ -79,7 +79,7 @@ if ($_GET["oid"]>=0) {
 		echo "<html><head><title>Download de arquivo</title>";
 		DBExec($c, "rollback work");
 		LOGError ("Unable to download file (" . basename($fname) . ")");
-		MSGError ("Unable to download file (" . basename($fname) . ")");
+		MSGError ("Não foi possível baixar o arquivo (" . basename($fname) . ")");
 		ForceLoad("index.php");
 	}
 	DB_lo_close($lo);
@@ -100,7 +100,7 @@ if ($_GET["oid"]>=0) {
 	if (($str=file_get_contents($fname))===false) {
 		header ("Content-type: text/html");
 		echo "<html><head><title>Download de arquivo</title>";
-		MSGError ("Unable to open file (" . basename($fname) . ")");
+		MSGError ("Não foi possível abrir o arquivo (" . basename($fname) . ")");
 		LOGError ("Unable to open file (" . basename($fname) . ")");
 		ForceLoad('index.php');
 		exit;

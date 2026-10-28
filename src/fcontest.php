@@ -1227,7 +1227,7 @@ function DBUserUpdate($contest, $site, $user, $username, $userfull, $userdesc, $
 			DBExec ($c, "rollback work");
 			LOGLevel("User " . $_SESSION["usertable"]["username"]."/". $_SESSION["usertable"]["usersitenumber"] . " couldn't change his settings " .
 				"(user=$user,site=$site,contest=$contest)",2);
-			MSGError ("Update problem (maybe username already in use). No data was changed.");
+			MSGError ("Não foi possível atualizar os dados. O nome de usuário pode já estar em uso. Nenhum dado foi alterado.");
 		}
 	}
 }
@@ -1371,7 +1371,7 @@ function DBNewUser($param, $c=null) {
 	  if($cw)
 	    DBExec ($c, "rollback work");
 	  LOGLevel ("Update problem for user $user (site=$site,contest=$contest) (maybe username already in use).",1);
-	  MSGError ("Update problem for user $user, site $site (maybe username already in use).");
+	  MSGError ("Não foi possível atualizar o usuário $user da sede $site. O nome de usuário pode já estar em uso.");
 	  return false;
 	}
 	if($cw) DBExec($c, "commit work");
