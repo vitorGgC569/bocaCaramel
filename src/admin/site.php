@@ -311,7 +311,7 @@ if ($main && isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_POST["
   <center>
     <table border="0">
       <tr>
-        <td width="35%" align=right>Site number:</td>
+        <td width="35%" align=right>Número do local:</td>
         <td width="65%">
 <?php
 echo "<select onChange=\"sitech()\" name=\"site\">\n";
@@ -383,7 +383,7 @@ echo "        <td nowrap width=\"35%\" align=right>Start date (contest=" . datec
 <?php
 if (!$st["siterunning"]) {
 	echo "      <tr>\n";
-	echo "        <td nowrap width=\"35%\" align=right><b>Site finished at:</b></td>\n";
+	echo "        <td nowrap width=\"35%\" align=right><b>Local encerrado em:</b></td>\n";
 	echo "        <td width=\"65%\"><b>" . dateconv($st["siteendeddate"]) . "</b></td>\n";
 	echo "      </tr>\n";
 	if($st["siteautoended"])
@@ -467,7 +467,7 @@ echo "):</td>";
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Global score:</td>
+        <td width="35%" align=right>Placar global:</td>
         <td width="65%">
           <input type="text" name="globalscore" value="<?php echo $st["siteglobalscore"]; ?>" size="20" maxlength="50" />
         </td>
@@ -496,23 +496,23 @@ echo "):</td>";
         </td>
       </tr>
       <tr>
-        <td width=\"35%\" align=right>Score level:</td>
+        <td width=\"35%\" align=right>Nível do placar:</td>
         <td width="65%">
           <input type="text" name="scorelevel" value="<?php echo $st["sitescorelevel"]; ?>" size="2" maxlength="2" />
         </td>
       </tr>
       <tr>
-        <td width=\"35%\" align=right>Number of Clars:</td>
+        <td width=\"35%\" align=right>Número de dúvidas:</td>
         <td width="65%"><?php echo $st["sitenextclar"]; ?>
         </td>
       </tr>
       <tr>
-        <td width=\"35%\" align=right>Number of Runs:</td>
+        <td width=\"35%\" align=right>Número de submissões:</td>
         <td width="65%"><?php echo $st["sitenextrun"]; ?>
         </td>
       </tr>
       <tr>
-        <td width=\"35%\" align=right>Number of Tasks:</td>
+        <td width=\"35%\" align=right>Número de pedidos:</td>
         <td width="65%"><?php echo $st["sitenexttask"]; ?>
         </td>
       </tr>
@@ -603,7 +603,7 @@ if($main) {
   <center>
     <table border="0">
       <tr>
-        <td width="25%" align=right>Import file:</td>
+        <td width="25%" align=right>Arquivo para importação:</td>
         <td width="75%">
           <input type="file" name="importfile" size="40">
         </td>
@@ -616,7 +616,7 @@ if($main) {
 <div id="normal">
 <div id="popupnew">
 <form action="site.php" id="formnew" method="get" name="formnew">
-<h2>Choose site number</h2>
+<h2>Selecione o número do local</h2>
 <input id="new" name="Number" placeholder="new" type="text">
 <input type="submit" name="Go" value="Go">
 </form>

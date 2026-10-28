@@ -324,7 +324,7 @@ The file must be in the format defined in the admin's manual.</b></center>
   <center>
     <table border="0">
       <tr>
-        <td width="25%" align=right>Import file:</td>
+        <td width="25%" align=right>Arquivo para importação:</td>
         <td width="75%">
           <input type="file" name="importfile" size="40">
         </td>
@@ -346,7 +346,7 @@ The file must be in the format defined in the admin's manual.</b></center>
 
   <br><br>
   <center>
-<b>To create/edit one user, enter the data below.<br>
+<b>Para criar ou editar um usuário, informe os dados abaixo.<br>
 Note that any changes will overwrite the already defined data.<br>
 (Specially care if you use a user number that is already existent.)<br>
 <br>
@@ -474,7 +474,7 @@ echo $u["userdesc"]; } ?>" size="50" maxlength="300" />
         </td>
       </tr>
       <tr> 
-        <td width="35%" align=right>Allow password change:</td>
+        <td width="35%" align=right>Permitir alteração de senha:</td>
         <td width="65%">
 		<select name="changepass">
 		<option <?php if(isset($u) && $u["changepassword"]) echo "selected"; ?> value="t">Yes</option>

@@ -133,7 +133,7 @@ for ($i=0; $i<count($cs); $i++) {
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Start date:</td>
+        <td width="35%" align=right>Data de início:</td>
         <td width="65%"> hh:mm
           <input type="text" <?php if(!$main) echo "readonly"; ?> name="startdateh" value="<?php echo date("H", $ct["conteststartdate"]); ?>" size="2" maxlength="2" />
           :
@@ -171,7 +171,7 @@ for ($i=0; $i<count($cs); $i++) {
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Max file size allowed for teams (in KB):</td>
+        <td width="35%" align=right>Tamanho máximo de arquivo das equipes (em KB):</td>
         <td width="65%">
           <input type="text" name="maxfilesize" <?php if(!$main) echo "readonly"; ?> 
                value="<?php echo $ct["contestmaxfilesize"]/1000; ?>" size="20" maxlength="20" />
@@ -183,7 +183,7 @@ for ($i=0; $i<count($cs); $i++) {
     <?php echo ini_get('post_max_size').'B(max. post) and '.ini_get('upload_max_filesize').'B(max. filesize)'; ?>
   </td></tr>
       <tr>
-							<td width="35%" align=right>Contest main site URL (IP/bocafolder):</td>
+							<td width="35%" align=right>URL do local principal da competição (IP/pasta do BOCA):</td>
         <td width="65%">
           <input type="text" name="mainsiteurl" value="<?php echo $ct["contestmainsiteurl"]; ?>" size="40" maxlength="200" />
         </td>
@@ -207,7 +207,7 @@ for ($i=0; $i<count($cs); $i++) {
       <input type="submit" name="Submit3" value="Activate" onClick="conf()">
       <input type="reset" name="Submit4" value="Clear">
   </center>
-							<?php } else { echo "<br><br><center>Select a contest or create a new one.</center><br><br>"; } ?>
+							<?php } else { echo "<br><br><center>Selecione uma competição ou crie uma nova.</center><br><br>"; } ?>
 </form>
 
 </body>

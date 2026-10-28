@@ -188,7 +188,7 @@ echo $contest;
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Start date:</td>
+        <td width="35%" align=right>Data de início:</td>
         <td width="65%"> hh:mm
           <input type="text" <?php if(!$main) echo "readonly"; ?> name="startdateh" value="<?php echo date("H", $ct["conteststartdate"]); ?>" size="2" maxlength="2" />
           :
@@ -226,7 +226,7 @@ echo $contest;
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Max file size allowed for teams (in KB):</td>
+        <td width="35%" align=right>Tamanho máximo de arquivo das equipes (em KB):</td>
         <td width="65%">
           <input type="text" name="maxfilesize" <?php if(!$main) echo "readonly"; ?> 
 		value="<?php echo $ct["contestmaxfilesize"]/1000; ?>" size="20" maxlength="20" />
@@ -242,7 +242,7 @@ echo $contest;
 <?php echo ini_get('session.gc_maxlifetime').'s of session expiration and ' . ini_get('session.cookie_lifetime') . ' as cookie lifetime (0 means unlimited)'; ?>
   </td></tr>
       <tr>
-							<td width="35%" align=right>Main site URL (IP/bocafolder):</td>
+							<td width="35%" align=right>URL do local principal (IP/pasta do BOCA):</td>
         <td width="65%">
           <input type="text" name="mainsiteurl" value="<?php echo $ct["contestmainsiteurl"]; ?>" size="40" maxlength="200" />
         </td>
@@ -250,7 +250,7 @@ echo $contest;
 <?php
   $exd = explode(' ',$ct["contestmainsiteurl"]);
   if(count($exd) >= 4 && is_numeric($exd[3]) && $exd[3] > 0)
-    echo "<tr><td width=\"35%\" align=right>Last update from mainsite:</td><td width=\"65%\">" . dateconv($exd[3]) . "</td></tr>\n";
+    echo "<tr><td width=\"35%\" align=right>Última atualização do local principal:</td><td width=\"65%\">" . dateconv($exd[3]) . "</td></tr>\n";
 ?>
       <tr>
 							<td width="35%" align=right>Unlock password (only use it within a <b>rede segura</b>):</td>

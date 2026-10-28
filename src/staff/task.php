@@ -162,7 +162,7 @@ for ($i=0; $i<count($task); $i++) {
   echo "&nbsp;</td>\n";
 }
 echo "</table>";
-if (!$anyprinted) echo "<br><center><b><font color=\"#ff0000\">NO TASKS FOUND</font></b></center>";
+if (!$anyprinted) echo "<br><center><b><font color=\"#ff0000\">NENHUM PEDIDO ENCONTRADO</font></b></center>";
 
 ?>
 

@@ -498,7 +498,7 @@ for ($i=0; $i<count($prob); $i++) {
   echo " </tr>\n";
 }
 echo "</table></form>";
-if (count($prob) == 0) echo "<br><center><b><font color=\"#ff0000\">NO PROBLEMS DEFINED</font></b></center>";
+if (count($prob) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUMA QUESTÃO CADASTRADA</font></b></center>";
 
 ?>
 

@@ -95,10 +95,10 @@ for ($i=0; $i<count($ans); $i++) {
     $n++;
 }
 echo "</table>";
-if ($n == 0) echo "<br><center><b><font color=\"#ff0000\">NO ANSWERS DEFINED</font></b></center>";
+if ($n == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUMA RESPOSTA CADASTRADA</font></b></center>";
 ?>
 
-<br><br><center><b>When allowed, clicking on the answer number will delete it.<br>
+<br><br><center><b>Quando permitido, clique no número da resposta para excluí-la.<br>
 	Inputting with the same number of an existing one will update its description.<br>
 	TAKE CARE: deleting an answer will remove EVERYTHING related to it (ALSO IN OTHER TABLES!!).<br>
 		It is NOT recommended to change anything while the contest is running.<br>
@@ -109,7 +109,7 @@ if ($n == 0) echo "<br><center><b><font color=\"#ff0000\">NO ANSWERS DEFINED</fo
   <input type=hidden name="confirmation" value="noconfirm" />
     <table border="0">
       <tr>
-        <td width="35%" align=right>Number:</td>
+        <td width="35%" align=right>Número:</td>
         <td width="65%">
           <input type="text" name="answernumber" value="" size="20" maxlength="20" />
         </td>

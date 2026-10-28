@@ -80,7 +80,7 @@ function computeHASH()
   <center>
     <table border="0">
       <tr>
-        <td width="50%" align=right>Local site number:</td>
+        <td width="50%" align=right>Número do local:</td>
         <td width="50%">
 	<input type="text" name="localsite" size="10">
         </td>
@@ -88,7 +88,7 @@ function computeHASH()
       <tr><td width="50%" align=right>Challenge string:</td><td width="50%"><input type="text" name="challenge" size="20"></td></tr>
 <!--
       <tr>
-        <td width="50%" align=right>Import file:</td>
+        <td width="50%" align=right>Arquivo para importação:</td>
         <td width="50%">
 				<input type="file" name="importfile" size="40">
         </td>

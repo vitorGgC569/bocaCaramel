@@ -49,7 +49,7 @@ if (isset($_GET)) {
 		"resizable=yes')\">Task List</a><br />\n";
       echo " <a href=\"#\" class=menu style=\"font-weight:bold\" onClick=\"window.open('report/site.php', ".
 		"'Start/Stop Logs','width=800,height=600,scrollbars=yes,toolbar=yes,menubar=yes,".
-		"resizable=yes')\">Site Start/Stop Logs</a><br />\n";
+		"resizable=yes')\">Registros de início e parada do local</a><br />\n";
       echo " <a href=\"#\" class=menu style=\"font-weight:bold\" onClick=\"window.open('report/icpc.php', ".
 		"'ICPC File','width=800,height=600,scrollbars=yes,toolbar=yes,menubar=yes,".
 		"resizable=yes')\">Arquivo ICPC</a><br />\n";

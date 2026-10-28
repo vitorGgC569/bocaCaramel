@@ -137,7 +137,7 @@ if(isset($_POST["Submit"])) {
 						   'permitip'=>-1);
 
 		if(strtoupper(substr($ar,0,5)) != '<XML>' && isset($_POST['password']) && strlen($_POST['password'])>20) {
-			echo "<br>Starting to create the contest<br>";
+			echo "<br>Iniciando a criação da competição<br>";
 			$str = strtok($ar," \n\t");
 			$str = strtok(" \n\t");
 			$ar = decryptData($str,$_POST['password'],'importxml');
@@ -188,7 +188,7 @@ function computeHASH()
   <center>
     <table border="0">
       <tr>
-        <td width="50%" align=right>Local site number:</td>
+        <td width="50%" align=right>Número do local:</td>
         <td width="50%">
 <?php
 	if(isset($_POST["localsite"])) {
@@ -205,7 +205,7 @@ function computeHASH()
 		} else {
 ?>
       <tr>
-        <td width="50%" align=right>Import file:</td>
+        <td width="50%" align=right>Arquivo para importação:</td>
         <td width="50%">
 				<input type="file" name="importfile" size="40">
         </td>

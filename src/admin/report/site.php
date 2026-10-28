@@ -22,7 +22,7 @@ require('header.php');
 $sitetime = DBAllSiteTime($_SESSION["usertable"]["contestnumber"], $site);
 ?>
 <br />
-<center><h2>Site Start/Stop Logs</h2></center>
+<center><h2>Registros de início e parada do local</h2></center>
 
     <table border="0">
 <?php
@@ -81,17 +81,17 @@ echo "):</td>";
         </td>
       </tr>
       <tr>
-        <td width=\"50%\" align=right>Number of Clars:</td>
+        <td width=\"50%\" align=right>Número de dúvidas:</td>
         <td width="50%"><?php echo $st["sitenextclar"]; ?>
         </td>
       </tr>
       <tr>
-        <td width=\"50%\" align=right>Number of Runs:</td>
+        <td width=\"50%\" align=right>Número de submissões:</td>
         <td width="50%"><?php echo $st["sitenextrun"]; ?>
         </td>
       </tr>
       <tr>
-        <td width=\"50%\" align=right>Number of Tasks:</td>
+        <td width=\"50%\" align=right>Número de pedidos:</td>
         <td width="50%"><?php echo $st["sitenexttask"]; ?>
         </td>
       </tr>

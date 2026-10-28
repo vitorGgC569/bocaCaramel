@@ -76,7 +76,7 @@ for ($i=0; $i<count($lang); $i++) {
   echo " </tr>\n";
 }
 echo "</table>";
-if (count($lang) == 0) echo "<br><center><b><font color=\"#ff0000\">NO LANGUAGES DEFINED</font></b></center>";
+if (count($lang) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUMA LINGUAGEM CADASTRADA</font></b></center>";
 
 ?>
 
@@ -95,12 +95,12 @@ It is NOT recommended to change anything while the contest is running.<br>
     }
   </script>
   <center>
-<b>To insert/edit a language, enter the data below.<br>
+<b>Para criar ou editar uma linguagem, informe os dados abaixo.<br>
 Note that any changes will overwrite the already defined data.<br><br>
 </b>
     <table border="0">
       <tr>
-        <td width="35%" align=right>Number:</td>
+        <td width="35%" align=right>Número:</td>
         <td width="65%">
           <input type="text" name="langnumber" value="" size="20" maxlength="20" />
         </td>

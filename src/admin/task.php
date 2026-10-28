@@ -141,7 +141,7 @@ for ($i=0; $i<count($task); $i++) {
   echo "</td>\n";
 }
 echo "</table>";
-if (count($task) == 0) echo "<br><center><b><font color=\"#ff0000\">NO TASKS FOUND</font></b></center>";
+if (count($task) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUM PEDIDO ENCONTRADO</font></b></center>";
 
 ?>
 

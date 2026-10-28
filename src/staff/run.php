@@ -188,7 +188,7 @@ if ($run[$i]["judge"] != "") {
 }
 
 echo "</table>";
-//if (!$anyprinted) echo "<br><center><b><font color=\"#ff0000\">NO RUNS AVAILABLE</font></b></center>";
+//if (!$anyprinted) echo "<br><center><b><font color=\"#ff0000\">NENHUMA SUBMISSÃO DISPONÍVEL</font></b></center>";
 //else {
 ?>
   <br>

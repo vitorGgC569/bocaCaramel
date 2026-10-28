@@ -359,7 +359,7 @@ if($redo) {
   if (count($run) == 0) $strtmp .= "<br><center><b><font color=\"#ff0000\">NENHUMA SUBMISSÃO DISPONÍVEL</font></b></center>";
   $linesubmission = @file_get_contents($_SESSION["locr"] . $ds . "private" . $ds . 'run-using-command.config');
   if(trim($linesubmission) == '1') {
-    $strtmp .= "<br><br><center><b>To submit a program, use the command-line tool:</b>\n<br>".
+    $strtmp .= "<br><br><center><b>Para enviar uma solução, use a ferramenta de linha de comando:</b>\n<br>".
       "<pre>boca-submit-run USER PASSWORD PROBLEM LANGUAGE FILE</pre><br>".
       "where USER is your username, PASSWORD is your password, <br>".
       "PROBLEM is one of { ";
@@ -371,7 +371,7 @@ if($redo) {
     $lang = DBGetLanguages($_SESSION["usertable"]["contestnumber"]);
     for ($i=0;$i<count($lang);$i++)
       $strtmp .= $lang[$i]["name"] . " ";
-    $strtmp .= "}<br>FILE is your submission file<br><br>\n";
+    $strtmp .= "}<br>FILE é o arquivo da solução<br><br>\n";
   } else {
 
     $strtmp .= "<br><br><center><b>Para enviar uma solução, preencha os campos abaixo:</b></center>\n".

@@ -39,7 +39,7 @@ $_SESSION["popuptime"] = time();
   <td><b>Questão</b></td>
 <!--  <td><b>Status</b></td>-->
   <td><b>Pergunta</b></td>
-  <td><b>Resultado</b></td>
+  <td><b>Resposta</b></td>
  </tr>
 <?php
 if(($st = DBSiteInfo($_SESSION["usertable"]["contestnumber"],$_SESSION["usertable"]["usersitenumber"])) == null)

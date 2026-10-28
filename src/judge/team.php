@@ -133,7 +133,7 @@ if($redo) {
 		}
 	}
 $strtmp .= "</table>";
-if (count($run) == 0) $strtmp .= "<br><center><b><font color=\"#ff0000\">NO RUNS AVAILABLE</font></b></center>";
+if (count($run) == 0) $strtmp .= "<br><center><b><font color=\"#ff0000\">NENHUMA SUBMISSÃO DISPONÍVEL</font></b></center>";
 
 $strtmp .= "<br><br><center><b>To submit a program, just fill in the following fields:</b></center>\n".
 "<form name=\"form1\" enctype=\"multipart/form-data\" method=\"post\" action=\"". $runteam ."\">\n".

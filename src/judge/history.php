@@ -66,7 +66,7 @@ for ($i=0; $i<count($clar); $i++) {
   echo " </tr>\n";
 }
 echo "</table>";
-if (count($clar) == 0) echo "<br><center><b><font color=\"#ff0000\">NO CLARIFICATIONS AVAILABLE</font></b></center>";
+if (count($clar) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUMA DÚVIDA DISPONÍVEL</font></b></center>";
 else echo "<br><b><font color=\"#b0b0a0\">* Shadowed clars and runs were judged by this judge</font></b>";
 
 ?>
@@ -112,7 +112,7 @@ for ($i=0; $i<count($run); $i++) {
   echo " </tr>\n";
 }
 echo "</table>";
-if (count($run) == 0) echo "<br><center><b><font color=\"#ff0000\">NO RUNS AVAILABLE</font></b></center>";
+if (count($run) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUMA SUBMISSÃO DISPONÍVEL</font></b></center>";
 
 echo "<br><br>\n";
 echo "My answered clars: " . $myclars . "/" . count($clar) . " (";
