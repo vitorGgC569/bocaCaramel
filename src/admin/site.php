@@ -222,7 +222,7 @@ if ($main && isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_POST["
 								}
 						}
 					}
-					MSGError($oklines . ' sites included/updated successfully');
+						MSGError($oklines . ' sede(s) incluída(s) ou atualizada(s) com sucesso.');
 				} else if(strtolower(substr($name,-4))==".tab") {
 					$oklines=0;
 					for ($i=0; $i<count($ar); $i++) {
@@ -252,7 +252,7 @@ if ($main && isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_POST["
 								}
 						}
 					}
-					MSGError($oklines . ' sites included/updated successfully');
+						MSGError($oklines . ' sede(s) incluída(s) ou atualizada(s) com sucesso.');
 					if(count($userlist) > 0) {
 ?>
 <center>

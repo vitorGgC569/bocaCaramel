@@ -53,9 +53,9 @@ function dirrec($dir, $user, $group, $dirPermissions, $filePermissions, $avoid=a
     $u = posix_getpwuid(fileowner($dir));
     $un = $u['name'];
     $ug = $u['gid'];
-    if($un != $user) echo "user of $dir must be fixed!!\n";
-    if($ug != $group) echo "group of $dir must be fixed!!\n";
-    if(@chmod($dir, $dirPermissions) === false) echo "cannot chmod $dir\n";
+    if($un != $user) echo "É necessário corrigir o proprietário de $dir.\n";
+    if($ug != $group) echo "É necessário corrigir o grupo de $dir.\n";
+    if(@chmod($dir, $dirPermissions) === false) echo "Não foi possível alterar as permissões de $dir.\n";
     if(($dp = @opendir($dir)) === false) return;
     while($file = readdir($dp)) {
       if (($file == ".") || ($file == ".."))
@@ -79,9 +79,9 @@ function dirrec($dir, $user, $group, $dirPermissions, $filePermissions, $avoid=a
       $u = posix_getpwuid(fileowner($dir));
       $un = $u['name'];
       $ug = $u['gid'];
-      if($un != $user) echo "user of $dir must be fixed!!\n";
-      if($ug != $group) echo "group of $dir must be fixed!!\n";
-      if(@chmod($dir, $filePermissions)=== false) echo "cannot chmod $dir\n";
+      if($un != $user) echo "É necessário corrigir o proprietário de $dir.\n";
+      if($ug != $group) echo "É necessário corrigir o grupo de $dir.\n";
+      if(@chmod($dir, $filePermissions)=== false) echo "Não foi possível alterar as permissões de $dir.\n";
     }
   }
 }
