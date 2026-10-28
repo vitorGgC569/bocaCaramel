@@ -135,21 +135,21 @@
   ],
   "files": [
     {
-      "file": "output\\pdf\\manual-if.pdf",
+      "file": "output/pdf/manual-if.pdf",
       "source": "manual-if.md",
       "source_sha256": "5581d2b752fc5e6ddc2cb88a998d99e9467b4f12c2d9ee25d1b1df537fb903d3",
       "pdf_sha256": "7f9ae590f85c5f67e96333295cd7a831f24ba2d0f1b62dc1395e4b87bc9851bf"
     },
     {
-      "file": "output\\pdf\\roteiro-banca.pdf",
+      "file": "output/pdf/roteiro-banca.pdf",
       "source": "roteiro-banca.md",
       "source_sha256": "413c6a20ecbd1b2625c8033c850513ac4b21999afff91d284ddd5de57c61720d",
       "pdf_sha256": "36280dbec53f6351912c4f431fd4059c0332d335a4978caa2f862843ef0a8832"
     },
     {
-      "file": "output\\pdf\\ficha-homologacao.pdf",
+      "file": "output/pdf/ficha-homologacao.pdf",
       "source": "ficha-homologacao.md",
-      "source_sha256": "979464fc7ba7f7ae670257981b7a0e9533546d79275eb814bc4e2b1f0398fa28",
+      "source_sha256": "cd5266fa782d46f144eae3380371a71f08d21f731f32bd1248dc8421e917b189",
       "pdf_sha256": "1ffa70d9075e070a19373a74640cc6243132b9e44a71bbb8cf9784caf94347c0"
     }
   ]

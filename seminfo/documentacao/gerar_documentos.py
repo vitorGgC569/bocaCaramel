@@ -11,6 +11,7 @@ import json
 from pathlib import Path
 import re
 import sys
+from document_integrity import source_sha256
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent/'reports/documentation-tools'))
@@ -157,7 +158,7 @@ def generate(name,title,full=False):
     OUT.mkdir(parents=True,exist_ok=True)
     target=OUT/(name+'.pdf');doc=ManualDoc(target,title,full)
     doc.multiBuild(story)
-    return {'file':str(target.relative_to(HERE)),'source':name+'.md','source_sha256':hashlib.sha256((HERE/(name+'.md')).read_bytes()).hexdigest(),'pdf_sha256':hashlib.sha256(target.read_bytes()).hexdigest()}
+    return {'file':target.relative_to(HERE).as_posix(),'source':name+'.md','source_sha256':source_sha256(HERE/(name+'.md')),'pdf_sha256':hashlib.sha256(target.read_bytes()).hexdigest()}
 
 
 if __name__=='__main__':

@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import re
 import sys
+from document_integrity import source_sha256
 
 from pypdf import PdfReader
 import pdfplumber
@@ -18,7 +19,7 @@ manifest=json.loads((HERE/'manifesto-documentacao.json').read_text(encoding='utf
 report={'passed':False,'documents':[],'errors':[]}
 for item in manifest['files']:
     source=HERE/item['source']; target=HERE/item['file']
-    if hashlib.sha256(source.read_bytes()).hexdigest()!=item['source_sha256']:report['errors'].append('Fonte diverge: '+source.name)
+    if source_sha256(source)!=item['source_sha256']:report['errors'].append('Fonte diverge: '+source.name)
     if hashlib.sha256(target.read_bytes()).hexdigest()!=item['pdf_sha256']:report['errors'].append('PDF diverge: '+target.name)
     pdf=PdfReader(target)
     page_lengths=[len(p.extract_text() or '') for p in pdf.pages]
