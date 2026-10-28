@@ -87,6 +87,16 @@ def database_status(profile):
     return json.loads(kit.run(base + ['-d', 'bocadb', '-c', query], timeout=15))
 
 
+def current_web_image(profile):
+    """Only expose authoring links when the running image matches this kit."""
+    lock = read_json(kit.DIST/'server.lock.json', {})
+    if lock.get('source_sha256') != kit.source_hash():
+        return False
+    expected = lock.get('images', {}).get('web', {}).get('id')
+    name = f'boca-{profile}-boca-web-1'
+    return bool(expected and kit.exists(name) and kit.inspect(name).get('Image') == expected)
+
+
 def editable(profile):
     from admission_setup import running
     if running(profile):
@@ -243,7 +253,7 @@ class Organizer:
                         result['problems'] = overview(profile)
                     result['preparation_ready'] = (result['services']['boca-web'].startswith('Up') and '(healthy)' in result['services']['boca-web']
                         and result['database']['prepared'] and not result['database']['active']
-                        and not result['database']['runs'] and not result['admission'])
+                        and not result['database']['runs'] and not result['admission'] and current_web_image(profile))
             except (OSError, ValueError, RuntimeError, subprocess.TimeoutExpired) as exc:
                 result['error'] = safe_error(exc)
             with self.lock:
@@ -478,6 +488,8 @@ class Panel(Handler):
                         app.idle()
                         profile=app.profile()
                         editable(profile)
+                        if not current_web_image(profile):
+                            raise ValueError('As imagens do BOCA estão desatualizadas. Solicite a reconstrução e reinicie o BOCA de preparação.')
                         name=f'boca-{profile}-boca-web-1'
                         if not kit.exists(name) or kit.inspect(name)['State'].get('Health',{}).get('Status')!='healthy':
                             raise ValueError('Abra o BOCA de preparação pela aba Prova e questões antes de continuar.')

@@ -166,6 +166,34 @@ class OrganizerTests(unittest.TestCase):
             for server in servers:server.shutdown();server.server_close()
             for thread in threads:thread.join()
 
+    def test_editor_routes_require_current_image_for_each_profile(self):
+        class NoRedirect(urllib.request.HTTPRedirectHandler):
+            def redirect_request(self, req, fp, code, msg, headers, newurl):
+                return None
+        server=Server(('127.0.0.1',0),organizer.Panel,None)
+        server.app,server.token=self.app,secrets.token_urlsafe(32)
+        thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+        base=f'http://127.0.0.1:{server.server_port}'
+        opener=urllib.request.build_opener(urllib.request.ProxyHandler({}),urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()),NoRedirect())
+        try:
+            try:opener.open(base+'/login?token='+server.token)
+            except urllib.error.HTTPError as error:self.assertEqual(error.code,303)
+            with patch.object(organizer,'editable'),patch.object(kit,'exists',return_value=True),patch.object(kit,'inspect',return_value={'State':{'Health':{'Status':'healthy'}}}):
+                for profile in ('si','tii'):
+                    self.app.select(profile)
+                    for path,destination in (('problem-builder','builder'),('problems','problems')):
+                        with patch.object(organizer,'current_web_image',return_value=True) as current:
+                            with self.assertRaises(urllib.error.HTTPError) as result:opener.open(base+'/open/'+path)
+                            self.assertEqual(result.exception.code,303)
+                            self.assertEqual(result.exception.headers['Location'],f'http://127.0.0.1:18000/boca/index.php?contest=1&destination={destination}')
+                            current.assert_called_once_with(profile)
+                        with patch.object(organizer,'current_web_image',return_value=False):
+                            with self.assertRaises(urllib.error.HTTPError) as result:opener.open(base+'/open/'+path)
+                            self.assertEqual(result.exception.code,400)
+                            self.assertIn('desatualizadas',result.exception.read().decode())
+        finally:
+            server.shutdown();server.server_close();thread.join()
+
     def test_http_cookie_csrf_origin_host_allowlist_and_no_secrets_in_state(self):
         body_reads=[]
         class ObservedPanel(organizer.Panel):

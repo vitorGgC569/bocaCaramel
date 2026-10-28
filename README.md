@@ -36,6 +36,8 @@ No topo, confira sempre **Esta banca gerencia**. Na mesma máquina de preparaç�
 
 **Abas da central:** Preparação da sala → rede e homologação; Prova e questões → tempos, pacotes e referências; Operação da maratona → equipes e placares; Backup e recuperação → cópia e restauração.
 
+Na Central, selecione a categoria em **Esta banca gerencia** antes de editar questões. Em **Prova e questões**, inicie o BOCA de preparação, entre como `admin` e use **Criar pacote de questão** ou **Importar ZIP ou editar questões**. O Builder gera o enunciado em PDF com o banner da categoria e um ZIP; importe esse ZIP na lista de questões da mesma banca. Na tela inicial, **Preparar questões** leva à mesma aba. Se o kit foi atualizado, reconstrua as imagens com `python seminfo/manage.py build-server` antes de abrir o BOCA de preparação.
+
 ## ISOs personalizadas - download
 
 **[Baixar o pacote das ISOs SI e TII pelo SwissTransfer](https://www.swisstransfer.com/dl/01a151eb-2850-70bb-8a64-f23753f527b1)**
@@ -49,7 +51,7 @@ Se o pacote estiver em ZIP, extraia antes de conferir o SHA256 e gravar o pendri
 
 O link do SwissTransfer é temporário. Se estiver expirado, solicite um novo link à organização.
 
-Cada ISO tem **6.814.892.032 bytes, aproximadamente 6,81 GB**. As duas incluem os fundos Claro e Espresso, sorteados uma vez por inicialização, compiladores e ferramentas da maratona. Cada variante reconhece somente a identidade da banca correspondente.
+Cada ISO tem **6.814.892.032 bytes, aproximadamente 6,81 GB**. A ISO TII usa o fundo Claro; a ISO SI usa o fundo Espresso. Ambas incluem compiladores e ferramentas da maratona. Cada variante reconhece somente a identidade da banca correspondente.
 
 ### Onde estão os arquivos no kit local
 

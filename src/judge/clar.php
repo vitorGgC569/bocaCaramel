@@ -33,12 +33,12 @@ if (isset($_POST["message"]) && isset($_POST["problem"]) && isset($_POST["Submit
 <br>
 <table width="100%" border=1>
  <tr>
-  <td><b>Clar #</b></td>
-  <td><b>Site</b></td>
-  <td><b>Time</b></td>
-  <td><b>Problem</b></td>
+  <td><b>Dúvida nº</b></td>
+  <td><b>Local</b></td>
+  <td><b>Tempo</b></td>
+  <td><b>Questão</b></td>
   <td><b>Status</b></td>
-  <td><b>Question</b></td>
+  <td><b>Pergunta</b></td>
  </tr>
 <?php
 
@@ -88,7 +88,7 @@ if (count($clar) == 0) echo "<br><center><b><font color=\"#ff0000\">NO CLARIFICA
   <center>
     <table border="0">
       <tr> 
-        <td width="13%" align=right>Problem:</td>
+        <td width="13%" align=right>Questão:</td>
         <td width="87%"> 
           <select name="problem">
 <?php
@@ -100,7 +100,7 @@ for ($i=0;$i<count($prob);$i++)
         </td>
       </tr>
       <tr> 
-        <td width="13%" align=right>Clarification:</td>
+        <td width="13%" align=right>Dúvida:</td>
         <td width="87%">
           <textarea name="message" cols="60" rows="8" maxlength="2000"></textarea>
         </td>

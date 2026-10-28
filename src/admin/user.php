@@ -197,11 +197,11 @@ else if (isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_FILES["imp
 				if(count($userlist) > 0) {
 ?>
 <center>
-<br><u><b>TAKE NOTE OF THE USERS AND PASSWORDS AND KEEP THEM SECRET</b></u><br><br>
+<br><u><b>ANOTE OS USUÁRIOS E AS SENHAS E MANTENHA-OS EM SIGILO</b></u><br><br>
 <table border=1>
  <tr>
-  <td nowrap><b>Site</b></td><td><b>User #</b></td>
-  <td><b>Password</b></td>
+  <td nowrap><b>Local</b></td><td><b>Usuário nº</b></td>
+  <td><b>Senha</b></td>
  </tr>
 <?php
 				  	foreach($userlist as $user => $pass) {
@@ -209,7 +209,7 @@ else if (isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_FILES["imp
 						echo "<tr><td>" . $x[0] . "</td><td>" . $x[1] . "</td><td>$pass</td></tr>\n";
 					}
 ?>
-</table><br><br><u><b>TAKE NOTE OF THE USERS AND PASSWORDS AND KEEP THEM SECRET</b></u></center></body></html>
+</table><br><br><u><b>ANOTE OS USUÁRIOS E AS SENHAS E MANTENHA-OS EM SIGILO</b></u></center></body></html>
 <?php
 	  exit;
 				}
@@ -235,18 +235,18 @@ else
 <br>
 <table width="100%" border=1>
  <tr>
-  <td nowrap><b>User #</b></td>
-  <td><b>Site</b></td>
-  <td><b>Username</b></td>
+  <td nowrap><b>Usuário nº</b></td>
+  <td><b>Local</b></td>
+  <td><b>Usuário</b></td>
   <td><b>ICPC ID</b></td>
-  <td><b>Type</b></td>
+  <td><b>Tipo</b></td>
   <td><b>IP</b></td>
-  <td><b>LastLogin</b></td>
-  <td><b>LastLogout</b></td>
-  <td><b>Enabled</b></td>
+  <td><b>Último acesso</b></td>
+  <td><b>Última saída</b></td>
+  <td><b>Ativo</b></td>
   <td><b>Multi</b></td>
-  <td><b>Fullname</b></td>
-  <td><b>Description</b></td>
+  <td><b>Nome completo</b></td>
+  <td><b>Descrição</b></td>
  </tr>
 <?php
 for ($i=0; $i < count($usr); $i++) {
@@ -427,7 +427,7 @@ if (isset($u)) {
         </td>
       </tr>
       <tr> 
-        <td width="35%" align=right>MultiLogins (local teams should be set to <b>No</b>):</td>
+        <td width="35%" align=right>MultiLogins (local teams should be set to <b>Não</b>):</td>
         <td width="65%">
 		<select name="usermultilogin">
 		<option <?php if(isset($u) && $u["usermultilogin"] == "t") echo "selected"; ?> value="t">Yes</option>

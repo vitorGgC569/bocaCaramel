@@ -30,38 +30,38 @@ if (($a = DBChiefGetRunToAnswer($runnumber, $runsitenumber,
 
 $b = DBGetProblemData($_SESSION["usertable"]["contestnumber"], $a["problemnumber"]);
 ?>
-<br><br><center><b>Use the following fields to judge the run:
+<br><br><center><b>Use os campos abaixo para julgar a submissão:
 </b></center>
 <form name="form1" method="post" action="<?php echo $runeditphp; ?>">
   <input type=hidden name="confirmation" value="noconfirm" />
   <center>
     <table border="1">
       <tr> 
-        <td width="27%" align=right><b>Site:</b></td>
+        <td width="27%" align=right><b>Local:</b></td>
         <td width="83%"> 
 		<input type=hidden name="sitenumber" value="<?php echo $a["sitenumber"]; ?>" />
 		<?php echo $a["sitenumber"]; ?>
         </td>
       </tr>
       <tr> 
-        <td width="27%" align=right><b>Number:</b></td>
+        <td width="27%" align=right><b>Número:</b></td>
         <td width="83%"> 
 		<input type=hidden name="number" value="<?php echo $a["number"]; ?>" />
 		<?php echo $a["number"]; ?>
         </td>
       </tr>
       <tr> 
-        <td width="27%" align=right><b>Time:</b></td>
+        <td width="27%" align=right><b>Tempo:</b></td>
         <td width="83%"> 
 		<?php echo dateconvminutes($a["timestamp"]); ?>
         </td>
       </tr>
       <tr> 
-        <td width="27%" align=right><b>Problem</b><i> <?php echo $a["problemname"]; ?></i>: </td>
+        <td width="27%" align=right><b>Questão</b><i> <?php echo $a["problemname"]; ?></i>: </td>
         <td width="83%"> 
 <?php
 for ($i=0;$i<count($b);$i++) {
-	echo "<b>Input:</b><a href=\"../filedownload.php?". filedownload($b[$i]["inputoid"], $b[$i]["inputfilename"]) ."\">";
+	echo "<b>Entrada:</b><a href=\"../filedownload.php?". filedownload($b[$i]["inputoid"], $b[$i]["inputfilename"]) ."\">";
 	echo $b[$i]["inputfilename"] . "</a>";
 	echo " <a href=\"#\" class=menu style=\"font-weight:bold\" onClick=\"window.open('../filewindow.php?".
 		filedownload($b[$i]["inputoid"], $b[$i]["inputfilename"]) ."', 'View$i - INPUT','width=680,height=600,scrollbars=yes,resizable=yes')\">view</a> &nbsp;";
@@ -77,12 +77,12 @@ for ($i=0;$i<count($b);$i++) {
 	&nbsp;</td>
       </tr>
       <tr> 
-        <td width="27%" align=right><b>Language</b>:</td>
+        <td width="27%" align=right><b>Linguagem</b>:</td>
         <td width="83%"><i> <?php echo $a["language"]; ?></i>
         &nbsp;</td>
       </tr>
       <tr> 
-        <td width="27%" align=right><b>Source code:</b></td>
+        <td width="27%" align=right><b>Código-fonte:</b></td>
         <td width="83%"> 
 <?php
 			echo "<a href=\"../filedownload.php?". filedownload($a["sourceoid"],$a["sourcename"]) . "\">" . $a["sourcename"] . "</a>\n";
@@ -93,7 +93,7 @@ filedownload($a["sourceoid"],$a["sourcename"]) ."', 'View - SOURCE', ".
         </td>
       </tr>
       <tr>
-        <td width="27%" align=right><b>Answer 1:</b></td>
+        <td width="27%" align=right><b>Resposta 1:</b></td>
         <td width="83%">
 <?php
 $ans = DBGetAnswers($_SESSION["usertable"]["contestnumber"]);
@@ -110,7 +110,7 @@ for ($i=0;$i<count($ans);$i++)
         </td>
       </tr>
       <tr>
-        <td width="27%" align=right><b>Answer 2:</b></td>
+        <td width="27%" align=right><b>Resposta 2:</b></td>
         <td width="83%">
 <?php
 $ans = DBGetAnswers($_SESSION["usertable"]["contestnumber"]);
@@ -129,7 +129,7 @@ for ($i=0;$i<count($ans);$i++)
 
 <!--
       <tr> 
-        <td width="27%" align=right><b>Notify user:</b></td>
+        <td width="27%" align=right><b>Notificar usuário:</b></td>
         <td width="83%">
           <input class=checkbox type=checkbox name="notifyuser" value="yes"
 <?php 
@@ -141,7 +141,7 @@ if ($a["timestamp"] < $s["sitelastmileanswer"]) echo "checked"; ?>>
         </td>
       </tr>
       <tr> 
-        <td width="27%" align=right><b>Update score board:</b></td>
+        <td width="27%" align=right><b>Atualizar placar:</b></td>
         <td width="83%">
           <input class=checkbox type=checkbox name="updatescore" value="yes"
 <?php if ($a["timestamp"] < $s["sitelastmilescore"]) echo "checked"; ?>>
@@ -172,14 +172,14 @@ if ($a["timestamp"] < $s["sitelastmileanswer"]) echo "checked"; ?>>
 -->
   <center>
 <br>
-<b>Autojudging:</b>
+<b>Julgamento automático:</b>
 <!--
 <input type="submit" name="giveup" value="Renew">
 -->
 <br><br>
   <table border="1">
   <tr>
-        <td width="27%" align=right><b>Autojudging answer:</b></td>
+        <td width="27%" align=right><b>Resultado automático:</b></td>
         <td width="83%"> 
 <?php
 if($a["autobegin"]!="" && $a["autoend"]=="")
@@ -193,7 +193,7 @@ else if($a["autoend"]!="") {
         </td>
   </tr>
   <tr>
-        <td width="27%" align=right><b>Autojudged by:</b></td>
+        <td width="27%" align=right><b>Juiz automático:</b></td>
 <?php if($a["autobegin"]!="" && $a["autoend"]=="")
       echo "<td width=\"83%\">". $a["autoip"] ." since ". dateconvsimple($a["autobegin"]) ."</td>";
 else if($a["autoend"]!="")
@@ -203,7 +203,7 @@ else
 ?>
   </tr>
   <tr> 
-        <td width="27%" align=right><b>Standard output:</b></td>
+        <td width="27%" align=right><b>Saída padrão:</b></td>
         <td width="83%"> 
 <?php 
 if($a["autostdout"]!="") {
@@ -217,7 +217,7 @@ if($a["autostdout"]!="") {
         </td>
   </tr>
   <tr> 
-        <td width="27%" align=right><b>Standard error:</b></td>
+        <td width="27%" align=right><b>Erro padrão:</b></td>
         <td width="83%"> 
 <?php 
 if($a["autostderr"]!="") {

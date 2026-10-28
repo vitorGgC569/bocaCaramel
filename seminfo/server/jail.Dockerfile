@@ -8,13 +8,13 @@ USER root
 RUN apt-get update \
     && apt-get install -y --no-install-recommends openjdk-17-jdk-headless \
     && apt-get clean
-# Use Ubuntu's repositories rather than the optional upstream ICPC PPA.
-RUN cp --remove-destination /etc/resolv.conf /home/bocajail/etc/resolv.conf \
-    && chroot /home/bocajail apt-get -o Dir::Etc::sourceparts=- update \
-    && chroot /home/bocajail /usr/bin/env DEBIAN_FRONTEND=noninteractive \
-       apt-get -o Dir::Etc::sourceparts=- install -y --no-install-recommends \
-       build-essential python3 \
-    && chroot /home/bocajail apt-get clean
+# The pinned upstream jail already supplies C, C++ and Python. Its dpkg
+# database contains unfinished upstream Java packages, whose post-install
+# scripts require a mounted /proc unavailable during docker build. Do not run
+# apt in that chroot; fail the build if the required compilers are absent.
+RUN chroot /home/bocajail /usr/bin/gcc --version \
+    && chroot /home/bocajail /usr/bin/g++ --version \
+    && chroot /home/bocajail /usr/bin/python3 --version
 # BOCA extracts multi-file submissions before entering the jail.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends unzip \

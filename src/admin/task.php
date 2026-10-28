@@ -69,13 +69,13 @@ if (isset($_GET["done"]) && is_numeric($_GET["done"]) && isset($_GET["site"]) &&
 <table width="100%" border=1>
  <tr>
   <td><b><a href="task.php?order=task">Task #</a></b></td>
-  <td><b>Time</b></td>
+  <td><b>Tempo</b></td>
   <td><b><a href="task.php?order=user">User / Site</a></b></td>
   <td><b><a href="task.php?order=description">Description</a></b></td>
-  <td><b>File</b></td>
+  <td><b>Arquivo</b></td>
   <td><b><a href="task.php?order=staff">Staff / Site</a></b></td>
   <td><b><a href="task.php?order=status">Status</a></b></td>
-  <td><b>Actions</b></td>
+  <td><b>Ações</b></td>
  </tr>
 <?php
 if (($s=DBSiteInfo($_SESSION["usertable"]["contestnumber"],$_SESSION["usertable"]["usersitenumber"])) == null)

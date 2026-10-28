@@ -24,11 +24,11 @@ require('header.php');
 <table width="100%" border=1>
  <tr>
   <td><b>Clar # (site)</b></td>
-  <td><b>Time</b></td>
-  <td><b>Problem</b></td>
+  <td><b>Tempo</b></td>
+  <td><b>Questão</b></td>
   <td><b>Status</b></td>
-  <td><b>Question</b></td>
-  <td><b>Answer</b></td>
+  <td><b>Pergunta</b></td>
+  <td><b>Resposta</b></td>
  </tr>
 <?php
 $clar = DBAllClarsInSites($_SESSION["usertable"]["contestnumber"],  $s["sitejudging"], "clar");
@@ -73,12 +73,12 @@ else echo "<br><b><font color=\"#b0b0a0\">* Shadowed clars and runs were judged 
 <br><br>
 <table width="100%" border=1>
  <tr>
-  <td><b>Run #</b></td>
-  <td><b>Time</b></td>
-  <td><b>Problem</b></td>
-  <td><b>Language</b></td>
+  <td><b>Submissão nº</b></td>
+  <td><b>Tempo</b></td>
+  <td><b>Questão</b></td>
+  <td><b>Linguagem</b></td>
   <td><b>Status</b></td>
-  <td><b>Answer</b></td>
+  <td><b>Resposta</b></td>
  </tr>
 <?php
 $run = DBAllRunsInSites($_SESSION["usertable"]["contestnumber"],

@@ -34,12 +34,12 @@ $_SESSION["popuptime"] = time();
 <br>
 <table width="100%" border=1>
  <tr>
-<!--  <td><b>Clar #</b></td>-->
-  <td><b>Time</b></td>
-  <td><b>Problem</b></td>
+<!--  <td><b>Dúvida nº</b></td>-->
+  <td><b>Tempo</b></td>
+  <td><b>Questão</b></td>
 <!--  <td><b>Status</b></td>-->
-  <td><b>Question</b></td>
-  <td><b>Answer</b></td>
+  <td><b>Pergunta</b></td>
+  <td><b>Resultado</b></td>
  </tr>
 <?php
 if(($st = DBSiteInfo($_SESSION["usertable"]["contestnumber"],$_SESSION["usertable"]["usersitenumber"])) == null)
@@ -59,7 +59,7 @@ for ($i=0; $i<count($clar); $i++) {
   echo "  <textarea name=\"m$i\" cols=\"60\" rows=\"8\" readonly>". unsanitizeText($clar[$i]["question"]) ."</textarea>\n";
   echo "</td>\n";
 
-  if (trim($clar[$i]["answer"]) == "") $clar[$i]["answer"] = "Not answered yet";
+  if (trim($clar[$i]["answer"]) == "") $clar[$i]["answer"] = "Ainda sem resposta";
   echo "  <td>";
 //  echo "  <pre>" . $clar[$i]["answer"] . "</pre>";
   echo "  <textarea name=\"a$i\" cols=\"60\" rows=\"8\" readonly>". unsanitizeText($clar[$i]["answer"]) ."</textarea>\n";
@@ -67,17 +67,17 @@ for ($i=0; $i<count($clar); $i++) {
   echo " </tr>\n";
 }
 echo "</table>";
-if (count($clar) == 0) echo "<br><center><b><font color=\"#ff0000\">NO CLARIFICATIONS AVAILABLE</font></b></center>";
+if (count($clar) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUMA DÚVIDA ENVIADA</font></b></center>";
 
 ?>
 
-<br><br><center><b>To submit a clarification, just fill in the following fields</b></center>
+<br><br><center><b>Para enviar uma dúvida, preencha os campos abaixo</b></center>
 <form name="form1" method="post" action="clar.php">
   <input type=hidden name="confirmation" value="noconfirm" />
   <center>
     <table border="0">
       <tr> 
-        <td width="13%" align=right>Problem:</td>
+        <td width="13%" align=right>Questão:</td>
         <td width="87%"> 
           <select name="problem" onclick="Arquivo()">
 <?php
@@ -89,7 +89,7 @@ for ($i=0;$i<count($prob);$i++)
         </td>
       </tr>
       <tr> 
-        <td width="13%" align=right>Clarification:</td>
+        <td width="13%" align=right>Dúvida:</td>
         <td width="87%">
           <textarea name="message" cols="60" rows="8" maxlength="2000"></textarea>
         </td>
@@ -98,7 +98,7 @@ for ($i=0;$i<count($prob);$i++)
   </center>
   <script language="javascript">
     function conf() {
-      if (confirm("Confirm clarification?")) {
+      if (confirm("Confirmar envio da dúvida?")) {
         document.form1.confirmation.value='confirm';
       }
     }

@@ -74,7 +74,7 @@ function render() {
  if(state.preparation_only) document.querySelectorAll('[data-tab="day"],[data-tab="recovery"]').forEach(t=>t.hidden=true);
  const canEdit=!!r.preparation_ready;
  document.querySelectorAll('.problem-editor-link').forEach(a=>{a.dataset.editorHref ||= a.getAttribute('href');a.setAttribute('aria-disabled',String(!canEdit));if(canEdit)a.setAttribute('href',a.dataset.editorHref);else a.removeAttribute('href');});
- $('problem-links-message').textContent=canEdit ? 'BOCA pronto nesta mesa. Entre como admin no BOCA; se aparecer o login, entre e use novamente o link desejado.' : db?.active || db?.runs ? 'Edição bloqueada: esta prova já foi ativada ou recebeu submissões.' : r.admission ? 'Pare o acesso das equipes pela Central SEMINFO antes de editar questões.' : 'Use Abrir BOCA de preparação e aguarde o diagnóstico para habilitar o criador e a importação.';
+ $('problem-links-message').textContent=canEdit ? 'BOCA pronto nesta mesa. Entre como admin no BOCA; se aparecer o login, entre e use novamente o link desejado.' : db?.active || db?.runs ? 'Edição bloqueada: esta prova já foi ativada ou recebeu submissões.' : r.admission ? 'Pare o acesso das equipes pela Central SEMINFO antes de editar questões.' : 'Use Abrir BOCA de preparação e aguarde o diagnóstico. Se as imagens estiverem desatualizadas, solicite a reconstrução ao apoio técnico.';
  $('admission-status').textContent=r.admission ? 'Banca funcionando' : r.checking ? 'Conferindo…' : 'Equipes sem acesso';
  $('network-status').textContent=c.server_ip ? `IP da banca: ${c.server_ip}` : 'IP e sub-rede ainda pendentes';
  $('contest-status').textContent=db ? db.active ? 'Prova ativada' : db.prepared ? 'Prova ainda inativa' : 'Prova não preparada' : 'Estado não confirmado';
@@ -171,3 +171,5 @@ $('secrets-dialog').addEventListener('close',()=>$('accounts').replaceChildren()
 document.addEventListener('visibilitychange',()=>{if(document.hidden)hideSecrets();});
 window.addEventListener('beforeunload',e=>{if(dirty || timingDirty){e.preventDefault();e.returnValue='';}});
 refresh(); setInterval(refresh,4000);
+
+document.getElementById('open-contest-questions').addEventListener('click', () => document.querySelector('[data-tab="contest"]').click());

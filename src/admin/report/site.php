@@ -45,7 +45,7 @@ if (!$st["siterunning"]) {
 		$ww = $st["currenttime"] % 60;
 	}
 	echo "      <tr>\n";
-	echo "        <td nowrap width=\"50%\" align=right><b>Real duration:</b></td>\n";
+	echo "        <td nowrap width=\"50%\" align=right><b>Duração real:</b></td>\n";
 	echo "        <td width=\"50%\"><b>$w minutes";
 	if($ww != 0)	echo " plus $ww seconds";
 	echo "</b></td>\n";

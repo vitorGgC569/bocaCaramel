@@ -22,15 +22,15 @@ require('header.php');
 <br>
 <table width="100%" border=1>
  <tr>
-  <td><b>Run #</b></td>
-  <td><b>Site</b></td>
-  <td><b>Time</b></td>
-  <td><b>Problem</b></td>
-  <td><b>Language</b></td>
-<!--  <td><b>Filename</b></td> -->
+  <td><b>Submissão nº</b></td>
+  <td><b>Local</b></td>
+  <td><b>Tempo</b></td>
+  <td><b>Questão</b></td>
+  <td><b>Linguagem</b></td>
+<!--  <td><b>Nome do arquivo</b></td> -->
   <td><b>Status</b></td>
   <td><b>AJ</b></td>
-  <td><b>Answer</b></td>
+  <td><b>Resposta</b></td>
  </tr>
 <?php
 if (($s=DBSiteInfo($_SESSION["usertable"]["contestnumber"],$_SESSION["usertable"]["usersitenumber"])) == null)

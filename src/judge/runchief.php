@@ -33,20 +33,20 @@ $order = myhtmlspecialchars($_GET["order"]);
 <br>
 <table width="100%" border=1>
  <tr>
-  <td><b><a href="<?php echo $runphp; ?>?order=run">Run #</a></b></td>
+  <td><b><a href="<?php echo $runphp; ?>?order=run">Submissão nº</a></b></td>
   <td><b><a href="<?php echo $runphp; ?>?order=site">Site</a></b></td>
 <?php if($runphp == "run.php") { ?>
-  <td><b><a href="<?php echo $runphp; ?>?order=user">User</a></b></td>
+  <td><b><a href="<?php echo $runphp; ?>?order=user">Usuário</a></b></td>
 <?php } ?>
-  <td><b>Time</b></td>
-  <td><b><a href="<?php echo $runphp; ?>?order=problem">Problem</a></b></td>
-  <td><b><a href="<?php echo $runphp; ?>?order=language">Language</a></b></td>
-<!--  <td><b>Filename</b></td> -->
+  <td><b>Tempo</b></td>
+  <td><b><a href="<?php echo $runphp; ?>?order=problem">Questão</a></b></td>
+  <td><b><a href="<?php echo $runphp; ?>?order=language">Linguagem</a></b></td>
+<!--  <td><b>Nome do arquivo</b></td> -->
   <td><b><a href="<?php echo $runphp; ?>?order=status">Status</a></b></td>
   <td><b><a href="<?php echo $runphp; ?>?order=judge">Judge (Site)</a></b></td>
   <td><b>AJ</b></td>
-  <td><b><a href="<?php echo $runphp; ?>?order=answer">Answer</a></b></td>
-  <td><b>Team</b></td>
+  <td><b><a href="<?php echo $runphp; ?>?order=answer">Resposta</a></b></td>
+  <td><b>Equipe</b></td>
  </tr>
 <?php
 if (($s=DBSiteInfo($_SESSION["usertable"]["contestnumber"],$_SESSION["usertable"]["usersitenumber"])) == null)

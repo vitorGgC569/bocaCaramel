@@ -44,13 +44,13 @@ if(isset($_GET["order"]) && $_GET["order"] != "") {
  <tr>
   <td><b><a href="clar.php?order=clar">Clar #</a></b></td>
   <td><b><a href="clar.php?order=site">Site</a></b></td>
-  <td><b><a href="clar.php?order=user">User</a></b></td>
-  <td><b>Time</b></td>
-  <td><b><a href="clar.php?order=problem">Problem</a></b></td>
+  <td><b><a href="clar.php?order=user">Usuário</a></b></td>
+  <td><b>Tempo</b></td>
+  <td><b><a href="clar.php?order=problem">Questão</a></b></td>
   <td><b><a href="clar.php?order=status">Status</a></b></td>
   <td><b><a href="clar.php?order=judge">Judge (Site)</a></b></td>
-  <td><b>Question</b></td>
-  <td><b>Answer</b></td>
+  <td><b>Pergunta</b></td>
+  <td><b>Resposta</b></td>
  </tr>
 <?php
 

@@ -41,9 +41,9 @@ if (isset($_GET["delete"]) && is_numeric($_GET["delete"])) {
 <table width="100%" border=1>
  <tr>
   <td><b>Bkp #</b></td>
-  <td><b>Time</b></td>
-  <td><b>User(Site)</b></td>
-  <td><b>File</b></td>
+  <td><b>Tempo</b></td>
+  <td><b>Usuário (local)</b></td>
+  <td><b>Arquivo</b></td>
   <td><b>Status</b></td>
  </tr>
 <?php

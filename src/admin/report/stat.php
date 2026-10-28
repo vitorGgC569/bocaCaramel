@@ -25,7 +25,7 @@ echo "<center><h2>Statistics</h2></center>\n";
 //----------------------------------------------------------
 echo "<center><h3>Runs by Problem</h3></center>\n";
 echo "<center><table border=1>\n";
-echo "<tr><td><b><u>Problems</u></b></td>";
+echo "<tr><td><b><u>Questões</u></b></td>";
 
 echo "<td>Total</td><td>Accepted</td>";
 echo "</tr>\n";
@@ -161,7 +161,7 @@ echo "<br />";
 echo "<hr />";
 echo "<center><h3>Runs by Language</h3></center>\n";
 echo "<center><table border=1>\n";
-echo "<tr><td><b><u>Languages</u></b></td>";
+echo "<tr><td><b><u>Linguagens</u></b></td>";
 
 echo "<td>Total</td><td>Accepted</td>";
 echo "</tr>\n";
@@ -268,9 +268,9 @@ echo "<center><table><tr>";
 echo "<td>";
 
 echo "<center><table border=1>\n";
-echo "<tr><td><b><u>Answers</u></b></td>";
+echo "<tr><td><b><u>Respostas</u></b></td>";
 
-echo "<td>Answers</td>";
+echo "<td>Respostas</td>";
 echo "</tr>\n";
 
 $str="All Runs by Answer";

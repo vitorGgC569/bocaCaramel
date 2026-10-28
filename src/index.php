@@ -124,7 +124,7 @@ if(function_exists("globalconf") && function_exists("sanitizeVariables")) {
 			echo "TRANSFER OK";
 		} else {
 			if($main && $_SESSION["usertable"]["usertype"] == 'site') {
-				MSGError('Direct login of this user is not allowed');
+				MSGError('O acesso direto deste usuário não é permitido');
 				unset($_SESSION["usertable"]);
 				ForceLoad("index.php");
 				exit;
@@ -139,7 +139,7 @@ if(function_exists("globalconf") && function_exists("sanitizeVariables")) {
   }
 } else {
   echo "<script language=\"JavaScript\">\n";
-  echo "alert('Unable to load config files. Possible file permission problem in the BOCA directory.');\n";
+  echo "alert('Não foi possível carregar a configuração. Verifique as permissões da pasta do BOCA.');\n";
   echo "</script>\n";
 }
 ?>
@@ -154,7 +154,7 @@ if(function_exists("globalconf") && function_exists("sanitizeVariables")) {
             <tr> 
               <td nowrap>
                 <div align="center"><font face="Verdana, Arial, Helvetica, sans-serif" size="+1">
-				BOCA Login</font></div>
+				Acesso ao BOCA</font></div>
               </td>
             </tr>
             <tr>
@@ -162,20 +162,20 @@ if(function_exists("globalconf") && function_exists("sanitizeVariables")) {
                 <table border="0" align="left">
                   <tr> 
                     <td><font face="Verdana, Arial, Helvetica, sans-serif" > 
-                      Name
+                      Usuário
                       </font></td>
                     <td> 
                       <input type="text" name="name">
                     </td>
                   </tr>
                   <tr> 
-                    <td><font face="Verdana, Arial, Helvetica, sans-serif" >Password</font></td>
+                    <td><font face="Verdana, Arial, Helvetica, sans-serif" >Senha</font></td>
                     <td> 
                       <input type="password" name="password">
                     </td>
                   </tr>
                 </table>
-                <input type="submit" name="Submit" value="Login">
+                <input type="submit" name="Submit" value="Entrar">
               </td>
             </tr>
           </table>

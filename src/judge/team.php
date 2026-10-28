@@ -90,8 +90,8 @@ if($redo) {
 	$_SESSION['forceredo']=false;
 	if(($st = DBSiteInfo($_SESSION["usertable"]["contestnumber"],$_SESSION["usertable"]["usersitenumber"])) == null)
         ForceLoad("../index.php");
-	$strtmp="<br>\n<table width=\"100%\" border=1>\n <tr>\n  <td><b>Run #</b></td>\n<td><b>Time</b></td>\n".
-		"  <td><b>Problem</b></td>\n  <td><b>Language</b></td>\n  <td><b>Answer</b></td>\n  <td><b>File</b></td>\n </tr>\n";
+	$strtmp="<br>\n<table width=\"100%\" border=1>\n <tr>\n  <td><b>Submissão nº</b></td>\n<td><b>Tempo</b></td>\n".
+		"  <td><b>Questão</b></td>\n  <td><b>Linguagem</b></td>\n  <td><b>Resposta</b></td>\n  <td><b>Arquivo</b></td>\n </tr>\n";
 	$strcolors = "0";
 	$run = DBUserRuns($_SESSION["usertable"]["contestnumber"],
 					  $_SESSION["usertable"]["usersitenumber"],
@@ -141,7 +141,7 @@ $strtmp .= "<br><br><center><b>To submit a program, just fill in the following f
 "  <center>\n".
 "    <table border=\"0\">\n".
 "      <tr> \n".
-"        <td width=\"25%\" align=right>Problem:</td>\n".
+"        <td width=\"25%\" align=right>Questão:</td>\n".
 "        <td width=\"75%\">\n".
 "          <select name=\"problem\" onclick=\"Arquivo()\">\n";
 $prob = DBGetProblems($_SESSION["usertable"]["contestnumber"],$_SESSION["usertable"]["usertype"]=='judge');
@@ -151,7 +151,7 @@ $strtmp .= "	  </select>\n".
 "        </td>\n".
 "      </tr>\n".
 "      <tr> \n".
-"        <td width=\"25%\" align=right>Language:</td>\n".
+"        <td width=\"25%\" align=right>Linguagem:</td>\n".
 "        <td width=\"75%\"> \n".
 "          <select name=\"language\" onclick=\"Arquivo()\">\n";
 $lang = DBGetLanguages($_SESSION["usertable"]["contestnumber"]);
@@ -161,7 +161,7 @@ $strtmp .= "	  </select>\n".
 "        </td>\n".
 "      </tr>\n".
 "      <tr> \n".
-"        <td width=\"25%\" align=right>Source code:</td>\n".
+"        <td width=\"25%\" align=right>Código-fonte:</td>\n".
 "        <td width=\"75%\">\n".
 "	  <input type=\"file\" name=\"sourcefile\" size=\"40\" onclick=\"Arquivo()\">\n".
 "        </td>\n".

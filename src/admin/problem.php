@@ -28,7 +28,7 @@ if (count($_POST) || isset($_GET['delete'])) {
     $guard=DBConnect();
     $used=pg_query_params($guard,'SELECT count(*) FROM runtable WHERE contestnumber=$1',[$_SESSION['usertable']['contestnumber']]);
     if ($ct['contestactive']==='t' || !$used || (int)pg_fetch_result($used,0,0)>0) {
-        MSGError('Edicao bloqueada: prova ativa, com submissoes ou banco indisponivel.');
+        MSGError('Edição bloqueada: prova ativa, com submissões ou banco indisponível.');
         ForceLoad('problem.php');
         exit;
     }
@@ -45,7 +45,7 @@ if (isset($_GET["delete"]) && is_numeric($_GET["delete"]) && isset($_GET["input"
 	ForceLoad("problem.php");
 }
 
-if(isset($_POST['Submit5']) && $_POST['Submit5']=='Build')
+if(isset($_POST['Submit5']) && $_POST['Submit5']=='Criar questão')
 	ForceLoad("buildproblem.php");
 
 if(isset($_POST['Submit5']) && $_POST['Submit5']=='Send') {
@@ -196,7 +196,7 @@ if (isset($_POST["Submit3"]) && isset($_POST["problemnumber"]) && is_numeric($_P
     isset($_POST["problemname"]) && $_POST["problemname"] != "") {
 	if(strpos(trim($_POST["problemname"]),' ')!==false) {
 		$_POST["confirmation"]='';
-		MSGError('Problem short name cannot have spaces');
+		MSGError('O nome curto da questão não pode conter espaços');
 	} else {
 	if ($_POST["confirmation"] == "confirm") {
 		if ($_FILES["probleminput"]["name"] != "") {
@@ -247,7 +247,7 @@ for ($i=0; $i<count($prob); $i++) {
 	isset($_POST["color" . $prob[$i]['number']]) && strlen($_POST["color" . $prob[$i]['number']]) <= 6 && 
 	isset($_POST["problemname" . $prob[$i]['number']]) && $_POST["problemname" . $prob[$i]['number']] != "" && strlen($_POST["problemname" . $prob[$i]['number']]) <= 20) {
       if(strpos(trim($_POST["problemname" . $prob[$i]['number']]),' ')!==false) {
-	MSGError('Problem short name cannot have spaces');
+	MSGError('O nome curto da questão não pode conter espaços');
       } else {
 	$param = array();
 	$param['number'] = $prob[$i]['number'];
@@ -265,7 +265,7 @@ for ($i=0; $i<count($prob); $i++) {
   }
 }
 
-// Update AutoJudge Setting
+// Update Julgamento automático
 for ($i=0; $i<count($prob); $i++) {
 	if($prob[$i]["fake"]=='t') continue;
 	
@@ -319,16 +319,16 @@ for ($i=0; $i<count($prob); $i++) {
 <form name="form0" enctype="multipart/form-data" method="post" action="problem.php">
 <table width="100%" border=1>
  <tr>
-  <td><b>Problem #</b></td>
-  <td><b>Short Name</b></td>
-  <td><b>Fullname</b></td>
-  <td><b>Basename</b></td>
-  <td><b>Descfile</b></td>
-  <td><b>Package file</b></td>
-<!--  <td><b>Compare file</b></td>
-  <td><b>Timelimit</b></td>-->
-  <td><b>Color</b></td>
-  <td><b>AutoJudge Setting</b></td>
+  <td><b>Questão nº</b></td>
+  <td><b>Nome curto</b></td>
+  <td><b>Nome completo</b></td>
+  <td><b>Nome do arquivo</b></td>
+  <td><b>Enunciado</b></td>
+  <td><b>Pacote</b></td>
+<!--  <td><b>Arquivo de comparação</b></td>
+  <td><b>Limite de tempo</b></td>-->
+  <td><b>Cor</b></td>
+  <td><b>Julgamento automático</b></td>
  </tr>
 <?php
 $all_answers = DBGetAnswers($_SESSION["usertable"]["contestnumber"]);
@@ -502,18 +502,18 @@ if (count($prob) == 0) echo "<br><center><b><font color=\"#ff0000\">NO PROBLEMS 
 
 ?>
 
-<br><br><center><b>Clicking on a problem number will delete it.<br>
-WARNING: deleting a problem will remove EVERYTHING related to it.<br>
-It is NOT recommended to change anything while the contest is running.<br>
-To import a problem, fill in the following fields.<br>
-To replace the data of a problem, proceed as if it did not exist (data will be replaced without removing it).</b></center>
+<br><br><center><b>Clique no número de uma questão para excluí-la.<br>
+ATENÇÃO: a exclusão remove todos os dados associados à questão.<br>
+Não altere questões durante a competição.<br>
+Para importar uma questão, preencha os campos abaixo.<br>
+Para substituir uma questão, informe o mesmo número e envie o novo pacote.</b></center>
 
 <form name="form1" enctype="multipart/form-data" method="post" action="problem.php">
   <input type=hidden name="confirmation" value="noconfirm" />
   <script language="javascript">
     function conf() {
 			if(document.form1.problemname.value=="") {
-				alert('Sorry, mandatory fields are empty');
+				alert('Preencha os campos obrigatórios');
 			} else {
 /*
 				var s1 = String(document.form1.problemdesc.value);
@@ -535,11 +535,11 @@ To replace the data of a problem, proceed as if it did not exist (data will be r
 */
 				var s2 = String(document.form1.probleminput.value);
 				if(s2.length > 4) {
-					if (confirm("Confirm?")) {
+					if (confirm("Confirmar o envio da questão?")) {
 						document.form1.confirmation.value='confirm';
 					}
 				} else {
-					alert('File package must be given');
+					alert('Selecione o pacote ZIP da questão');
 				}
 			}
     }
@@ -547,26 +547,26 @@ To replace the data of a problem, proceed as if it did not exist (data will be r
   <center>
     <table border="0">
       <tr>
-        <td width="35%" align=right>Number:</td>
+        <td width="35%" align=right>Número:</td>
         <td width="65%">
           <input type="text" name="problemnumber" value="" size="20" maxlength="20" />
         </td>
       </tr>
       <tr>
-	 <td width="35%" align=right>Short Name (usually a letter, no spaces):</td>
+	 <td width="35%" align=right>Nome curto (geralmente uma letra, sem espaços):</td>
         <td width="65%">
           <input type="text" name="problemname" value="" size="20" maxlength="20" />
         </td>
       </tr>
 <!--
       <tr>
-        <td width="35%" align=right>Problem Fullname:</td>
+        <td width="35%" align=right>Problem Nome completo:</td>
         <td width="65%">
           <input type="text" name="fullname" value="" size="50" maxlength="100" />
         </td>
       </tr>
       <tr>
-	 <td width="35%" align=right>Problem Basename (a.k.a. name of class expected to have the main):</td>
+	 <td width="35%" align=right>Problem Nome do arquivo (a.k.a. name of class expected to have the main):</td>
         <td width="65%">
           <input type="text" name="basename" value="" size="50" maxlength="100" />
         </td>
@@ -579,7 +579,7 @@ To replace the data of a problem, proceed as if it did not exist (data will be r
       </tr>
 -->
       <tr>
-	 <td width="35%" align=right>Problem package (ZIP):</td>
+	 <td width="35%" align=right>Pacote da questão (ZIP):</td>
         <td width="65%">
           <input type="file" name="probleminput" value="" size="40" />
         </td>
@@ -600,24 +600,24 @@ To replace the data of a problem, proceed as if it did not exist (data will be r
       </tr>
 -->
       <tr>
-        <td width="35%" align=right>Color name:</td>
+        <td width="35%" align=right>Nome da cor:</td>
         <td width="65%">
           <input type="text" name="colorname" value="" size="40" maxlength="100" />
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Color (RGB HTML format):</td>
+        <td width="35%" align=right>Cor (formato RGB hexadecimal):</td>
         <td width="65%">
           <input type="text" name="color" value="" size="6" maxlength="6" />
         </td>
       </tr>
       <tr>
-      	<td width="35%" align=right>Autojudge Setting:</td>
+        <td width="35%" align=right>Julgamento automático:</td>
         <td width="65%">
           <select name="autojudge_new_sel" id="autojudge_new_sel">
-          	<option value="all" selected="selected">Everything</option>
-          	<option value="custom">Custom</option>
-          	<option value="none">None</option>
+            <option value="all" selected="selected">Todas as respostas</option>
+            <option value="custom">Personalizado</option>
+            <option value="none">Nenhuma</option>
           </select>
           <table><tr>
 <?php
@@ -668,12 +668,12 @@ To replace the data of a problem, proceed as if it did not exist (data will be r
     </table>
   </center>
   <center>
-      <input type="submit" name="Submit3" value="Send" onClick="conf()">
-      <input type="reset" name="Submit4" value="Clear">
+      <input type="submit" name="Submit3" value="Enviar" onClick="conf()">
+      <input type="reset" name="Submit4" value="Limpar">
   </center>
 
-	 <br><br><br><center>To build a problem package from files, use this link:
-      <input type="submit" name="Submit5" value="Build">
+	 <br><br><br><center>Para criar um pacote de questão, use o Builder:
+      <input type="submit" name="Submit5" value="Criar questão">
 </center>
 </form>
 

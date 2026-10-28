@@ -24,10 +24,10 @@ require('header.php');
 <table width="100%" border=1>
  <tr>
   <td><b>#</b></td>
-  <td><b>Time</b></td>
-  <td><b>User / Site</b></td>
-  <td><b>Description</b></td>
-  <td><b>File</b></td>
+  <td><b>Tempo</b></td>
+  <td><b>Usuário / local</b></td>
+  <td><b>Descrição</b></td>
+  <td><b>Arquivo</b></td>
   <td><b>Staff / Site</b></td>
   <td><b>Status</b></td>
  </tr>

@@ -60,9 +60,9 @@ if (isset($_POST["Submit3"]) && isset($_POST["langnumber"]) && is_numeric($_POST
   </script>
 <table width="100%" border=1>
  <tr>
-  <td><b>Language #</b></td>
-  <td><b>Name</b></td>
-  <td><b>Extension</b></td>
+  <td><b>Linguagem nº</b></td>
+  <td><b>Nome</b></td>
+  <td><b>Extensão</b></td>
  </tr>
 <?php
 $lang = DBGetLanguages($_SESSION["usertable"]["contestnumber"]);
@@ -106,7 +106,7 @@ Note that any changes will overwrite the already defined data.<br><br>
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Name:</td>
+        <td width="35%" align=right>Nome:</td>
         <td width="65%">
           <input type="text" name="langname" value="" size="20" maxlength="20" />
         </td>

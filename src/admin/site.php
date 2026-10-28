@@ -256,18 +256,18 @@ if ($main && isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_POST["
 					if(count($userlist) > 0) {
 ?>
 <center>
-<br><u><b>TAKE NOTE OF THE USERS AND PASSWORDS AND KEEP THEM SECRET</b></u><br><br>
+<br><u><b>ANOTE OS USUÁRIOS E AS SENHAS E MANTENHA-OS EM SIGILO</b></u><br><br>
 <table border=1>
  <tr>
-  <td><b>Username</b></td>
-  <td><b>Password</b></td>
+  <td><b>Usuário</b></td>
+  <td><b>Senha</b></td>
  </tr>
 <?php
 							foreach($userlist as $user => $pass) {
 							echo "<tr><td>$user</td><td>$pass</td></tr>\n";
 						}
 ?>
-</table><br><br><u><b>TAKE NOTE OF THE USERS AND PASSWORDS AND KEEP THEM SECRET</b></u></center></body></html>
+</table><br><br><u><b>ANOTE OS USUÁRIOS E AS SENHAS E MANTENHA-OS EM SIGILO</b></u></center></body></html>
 <?php
 	  exit;
 					}
@@ -335,7 +335,7 @@ if($ct["contestlocalsite"]==$site) echo "(local site)";
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Name:</td>
+        <td width="35%" align=right>Nome:</td>
         <td width="65%">
           <input type="text" name="name" value="<?php echo $st["sitename"]; ?>" size="50" maxlength="50" />
         </td>
@@ -391,7 +391,7 @@ if (!$st["siterunning"]) {
 	else
 		$w = (int) ($st["currenttime"]/60);
 	echo "      <tr>\n";
-	echo "        <td nowrap width=\"35%\" align=right><b>Real duration:</b></td>\n";
+	echo "        <td nowrap width=\"35%\" align=right><b>Duração real:</b></td>\n";
 	echo "        <td width=\"65%\"><b>" . $w . " minutes</b></td>\n";
 	echo "      </tr>\n";
 }

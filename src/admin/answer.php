@@ -64,10 +64,10 @@ if (isset($_POST["Submit3"]) && isset($_POST["answernumber"]) && is_numeric($_PO
   </script>
 <table width="100%" border=1>
  <tr>
-  <td><b>Answer #</b></td>
-  <td><b>Description</b></td>
-  <td><b>Shortname</b></td>
-  <td><b>Yes/No</b></td>
+  <td><b>Resposta nº</b></td>
+  <td><b>Descrição</b></td>
+  <td><b>Nome curto</b></td>
+  <td><b>Sim/Não</b></td>
  </tr>
 <?php
 $ans = DBGetAnswers($_SESSION["usertable"]["contestnumber"]);
@@ -115,7 +115,7 @@ if ($n == 0) echo "<br><center><b><font color=\"#ff0000\">NO ANSWERS DEFINED</fo
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Description:</td>
+        <td width="35%" align=right>Descrição:</td>
         <td width="65%">
           <input type="text" name="answername" value="" size="50" maxlength="50" />
         </td>

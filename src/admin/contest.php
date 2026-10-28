@@ -174,7 +174,7 @@ flow. ARE YOU SURE?")) {
   <center>
     <table border="0">
       <tr>
-        <td width="35%" align=right>Contest number:</td>
+        <td width="35%" align=right>Número da competição:</td>
         <td width="65%">
 <?php 
 echo $contest;
@@ -182,7 +182,7 @@ echo $contest;
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Name:</td>
+        <td width="35%" align=right>Nome:</td>
         <td width="65%">
           <input type="text" <?php if(!$main) echo "readonly"; ?> name="name" value="<?php echo $ct["contestname"]; ?>" size="50" maxlength="50" />
         </td>
@@ -253,27 +253,27 @@ echo $contest;
     echo "<tr><td width=\"35%\" align=right>Last update from mainsite:</td><td width=\"65%\">" . dateconv($exd[3]) . "</td></tr>\n";
 ?>
       <tr>
-							<td width="35%" align=right>Unlock password (only use it within a <b>secure network</b>):</td>
+							<td width="35%" align=right>Unlock password (only use it within a <b>rede segura</b>):</td>
         <td width="65%">
           <input type="password" name="unlockkey" value="" size="40" maxlength="200" />
 		   <?php if(strlen($ct["contestunlockkey"]) > 1) echo "<b><= has been set</b>"; ?>
         </td>
       </tr>
       <tr>
-							<td width="35%" align=right>Keys (only use it within a <b>secure network</b>):</td>
+							<td width="35%" align=right>Keys (only use it within a <b>rede segura</b>):</td>
         <td width="65%">
           <input type="file" name="keyfile" size="40">
 		   <?php if(strlen($ct["contestkeys"]) > 32) echo "<b><= has been set</b>"; ?>
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Contest main site number:</td>
+        <td width="35%" align=right>Número do local principal:</td>
         <td width="65%">
           <input type="text" name="mainsite" <?php if(!$main) echo "readonly"; ?> value="<?php echo $ct["contestmainsite"]; ?>" size="4" maxlength="4" />
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Contest local site number:</td>
+        <td width="35%" align=right>Número do local:</td>
         <td width="65%">
           <input type="text" name="localsite" <?php if(!$main) echo "readonly"; ?> value="<?php echo $ct["contestlocalsite"]; ?>" size="4" maxlength="4" />
         </td>

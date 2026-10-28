@@ -106,7 +106,7 @@ if (isset($_POST["Submit3"]) && isset($_POST["penalty"]) && is_numeric($_POST["p
   <center>
     <table border="0">
       <tr>
-        <td width="35%" align=right>Contest number:</td>
+        <td width="35%" align=right>Número da competição:</td>
         <td width="65%">
 <select onChange="contestch()" name="contest">
 <?php 
@@ -127,7 +127,7 @@ for ($i=0; $i<count($cs); $i++) {
       </tr>
 	<?php if(!$isfake) { ?>
       <tr>
-        <td width="35%" align=right>Name:</td>
+        <td width="35%" align=right>Nome:</td>
         <td width="65%">
           <input type="text" <?php if(!$main) echo "readonly"; ?> name="name" value="<?php echo $ct["contestname"]; ?>" size="50" maxlength="50" />
         </td>
@@ -189,13 +189,13 @@ for ($i=0; $i<count($cs); $i++) {
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Contest main site number:</td>
+        <td width="35%" align=right>Número do local principal:</td>
         <td width="65%">
           <input type="text" name="mainsite" value="<?php echo $ct["contestmainsite"]; ?>" size="4" maxlength="4" />
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Contest local site number:</td>
+        <td width="35%" align=right>Número do local:</td>
         <td width="65%">
           <input type="text" name="localsite" value="<?php echo $ct["contestlocalsite"]; ?>" size="4" maxlength="4" />
         </td>

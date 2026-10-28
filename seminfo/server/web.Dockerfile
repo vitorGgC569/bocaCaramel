@@ -1,6 +1,7 @@
 ARG BASE=ghcr.io/joaofazolo/boca-docker/boca-web:latest
 FROM ${BASE}
 USER root
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends texlive-latex-base texlive-latex-recommended texlive-lang-portuguese && rm -rf /var/lib/apt/lists/*
 COPY src/ /var/www/boca/src/
 COPY tools/ /var/www/boca/tools/
 COPY doc/problemexamples/problemtemplate/ /var/www/boca/doc/problemexamples/problemtemplate/
