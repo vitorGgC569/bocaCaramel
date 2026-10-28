@@ -290,7 +290,7 @@ if ($main && isset($_FILES["importfile"]) && isset($_POST["Submit"]) && $_POST["
     }
     function conf2() {
       if (confirm("Confirmar a exclusão de todos os dados?")) {
-		  if (confirm("This operation has no come back. DATA WILL BE LOST. Confirmar?")) {
+		  if (confirm("Esta operação não pode ser desfeita. OS DADOS SERÃO PERDIDOS. Confirmar?")) {
 			  document.form1.confirmation.value='confirm';
 		  }
       }

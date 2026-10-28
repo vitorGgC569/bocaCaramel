@@ -307,11 +307,11 @@ function DBNewProblem($contestnumber, $param, $c=null) {
   $fake='f';
   foreach($ac as $key) {
     if(!isset($param[$key])) {
-      MSGError("DBNewProblem param error: $key is not set");
+      MSGError("DBNewProblem: o parâmetro $key não foi informado.");
       return false;
     }
     if(isset($type[$key]) && !is_numeric($param[$key])) {
-      MSGError("DBNewProblem param error: $key is not numeric");
+      MSGError("DBNewProblem: o parâmetro $key deve ser numérico.");
       return false;
     }
     $$key = myhtmlspecialchars($param[$key]);
@@ -324,7 +324,7 @@ function DBNewProblem($contestnumber, $param, $c=null) {
   foreach($ac1 as $key) {
     if(isset($param[$key])) {
       if(isset($type[$key]) && !is_numeric($param[$key])) {
-	MSGError("DBNewProblem param error: $key is not numeric");
+	MSGError("DBNewProblem: o parâmetro $key deve ser numérico.");
 	return false;
       }
       $$key = myhtmlspecialchars($param[$key]);

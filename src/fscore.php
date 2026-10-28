@@ -99,7 +99,7 @@ function DBScore($contest, $verifylastmile, $hor=-1, $globalsite='0') {
   $n = DBnlines($r);
   if ($n == 0) {
     LOGError("Unable to get site information. No active sites available (contest=$contest)");
-    MSGError("Unable to get site information. No active sites available. Contact an admin now!");
+    MSGError("Não foi possível obter informações da sede. Não há sedes ativas; contate a administração.");
     exit;
   }
   $a = array();
@@ -208,7 +208,7 @@ function DBScore($contest, $verifylastmile, $hor=-1, $globalsite='0') {
   }
   if (($result = ordena ($resp)) === false) {
     LOGError("Error while sorting scores (contest=$contest).");
-    MSGError("Error while sorting scores. Contact an admin now!");
+    MSGError("Não foi possível ordenar o placar. Contate a administração.");
   }
   return $result;
 }
@@ -405,7 +405,7 @@ function DBScoreSite($contest, $site, $verifylastmile, $hor=-1, $data=null) {
 
   if (($result = ordena ($resp)) === false) {
     LOGError("Error while sorting scores (contest=$contest, site=$site).");
-    MSGError("Error while sorting scores. Contact an admin now!");
+    MSGError("Não foi possível ordenar o placar. Contate a administração.");
   }
   return array($result,$data0);
 }

@@ -316,11 +316,11 @@ function DBNewTask($param, $c=null, $autotask=false) {
 	$type['taskstaffsite']=1;
 	foreach($ac as $key) {
 		if(!isset($param[$key]) || $param[$key]=="") {
-			MSGError("DBNewTask param error: $key not found");
+			MSGError("DBNewTask: o parâmetro $key não foi informado.");
 			return false;
 		}
 		if(isset($type[$key]) && !is_numeric($param[$key])) {
-			MSGError("DBNewTask param error: $key is not numeric");
+			MSGError("DBNewTask: o parâmetro $key deve ser numérico.");
 			return false;
 		}
 		$$key = myhtmlspecialchars($param[$key]);
@@ -343,7 +343,7 @@ function DBNewTask($param, $c=null, $autotask=false) {
 		if(isset($param[$key])) {
 			$$key = myhtmlspecialchars($param[$key]);
 			if(isset($type[$key]) && !is_numeric($param[$key])) {
-				MSGError("DBNewTask param error: $key is not numeric");
+				MSGError("DBNewTask: o parâmetro $key deve ser numérico.");
 				return false;
 			}
 		}

@@ -680,11 +680,11 @@ function DBNewRun($param,$c=null,$allowinsert=true) {
 	$type['runanswer2']=1;
 	foreach($ac as $key) {
 		if(!isset($param[$key]) || $param[$key]=="") {
-			MSGError("DBNewRun param error: $key not found");
+			MSGError("DBNewRun: o parâmetro $key não foi informado.");
 			return false;
 		}
 		if(isset($type[$key]) && !is_numeric($param[$key])) {
-			MSGError("DBNewRun param error: $key is not numeric");
+			MSGError("DBNewRun: o parâmetro $key deve ser numérico.");
 			return false;
 		}
 		$$key = myhtmlspecialchars($param[$key]);
@@ -715,7 +715,7 @@ function DBNewRun($param,$c=null,$allowinsert=true) {
 		if(isset($param[$key])) {
 			$$key = myhtmlspecialchars($param[$key]);
 			if(isset($type[$key]) && !is_numeric($param[$key])) {
-				MSGError("DBNewRun param error: $key is not numeric");
+				MSGError("DBNewRun: o parâmetro $key deve ser numérico.");
 				return false;
 			}
 		}
@@ -817,14 +817,14 @@ function DBNewRun($param,$c=null,$allowinsert=true) {
 			if (($oid1 = DB_lo_import_text($c, $autostdout)) == null) {
 				DBExec($c, "rollback work", "DBNewRun(rollback-import stdout)");
 				LOGError("Unable to create a large object for file stdout (run=$runnumber,site=$site,contest=$contest).");
-				MSGError("problem importing stdout to database. Contact an admin now!");
+				MSGError("Não foi possível importar stdout para o banco de dados. Contate a administração.");
 				return false;
 			}
 		} else {
 			if($autostdout != '') {
 				DBExec($c, "rollback work", "DBNewRun(rollback-import stderr)");
 				LOGError("Unable to create a large object for file stdout that is not BASE64 (run=$runnumber,site=$site,contest=$contest).");
-				MSGError("problem importing stdout (not BASE64) to database. Contact an admin now!");
+				MSGError("Não foi possível importar stdout (formato BASE64 inválido) para o banco de dados. Contate a administração.");
 				return false;
 			}
 			$oid1 = 'NULL';
@@ -836,14 +836,14 @@ function DBNewRun($param,$c=null,$allowinsert=true) {
 			if (($oid2 = DB_lo_import_text($c, $autostderr)) == null) {
 				DBExec($c, "rollback work", "DBNewRun(rollback-import stderr)");
 				LOGError("Unable to create a large object for file stderr (run=$runnumber,site=$site,contest=$contest).");
-				MSGError("problem importing stderr to database. Contact an admin now!");
+				MSGError("Não foi possível importar stderr para o banco de dados. Contate a administração.");
 				return false;
 			}
 		} else {
 			if($autostderr != '') {
 				DBExec($c, "rollback work", "DBNewRun(rollback-import stderr)");
 				LOGError("Unable to create a large object for file stderr that is not BASE64 (run=$runnumber,site=$site,contest=$contest).");
-				MSGError("problem importing stderr (not BASE64) to database. Contact an admin now!");
+				MSGError("Não foi possível importar stderr (formato BASE64 inválido) para o banco de dados. Contate a administração.");
 				return false;
 			}
 			$oid2 = 'NULL';

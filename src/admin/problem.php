@@ -530,7 +530,7 @@ Para substituir uma questão, informe o mesmo número e envie o novo pacote.</b>
 							 s1.substr(l-4,4).toUpperCase()==".ZIP" ||
 							 s1.substr(l-4,4).toUpperCase()==".TGZ" ||
 							 s1.substr(l-5,5).toUpperCase()==".JAVA")) {
-					alert('Description file has invalid extension: ...'+s1.substr(l-3,3));
+					alert('Extensão inválida no arquivo do enunciado: ...'+s1.substr(l-3,3));
 				} else {
 */
 				var s2 = String(document.form1.probleminput.value);

@@ -280,11 +280,11 @@ function DBNewClar($param,$c=null,$allowupdate=true) {
 	$type['clarjudgesite']=1;
 	foreach($ac as $key) {
 		if(!isset($param[$key]) || $param[$key]=="") {
-			MSGError("DBNewClar param error: $key not found");
+			MSGError("DBNewClar: o parâmetro $key não foi informado.");
 			return false;
 		}
 		if(isset($type[$key]) && !is_numeric($param[$key])) {
-			MSGError("DBNewClar param error: $key is not numeric");
+			MSGError("DBNewClar: o parâmetro $key deve ser numérico.");
 			return false;
 		}
 		$$key = myhtmlspecialchars($param[$key]);
@@ -303,7 +303,7 @@ function DBNewClar($param,$c=null,$allowupdate=true) {
 		if(isset($param[$key])) {
 			$$key = myhtmlspecialchars($param[$key]);
 			if(isset($type[$key]) && !is_numeric($param[$key])) {
-				MSGError("DBNewClar param error: $key is not numeric");
+				MSGError("DBNewClar: o parâmetro $key deve ser numérico.");
 				return false;
 			}
 		}

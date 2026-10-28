@@ -632,12 +632,12 @@ function DBUpdateSite ($param,$c=null) {
 	$type['sitescorelevel']=1;
 	foreach($ac as $key) {
 		if(!isset($param[$key])) {
-			MSGError("DBUpdateSite param error: $key is not set");
+			MSGError("DBUpdateSite: o parâmetro $key não foi informado.");
 			return false;
 		}
 		$$key = myhtmlspecialchars($param[$key]);
 		if(isset($type[$key]) && !is_numeric($param[$key])) {
-			MSGError("DBUpdateSite param error: $key is not numeric");
+			MSGError("DBUpdateSite: o parâmetro $key deve ser numérico.");
 			return false;
 		}
 	}
@@ -662,7 +662,7 @@ function DBUpdateSite ($param,$c=null) {
 		if(isset($param[$key])) {
 			$$key = myhtmlspecialchars($param[$key]);
 			if(isset($type[$key]) && !is_numeric($param[$key])) {
-				MSGError("DBUpdateSite param error: $key is not numeric");
+				MSGError("DBUpdateSite: o parâmetro $key deve ser numérico.");
 				return false;
 			}
 		}
@@ -789,12 +789,12 @@ function DBUpdateContest ($param, $c=null) {
 	$type['localsite']=1;
 	foreach($ac as $key) {
 		if(!isset($param[$key])) {
-			MSGError("DBUpdateContest param error: $key is not set");
+			MSGError("DBUpdateContest: o parâmetro $key não foi informado.");
 			return false;
 		}
 		$$key = myhtmlspecialchars($param[$key]);
 		if(isset($type[$key]) && !is_numeric($param[$key])) {
-			MSGError("DBUpdateContest param error: $key is not numeric");
+			MSGError("DBUpdateContest: o parâmetro $key deve ser numérico.");
 			return false;
 		}
 	}
@@ -817,7 +817,7 @@ function DBUpdateContest ($param, $c=null) {
 		if(isset($param[$key])) {
 			$$key = myhtmlspecialchars($param[$key]);
 			if(isset($type[$key]) && !is_numeric($param[$key])) {
-				MSGError("DBUpdateContest param error: $key is not numeric");
+				MSGError("DBUpdateContest: o parâmetro $key deve ser numérico.");
 				return false;
 			}
 		}
@@ -955,18 +955,18 @@ function DBRenewSiteTime($param, $c=null) {
 		if(isset($param[$i]['sitenumber']) && !isset($param[$i]['site'])) $param[$i]['site']=$param[$i]['sitenumber'];
 		foreach($ac as $key) {
 			if(!isset($param[$i][$key])) {
-				MSGError("DBRenewSiteTime param error: $key is not set");
+				MSGError("DBRenewSiteTime: o parâmetro $key não foi informado.");
 				return false;
 			}
 			if(isset($type[$key]) && !is_numeric($param[$i][$key])) {
-				MSGError("DBRenewSiteTime param error: $key is not numeric");
+				MSGError("DBRenewSiteTime: o parâmetro $key deve ser numérico.");
 				return false;
 			}
 		}
 		foreach($ac1 as $key) {
 			if(isset($param[$i][$key])) {
 				if(isset($type[$key]) && !is_numeric($param[$i][$key])) {
-					MSGError("DBRenewSiteTime param error: $key is not numeric");
+					MSGError("DBRenewSiteTime: o parâmetro $key deve ser numérico.");
 					return false;
 				}
 			}
@@ -1221,7 +1221,7 @@ function DBUserUpdate($contest, $site, $user, $username, $userfull, $userdesc, $
 			DBExec ($c, "commit work");
 			LOGLevel("User " . $_SESSION["usertable"]["username"]."/". $_SESSION["usertable"]["usersitenumber"] . " changed his settings (newname=$username) ".
 				"(user=$user,site=$site,contest=$contest)",2);
-			MSGError("Data updated.");
+			MSGError("Dados atualizados.");
 			ForceLoad("index.php");
 		} else {
 			DBExec ($c, "rollback work");
@@ -1258,11 +1258,11 @@ function DBNewUser($param, $c=null) {
 	$typei['user']=1;
 	foreach($ac as $key) {
 		if(!isset($param[$key]) || $param[$key]=="") {
-			MSGError("DBNewUser param error: $key not found");
+			MSGError("DBNewUser: o parâmetro $key não foi informado.");
 			return false;
 		}
 		if(isset($typei[$key]) && !is_numeric($param[$key])) {
-			MSGError("DBNewUser param error: $key is not numeric");
+			MSGError("DBNewUser: o parâmetro $key deve ser numérico.");
 			return false;
 		}
 		$$key = myhtmlspecialchars($param[$key]);
@@ -1287,7 +1287,7 @@ function DBNewUser($param, $c=null) {
 		if(isset($param[$key])) {
 			$$key = myhtmlspecialchars($param[$key]);
 			if(isset($typei[$key]) && !is_numeric($param[$key])) {
-				MSGError("DBNewUser param error: $key is not numeric");
+				MSGError("DBNewUser: o parâmetro $key deve ser numérico.");
 				return false;
 			}
 		}

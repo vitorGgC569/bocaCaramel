@@ -318,7 +318,7 @@ function IntrusionNotify($where) {
 		$msg .= " (" . $_SESSION["usertable"]["username"] . "/" . $_SESSION["usertable"]["usersitenumber"] .")";
 	unset($_SESSION["usertable"]);
 	LOGLevel($msg,1);
-	MSGError("Violation ($where). Admin warned.");
+	MSGError("Violação detectada ($where). A administração foi avisada.");
 }
 
 function ValidCookie($dolog=false,$gip='') {

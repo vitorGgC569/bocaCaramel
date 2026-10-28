@@ -37,6 +37,8 @@ Na revisão dos pedidos e estatísticas, o teste isolado em TII criou um pedido 
 
 Na revisão dos estados e mensagens de erro, um ensaio isolado de TII enviou uma dúvida pela equipe, conferiu o estado na administração e registrou uma resposta recebida pela equipe. Também verificou o estado de submissão julgada, os resultados YES e WA, o Builder, as quatro linguagens e a restauração. Os códigos internos foram preservados; passaram os 56 testes de unidade e a verificação de sintaxe PHP.
 
+Após a tradução das mensagens de erro de banco, importação, parâmetros e backups, a imagem passou na sintaxe PHP, nos 56 testes de unidade e no ensaio isolado TII, incluindo acesso, Builder, quatro linguagens, restauração, pedido de ajuda, dúvida e submissões YES e WA.
+
 Essas evidências não homologam as salas físicas. Os seis ensaios a seguir devem ser realizados presencialmente em cada laboratório; não registre atestados sem executá-los.
 
 ## Uma ficha presencial por laboratório
