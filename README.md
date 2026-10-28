@@ -40,6 +40,9 @@ Na Central, selecione a categoria em **Esta banca gerencia** antes de editar que
 
 ## ISOs personalizadas - download
 
+**Atualização pendente:** o pacote de ISOs publicado e as ISOs originais de 17/10 são anteriores às correções de 27/10 do PR #1. Elas ainda não contêm a seleção fixa dos banners por categoria. As novas imagens estão sendo preparadas e precisam passar pela inspeção e pela homologação presencial antes da distribuição para a competição. O link e os hashes abaixo identificam somente o pacote anterior.
+
+
 **[Baixar o pacote das ISOs SI e TII pelo SwissTransfer](https://www.swisstransfer.com/dl/01a151eb-2850-70bb-8a64-f23753f527b1)**
 
 Se o pacote estiver em ZIP, extraia antes de conferir o SHA256 e gravar o pendrive. Escolha a ISO correspondente ao laboratório:
@@ -51,7 +54,7 @@ Se o pacote estiver em ZIP, extraia antes de conferir o SHA256 e gravar o pendri
 
 O link do SwissTransfer é temporário. Se estiver expirado, solicite um novo link à organização.
 
-Cada ISO tem **6.814.892.032 bytes, aproximadamente 6,81 GB**. A ISO TII usa o fundo Claro; a ISO SI usa o fundo Espresso. Ambas incluem compiladores e ferramentas da maratona. Cada variante reconhece somente a identidade da banca correspondente.
+Cada ISO tem **6.814.892.032 bytes, aproximadamente 6,81 GB**. O pacote anterior inclui os fundos Claro e Espresso e ferramentas da maratona; a associação fixa de TII ao Claro e SI ao Espresso exige as imagens atualizadas. Cada variante reconhece somente a identidade da banca correspondente.
 
 ### Onde estão os arquivos no kit local
 
