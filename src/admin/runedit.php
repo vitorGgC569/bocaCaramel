@@ -174,7 +174,7 @@ for ($i=0;$i<count($ans);$i++)
 //	if(!$isfak) {
         if($a["judgesite"] != "" && $a["judge"] != "") {
  	 $uu = DBUserInfo ($_SESSION["usertable"]["contestnumber"], $a["judgesite"], $a["judge"]);
-   	 echo " [judge=" . $uu["username"] . " (" . $a["judgesite"] . ")]";
+	 echo " [juiz=" . $uu["username"] . " (" . $a["judgesite"] . ")]";
         }
 ?>
         </td>
@@ -189,7 +189,7 @@ for ($i=0;$i<count($ans);$i++)
 //	  if($ans[$i]["fake"] != "t") {
           if($a["judgesite1"] != "" && $a["judge1"] != "") {
    	   $uu = DBUserInfo ($_SESSION["usertable"]["contestnumber"], $a["judgesite1"], $a["judge1"]);
-	   echo displayRunAnswer($ans[$i]["desc"]) . " [judge=" . $uu["username"] . " (" . $a["judgesite1"] . ")]";
+	   echo displayRunAnswer($ans[$i]["desc"]) . " [juiz=" . $uu["username"] . " (" . $a["judgesite1"] . ")]";
 	  } else
 	   echo displayRunAnswer($ans[$i]["desc"]);
         }
@@ -206,7 +206,7 @@ for ($i=0;$i<count($ans);$i++)
 //	  if($ans[$i]["fake"] != "t") {
           if($a["judgesite2"] != "" && $a["judge2"] != "") {
    	   $uu = DBUserInfo ($_SESSION["usertable"]["contestnumber"], $a["judgesite2"], $a["judge2"]);
-	   echo displayRunAnswer($ans[$i]["desc"]) . " [judge=" . $uu["username"] . " (" . $a["judgesite2"] . ")]";
+	   echo displayRunAnswer($ans[$i]["desc"]) . " [juiz=" . $uu["username"] . " (" . $a["judgesite2"] . ")]";
 	  } else
 	   echo displayRunAnswer($ans[$i]["desc"]);
 	}
@@ -266,9 +266,9 @@ if ($a["timestamp"] < $s["sitelastmileanswer"]) echo "checked"; ?>>
         <td width="83%"> 
 <?php
 if($a["autobegin"]!="" && $a["autoend"]=="")
-      echo "in progress";
+      echo "em andamento";
 else if($a["autoend"]!="") {
-      if($a["autoanswer"]!="") echo $a["autoanswer"];
+      if($a["autoanswer"]!="") echo displayRunAnswer($a["autoanswer"]);
       else echo "Erro no julgamento automático";
 } else
       echo "indisponível";
@@ -278,7 +278,7 @@ else if($a["autoend"]!="") {
   <tr>
         <td width="27%" align=right><b>Juiz automático:</b></td>
 <?php if($a["autobegin"]!="" && $a["autoend"]=="")
-      echo "<td width=\"83%\">". $a["autoip"] ." since ". dateconvsimple($a["autobegin"]) ."</td>";
+      echo "<td width=\"83%\">". $a["autoip"] ." desde ". dateconvsimple($a["autobegin"]) ."</td>";
 else if($a["autoend"]!="")
       echo "<td width=\"83%\">". $a["autoip"] ." de ". dateconvsimple($a["autobegin"]) ." até ". dateconvsimple($a["autoend"]) ."</td>";
 else

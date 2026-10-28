@@ -350,6 +350,18 @@ def main(profile="si"):
                 print('Envio HTTP da equipe: '+str(verdicts),flush=True)
                 assert 'Julgada' in client.open(base+'admin/run.php').read().decode('utf-8')
                 assert int(rows[0]['runanswer']) == 1 and int(rows[1]['runanswer']) == 6, rows
+                # Read the native detail page while an automatic judge is in progress.
+                # The temporary database is isolated, and the completed timestamp is restored.
+                runnumber=int(rows[0]['runnumber'])
+                def detail_sql(query):
+                    return raw_run(['docker','exec',names['db'],'psql','-U','postgres','-d','bocadb','-Atc',query]).decode().strip()
+                completed=detail_sql(f'SELECT autoenddate FROM runtable WHERE contestnumber=1 AND runsitenumber=1 AND runnumber={runnumber}')
+                assert completed.isdecimal(),completed
+                detail_sql(f'UPDATE runtable SET autoenddate=NULL WHERE contestnumber=1 AND runsitenumber=1 AND runnumber={runnumber}')
+                detail=client.open(base+f'admin/runedit.php?runsitenumber=1&runnumber={runnumber}').read().decode('utf-8')
+                assert 'em andamento' in detail and ' desde ' in detail
+                assert 'in progress' not in detail and ' since ' not in detail
+                detail_sql(f'UPDATE runtable SET autoenddate={completed} WHERE contestnumber=1 AND runsitenumber=1 AND runnumber={runnumber}')
                 team_page=team.open(base+'team/run.php').read().decode('utf-8')
                 assert 'correta.c' in team_page and 'errada.c' in team_page
                 assert 'Sim (YES)' in team_page and 'resposta incorreta (WA)' in team_page

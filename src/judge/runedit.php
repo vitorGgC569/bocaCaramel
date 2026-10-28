@@ -194,9 +194,9 @@ Um código malicioso poderia localizar e copiar a saída correta no disco.
         <td width="83%"> 
 <?php
 if($a["autobegin"]!="" && $a["autoend"]=="")
-      echo "in progress";
+      echo "em andamento";
 else if($a["autoend"]!="") {
-      if($a["autoanswer"]!="") echo $a["autoanswer"];
+      if($a["autoanswer"]!="") echo displayRunAnswer($a["autoanswer"]);
       else echo "Erro no julgamento automático";
 } else
       echo "indisponível";
@@ -206,7 +206,7 @@ else if($a["autoend"]!="") {
   <tr>
         <td width="27%" align=right><b>Juiz automático:</b></td>
 <?php if($a["autobegin"]!="" && $a["autoend"]=="")
-      echo "<td width=\"83%\">". $a["autoip"] ." since ". dateconvsimple($a["autobegin"]) ."</td>";
+      echo "<td width=\"83%\">". $a["autoip"] ." desde ". dateconvsimple($a["autobegin"]) ."</td>";
 else if($a["autoend"]!="")
       echo "<td width=\"83%\">". $a["autoip"] ." de ". dateconvsimple($a["autobegin"]) ." até ". dateconvsimple($a["autoend"]) ."</td>";
 else
