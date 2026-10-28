@@ -226,9 +226,9 @@ if (isset($_POST["Submit3"]) && isset($_POST["problemnumber"]) && is_numeric($_P
 				$campo = 'autojudge_chc_new_'.$all_answers[$g]['number'];
 				
 				if ($_POST['autojudge_new_sel'] == 'all') {
-					$autojudge_value |= pow (2, $g);
+					$autojudge_value |= pow (2, $all_answers[$g]['number']);
 				} else if ($_POST['autojudge_new_sel'] == 'custom' && isset ($_POST[$campo]) && $_POST[$campo] == "1") {
-					$autojudge_value |= pow (2, $g);
+					$autojudge_value |= pow (2, $all_answers[$g]['number']);
 				}
 			}
 		}
@@ -278,9 +278,9 @@ for ($i=0; $i<count($prob); $i++) {
 			$campo = 'autojudge_chc_'.$prob[$i]['number'].'_'.$all_answers[$g]['number'];
 			
 			if ($_POST[$sel_name] == 'all') {
-				$value |= pow (2, $g);
+				$value |= pow (2, $all_answers[$g]['number']);
 			} else if ($_POST[$sel_name] == 'custom' && isset ($_POST[$campo]) && $_POST[$campo] == "1") {
-				$value |= pow (2, $g);
+				$value |= pow (2, $all_answers[$g]['number']);
 			}
 		}
 		$param = array();
@@ -393,7 +393,7 @@ for ($i=0; $i<count($prob); $i++) {
     }
     echo "<input type=\"text\" name=\"colorname" . $prob[$i]['number'] . "\" value=\"" . $prob[$i]["colorname"] . "\" size=\"10\" maxlength=\"100\" />";
     echo "<input type=\"text\" name=\"color" . $prob[$i]['number'] . "\" value=\"" . $prob[$i]["color"]. "\" size=\"6\" maxlength=\"6\" />";
-    echo "<input type=\"submit\" name=\"SubmitProblem" . $prob[$i]["number"] . "\" value=\"Update\">";
+    echo "<button type=\"submit\" name=\"SubmitProblem" . $prob[$i]["number"] . "\" value=\"Update\">Atualizar</button>";
   } else echo "&nbsp;";
   echo "</td>\n";
   
@@ -407,7 +407,7 @@ for ($i=0; $i<count($prob); $i++) {
 	$all_mask = 0;
 	for ($g = 0; $g < count($all_answers); $g++) {
 		if ($all_answers[$g]['fake'] == 't') continue;
-		$all_mask |= pow (2, $g);
+		$all_mask |= pow (2, $all_answers[$g]['number']);
 	}
 	if ($autojudge_int_val == $all_mask) {
 		$dis = true;
@@ -422,7 +422,7 @@ for ($i=0; $i<count($prob); $i++) {
 		$sel_value = 'custom';
 	}
 	
-	$opts = array ('Everything' => 'all', 'Custom' => 'custom', 'None' => 'none');
+	$opts = array ('Todas as respostas' => 'all', 'Personalizado' => 'custom', 'Nenhuma' => 'none');
 	foreach ($opts as $display_name => $opt) {
 		if ($opt == $sel_value) {
 			printf ('<option value="%s" selected="selected">%s</option>', $opt, $display_name);
@@ -438,7 +438,7 @@ for ($i=0; $i<count($prob); $i++) {
 	for ($g = 0; $g < count($all_answers); $g++) {
 		if ($all_answers[$g]['fake'] == 't') continue;
 		echo "<td>\n";
-		printf ('<input type="checkbox" id=autojudge_chc_%s_%s name="autojudge_chc_%s_%s" value="1" ', $i, $g, $i, $g);
+		printf ('<input type="checkbox" id=autojudge_chc_%s_%s name="autojudge_chc_%s_%s" value="1" ', $prob[$i]['number'], $g, $prob[$i]['number'], $all_answers[$g]['number']);
 		if ($sel_value == 'all') {
 			printf ('disabled="disabled" checked="checked" />');
 		} else if ($sel_value == 'none') {
@@ -456,8 +456,8 @@ for ($i=0; $i<count($prob); $i++) {
 	echo "</tr><tr>\n";
 	for ($g = 0; $g < count($all_answers); $g++) {
 		if ($all_answers[$g]['fake'] == 't') continue;
-		printf ('<td><label for="autojudge_chc_%s_%s">', $i, $g);
-		printf ('<abbr title="%s">%s</abbr>', $all_answers[$g]['desc'], $all_answers[$g]['short']);
+		printf ('<td><label for="autojudge_chc_%s_%s">', $prob[$i]['number'], $g);
+		printf ('<abbr title="%s">%s</abbr>', htmlspecialchars(displayRunAnswer($all_answers[$g]['desc']), ENT_QUOTES, 'UTF-8'), $all_answers[$g]['short']);
 		echo "</label></td>\n";
 	}
 	echo "</tr></table>\n";
@@ -491,7 +491,7 @@ for ($i=0; $i<count($prob); $i++) {
 		<?php echo "f_change_".$sel_name; ?> ();
 	</script>
 <?php
-    echo "<input type=\"submit\" name=\"SubmitProblemAJ" . $prob[$i]["number"] . "\" value=\"Update\">";
+    echo "<button type=\"submit\" name=\"SubmitProblemAJ" . $prob[$i]["number"] . "\" value=\"Update\">Atualizar</button>";
   } else echo "&nbsp;";
   echo "</td>\n";
   
@@ -624,14 +624,14 @@ Para substituir uma questão, informe o mesmo número e envie o novo pacote.</b>
 	for ($g = 0; $g < count($all_answers); $g++) {
 		if ($all_answers[$g]['fake'] == 't') continue;
 		echo "<td>\n";
-		printf ('<input type="checkbox" id=autojudge_chc_new_%s name="autojudge_chc_new_%s" value="1" disabled="disabled" checked="checked" />', $g, $g);
+		printf ('<input type="checkbox" id=autojudge_chc_new_%s name="autojudge_chc_new_%s" value="1" disabled="disabled" checked="checked" />', $g, $all_answers[$g]['number']);
 		echo "\n</td>\n";
 	}
 	echo "</tr><tr>\n";
 	for ($g = 0; $g < count($all_answers); $g++) {
 		if ($all_answers[$g]['fake'] == 't') continue;
 		printf ('<td><label for="autojudge_chc_new_%s">', $g);
-		printf ('<abbr title="%s">%s</abbr>', $all_answers[$g]['desc'], $all_answers[$g]['short']);
+		printf ('<abbr title="%s">%s</abbr>', htmlspecialchars(displayRunAnswer($all_answers[$g]['desc']), ENT_QUOTES, 'UTF-8'), $all_answers[$g]['short']);
 		echo "</label></td>\n";
 	}
 	echo "</tr></table>\n";

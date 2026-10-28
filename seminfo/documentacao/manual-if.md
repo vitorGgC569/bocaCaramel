@@ -82,7 +82,7 @@ Caramel Contest | IF Goiano - Campus Urutaí | Evento: 29/10/2026 | Texto revisa
 | Nome curto | Letra sem espaços: A, B, C… |
 | Pacote da questão (ZIP) | ZIP recebido da organização ou gerado no Builder. |
 | Nome da cor / Cor | Nome e código RGB hexadecimal. |
-| Julgamento automático | Selecione Todas as respostas, Personalizado ou Nenhuma. Na edição de uma questão existente, as opções podem aparecer como Everything, Custom e None. |
+| Julgamento automático | Selecione Todas as respostas, Personalizado ou Nenhuma, tanto ao cadastrar quanto ao editar uma questão. |
 | Enviar / Limpar | Enviar importa o pacote; Limpar restaura os campos. |
 | Linha da questão | Confira título, nome do arquivo, enunciado, pacote e cor. Para trocar enunciado, casos ou limites, reimporte o ZIP usando o mesmo número. |
 

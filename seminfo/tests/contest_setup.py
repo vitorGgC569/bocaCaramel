@@ -158,7 +158,38 @@ def main(profile="si"):
                       'colorname':'Amarelo','color':'ffcc00','autojudge_new_sel':'all'}, {'probleminput':('A.zip',package)})
                 # BOCA fills metadata by reading problem.info when the list is rendered.
                 client.open(base+'admin/problem.php').close()
-            package=build();publish(package)
+            package=build()
+            def sql(query):
+                return raw_run(['docker','exec',names['db'],'psql','-U','postgres','-d','bocadb','-Atc',query]).decode().strip()
+            # Exercise sparse problem and answer numbers against the real admin form.
+            sql("INSERT INTO answertable(contestnumber,answernumber,runanswer,shortname,yes,fake) VALUES (1,10,'Resposta de ensaio','EX','f','f')")
+            post({'Submit3':'Send','confirmation':'confirm','noflush':'true','problemnumber':'7','problemname':'B',
+                  'colorname':'Amarelo','color':'ffcc00','autojudge_new_sel':'custom','autojudge_chc_new_10':'1'},
+                 {'probleminput':('B.zip',package)})
+            class Inputs(HTMLParser):
+                def __init__(self):
+                    super().__init__(); self.inputs=[]
+                def handle_starttag(self,tag,attrs):
+                    if tag=='input': self.inputs.append(dict(attrs))
+            page=client.open(base+'admin/problem.php').read().decode('utf-8')
+            inputs=Inputs(); inputs.feed(page)
+            for prefix in ('7','new'):
+                checkbox=next(item for item in inputs.inputs if item.get('name')==f'autojudge_chc_{prefix}_10')
+                assert checkbox['id'].startswith(f'autojudge_chc_{prefix}_')
+                assert f'for="{checkbox["id"]}"' in page
+            assert 'name="SubmitProblemAJ7" value="Update">Atualizar</button>' in page
+            assert all(label in page for label in ('Todas as respostas','Personalizado','Nenhuma'))
+            mask_sql='SELECT problemautojudge FROM problemtable WHERE contestnumber=1 AND problemnumber=7'
+            assert int(sql(mask_sql))==1<<10
+            sql('UPDATE problemtable SET updatetime=extract(epoch from now())::bigint+10 WHERE contestnumber=1 AND problemnumber=7')
+            answer_numbers=sql("SELECT answernumber FROM answertable WHERE contestnumber=1 AND fake='f' AND runanswer !~ '(DEL)'").splitlines()
+            for mode,expected in [('none',0),('custom',1<<10),('all',sum(1<<int(n) for n in answer_numbers))]:
+                post({'SubmitProblemAJ7':'Update','autojudge_7_sel':mode,'autojudge_chc_7_10':'1'}, {})
+                assert int(sql(mask_sql))==expected,(mode,sql(mask_sql),expected)
+            sql('DELETE FROM problemtable WHERE contestnumber=1 AND problemnumber=7')
+            sql('DELETE FROM answertable WHERE contestnumber=1 AND answernumber=10')
+            print('Julgamento automático: rótulos, numeração não sequencial e alterações rápidas OK',flush=True)
+            publish(package)
             with patch.object(kit,'LOCAL',local),patch.object(kit,'run',mapped),patch.object(kit,'exists',side_effect=lambda x:raw_exists(mapping.get(str(x),x))),patch.object(kit,'control',side_effect=control),patch('admission_setup.running',return_value=False):
                 problem=problems.catalog(profile)[0]
                 assert problem['basename']=='A' and problem['title']=='Soma sintetica'

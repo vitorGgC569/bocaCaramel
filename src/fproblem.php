@@ -330,8 +330,9 @@ function DBNewProblem($contestnumber, $param, $c=null) {
       $$key = myhtmlspecialchars($param[$key]);
     }
   }
+  $localUpdate = ($updatetime <= 0);
   $t = time();
-  if($updatetime <= 0)
+  if($localUpdate)
     $updatetime=$t;
   $inputhash = '';
 
@@ -359,6 +360,8 @@ function DBNewProblem($contestnumber, $param, $c=null) {
   else {
     $lr = DBRow($r,0);
     $t = $lr['updatetime'];
+    // Alterações locais consecutivas exigem versões distintas para sincronização.
+    if ($localUpdate) $updatetime = max((int)$updatetime, (int)$t + 1);
     $oldfullname=$lr['problemfullname'];
     $s = "updated";
     $inputhash = $lr['probleminputfilehash'];
