@@ -79,7 +79,7 @@ if(isset($_POST)) {
     }
   }
   if($nrenew > 0) {
-    MSGError($nrenew . " runs renewed for autojudging.");
+    MSGError($nrenew . " submissão(ões) enviada(s) novamente ao julgamento automático.");
     ForceLoad($runphp);
   }
   if($nreopen > 0) {
@@ -185,7 +185,7 @@ else {
   </script>
   <center>
 <b>Clique no número de uma submissão para editá-la ou selecione várias<br />pelas caixas de seleção e use os botões para processá-las:</b><br /><br />
-      <input type="submit" name="auto" value="Re-run autojudge for selected runs" onClick="conf()">
+      <button type="submit" name="auto" value="Re-run autojudge for selected runs" onClick="conf()">Reexecutar julgamento automático das submissões selecionadas</button>
       <button type="submit" name="open" value="Open selected runs for rejudging" onClick="conf()">Abrir submissões selecionadas para novo julgamento</button>
 <br><br>
   </center>

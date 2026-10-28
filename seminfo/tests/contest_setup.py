@@ -373,6 +373,12 @@ def main(profile="si"):
                 score_page=client.open(base+'admin/report/score.php?p=0&hor=10',timeout=120).read().decode('utf-8')
                 assert 'Placar aos 10 minutos. Outros horários:' in score_page
                 assert 'Placar aos 1 minuto.' not in score_page
+                buttons=Buttons(); buttons.feed(client.open(base+'admin/run.php').read().decode('utf-8'))
+                button=buttons.labels['Reexecutar julgamento automático das submissões selecionadas']
+                assert button['name']=='auto' and button['value']=='Re-run autojudge for selected runs'
+                payload=urllib.parse.urlencode({button['name']:button['value'],f'cbox_{runnumber}_1':'1','confirmation':'confirm'}).encode()
+                result=client.open(urllib.request.Request(base+'admin/run.php',payload),timeout=30).read().decode('utf-8')
+                assert 'submissão(ões) enviada(s) novamente ao julgamento automático.' in result
                 print('Relatório apresenta resultados em português: OK',flush=True)
                 print('Submissões e resultados visíveis para a equipe: OK',flush=True)
                 report={'passed':True,'server_source_sha256':kit.source_hash(),'native_create_import_edit':True,
