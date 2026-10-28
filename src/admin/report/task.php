@@ -46,7 +46,7 @@ for ($i=0; $i<count($task); $i++) {
   echo "  <td nowrap>" . $task[$i]["number"] . "</td>\n";
   echo "  <td nowrap>" . dateconvminutes($task[$i]["timestamp"]) . "</td>\n";
   echo "  <td nowrap>".$task[$i]["username"]." / ".$task[$i]["site"]."</td>\n";
-  echo "  <td>" . $task[$i]["description"] . "</td>\n";
+  echo "  <td>" . displayTaskDescription($task[$i]["description"]) . "</td>\n";
   if ($task[$i]["oid"] != null) {
     echo "  <td nowrap>" . $task[$i]["filename"];
              echo "</td>\n";
@@ -59,7 +59,7 @@ for ($i=0; $i<count($task); $i++) {
   else
     echo "  <td nowrap>&nbsp;</td>\n";
 
-  echo "  <td nowrap>$st</td>\n";
+  echo "  <td nowrap>" . displayTaskStatus($st) . "</td>\n";
 }
 echo "</table>";
 if (count($task) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUM PEDIDO ENCONTRADO</font></b></center>";

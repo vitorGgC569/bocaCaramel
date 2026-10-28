@@ -105,7 +105,7 @@ if($redo) {
 //  $strtmp .= "  <td nowrap>" . $run[$i]["status"] . "</td>\n";
 		if (trim($run[$i]["answer"]) == "") { 
 			$run[$i]["answer"] = "Not answered yet";
-			$strtmp .= "  <td>Not answered yet"; 
+			$strtmp .= "  <td>Ainda sem resposta";
 		}
 		else {
 			$strtmp .= "  <td>" . $run[$i]["answer"]; 

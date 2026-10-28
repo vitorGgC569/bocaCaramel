@@ -82,7 +82,7 @@ if(isset($_POST)) {
     ForceLoad($runphp);
   }
   if($nreopen > 0) {
-    MSGError($nreopen . " runs reopened.");
+    MSGError($nreopen . " submissões reabertas.");
     ForceLoad($runphp);
   }
 }

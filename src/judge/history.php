@@ -115,13 +115,13 @@ echo "</table>";
 if (count($run) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUMA SUBMISSÃO DISPONÍVEL</font></b></center>";
 
 echo "<br><br>\n";
-echo "My answered clars: " . $myclars . "/" . count($clar) . " (";
+echo "Dúvidas respondidas por mim: " . $myclars . "/" . count($clar) . " (";
 if(count($clar)>0) echo ((int) ($myclars*1000/count($clar)))/10 . "%)<br>\n";
 else echo "0%)<br>\n";
-echo "My judged runs: " . $myruns . "/" . count($run) ." (";
+echo "Submissões julgadas por mim: " . $myruns . "/" . count($run) ." (";
 if(count($run)>0) echo ((int) ($myruns*1000/count($run)))/10 . "%)<br>\n";
 else echo "0%)<br>\n";
-echo "Accepted runs that I've judged: " . $myyes . "/" . $yes . " (";
+echo "Submissões aceitas que julguei: " . $myyes . "/" . $yes . " (";
 if($yes>0) echo ((int) ($myyes*1000/$yes))/10 ."%)<br>\n";
 else echo "0%)<br>\n";
 ?>

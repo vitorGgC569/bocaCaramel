@@ -96,7 +96,7 @@ for ($i=0; $i<count($task); $i++) {
   echo "  <td nowrap>" . $task[$i]["number"] . "</td>\n";
   echo "  <td nowrap>" . dateconvminutes($task[$i]["timestamp"]) . "</td>\n";
   echo "  <td nowrap>".$task[$i]["username"]."(" . $task[$i]["user"] . ") / ".$task[$i]["site"]."</td>\n";
-  echo "  <td>" . $task[$i]["description"];
+  echo "  <td>" . displayTaskDescription($task[$i]["description"]);
   if($task[$i]["color"] != "") {
           echo " <img alt=\"".$task[$i]["colorname"]."\" width=\"10\" ".
 			  "src=\"" . balloonurl($task[$i]["color"]) ."\" />";
@@ -124,7 +124,7 @@ for ($i=0; $i<count($task); $i++) {
   else if ($st == "opentask") $color="ffff88";
   else $color="ffffff";
 
-  echo "  <td nowrap bgcolor=\"#$color\">$st</td>\n  <td nowrap>";
+  echo "  <td nowrap bgcolor=\"#$color\">" . displayTaskStatus($st) . "</td>\n  <td nowrap>";
 
   if($st != "deleted")
     echo "  <a href=\"javascript: conf2('task.php?delete=" . $task[$i]["number"] . "&site=" . 

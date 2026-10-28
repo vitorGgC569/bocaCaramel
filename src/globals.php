@@ -537,5 +537,15 @@ function match_network ($nets, $ip) {
     }
     return false;
 }
+// Rótulos apresentados ao operador; os códigos e descrições armazenados permanecem iguais.
+function displayTaskStatus($status) {
+    $labels = array('opentask' => 'Aguardando', 'processing' => 'Em atendimento',
+                    'done' => 'Concluído', 'deleted' => 'Excluído');
+    return isset($labels[$status]) ? $labels[$status] : $status;
+}
+function displayTaskDescription($description) {
+    $labels = array('Staff assistance' => 'Solicitação de ajuda', 'File to print' => 'Arquivo para impressão');
+    return isset($labels[$description]) ? $labels[$description] : $description;
+}
 // eof
 ?>

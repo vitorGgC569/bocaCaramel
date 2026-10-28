@@ -189,6 +189,24 @@ def main(profile="si"):
                          '-e','BOCA_DB_HOST=boca-db','-e','BOCA_JAIL_HOST=boca-jail',
                          lock['images']['jail']['reference']])
                 team=login(base,profile+'01',credentials['TEAM_01'],'team')
+                # Create a real support request and verify both the translated
+                # display and unchanged internal states through completion.
+                request=urllib.parse.urlencode({'Submit':'S.O.S.','confirmation':'confirm'}).encode()
+                team.open(urllib.request.Request(base+'team/task.php',request),timeout=30).read()
+                sql="SELECT tasknumber FROM tasktable WHERE contestnumber=1 AND taskdesc='Staff assistance' ORDER BY tasknumber DESC LIMIT 1"
+                number=raw_run(['docker','exec',names['db'],'psql','-U','postgres','-d','bocadb','-Atc',sql]).decode().strip()
+                assert number.isdecimal(),number
+                page=team.open(base+'team/task.php').read().decode('utf-8')
+                assert 'Solicitação de ajuda' in page and 'Aguardando' in page
+                page=client.open(base+'admin/task.php').read().decode('utf-8')
+                assert 'Solicitação de ajuda' in page and 'Aguardando' in page
+                client.open(base+'admin/task.php?get='+number+'&site=1').read()
+                page=team.open(base+'team/task.php').read().decode('utf-8')
+                assert 'Em atendimento' in page
+                client.open(base+'admin/task.php?done='+number+'&site=1').read()
+                page=team.open(base+'team/task.php').read().decode('utf-8')
+                assert 'Concluído' in page
+                print('Pedido de ajuda: equipe, atendimento e conclusão OK',flush=True)
                 for filename,source in [('correta.c',b'#include <stdio.h>\nint main(){puts("99");}\n'),
                                         ('errada.c',b'#include <stdio.h>\nint main(){puts("0");}\n')]:
                     payload,kind=multipart({'problem':'1','language':'1','Submit':'Send','confirmation':'confirm'},

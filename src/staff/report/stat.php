@@ -21,17 +21,17 @@ require('header.php');
 
 $d = DBRunReport($_SESSION["usertable"]["contestnumber"],$_SESSION["usertable"]["usersitenumber"]);
 
-echo "<center><h2>Statistics</h2></center>\n";
+echo "<center><h2>Estatísticas</h2></center>\n";
 //----------------------------------------------------------
 echo "<center><h3>Submissões por questão</h3></center>\n";
 echo "<center><table border=1>\n";
 echo "<tr><td><b><u>Questões</u></b></td>";
 
-echo "<td>Total</td><td>Accepted</td>";
+echo "<td>Total</td><td>Aceitas</td>";
 echo "</tr>\n";
 
-$str="All Submissões por questão";
-$str2="Accepted Submissões por questão";
+$str="Todas as submissões por questão";
+$str2="Submissões aceitas por questão";
 $cor = "";
 $color=array();
 $values_ac=array();
@@ -87,8 +87,8 @@ for($i=0;$i<count($values_ac);$i++){
 }
 fclose($myfile);
 
-shell_exec("python3 ../../admin/report/piechart.py runs_by_problems.txt 'Submissões por questãos'");
-shell_exec("python3 ../../admin/report/piechart.py accepted_runs_by_problems.txt 'Accepted Submissões por questãos'");
+shell_exec("python3 ../../admin/report/piechart.py runs_by_problems.txt 'Submissões por questão'");
+shell_exec("python3 ../../admin/report/piechart.py accepted_runs_by_problems.txt 'Submissões aceitas por questão'");
 
 
 echo "<center><table><tr>";
@@ -167,11 +167,11 @@ echo "<center><h3>Submissões por linguagem</h3></center>\n";
 echo "<center><table border=1>\n";
 echo "<tr><td><b><u>Linguagens</u></b></td>";
 
-echo "<td>Total</td><td>Accepted</td>";
+echo "<td>Total</td><td>Aceitas</td>";
 echo "</tr>\n";
 
-$str="All Submissões por linguagem";
-$str2="Accepted Submissões por linguagem";
+$str="Todas as submissões por linguagem";
+$str2="Submissões aceitas por linguagem";
 $values = array();
 $values_ac = array();
 
@@ -229,8 +229,8 @@ for($i=0;$i<count($values);$i++){
 fclose($myfile);
 
 
-shell_exec("python3 ../../admin/report/piechart.py all_runs_by_language.txt 'All Submissões por linguagem' 'lower'");
-shell_exec("python3 ../../admin/report/piechart.py accepted_runs_by_language.txt 'Accepted Submissões por linguagem' 'lower'");
+shell_exec("python3 ../../admin/report/piechart.py all_runs_by_language.txt 'Todas as submissões por linguagem' 'lower'");
+shell_exec("python3 ../../admin/report/piechart.py accepted_runs_by_language.txt 'Submissões aceitas por linguagem' 'lower'");
 
 
 echo "<center><table><tr>";
@@ -283,7 +283,7 @@ echo "<tr><td><b><u>Respostas</u></b></td>";
 echo "<td>Respostas</td>";
 echo "</tr>\n";
 
-$str="All Submissões por resposta";
+$str="Todas as submissões por resposta";
 $values = array();
 // while (list($keya, $val) = each($d['answer'])) {
 foreach($d['answer'] as $keya => $val){
@@ -305,7 +305,7 @@ for($i=0;$i<count($values);$i++){
 
 fclose($myfile);
 
-shell_exec("python3 ../../admin/report/piechart.py all_runs_by_answer.txt 'All Submissões por resposta' 'lower'");
+shell_exec("python3 ../../admin/report/piechart.py all_runs_by_answer.txt 'Todas as submissões por resposta' 'lower'");
 
 
 echo "</table></center>";
@@ -329,7 +329,7 @@ foreach($d['problem'] as $key => $val){
 	  "src=\"" . balloonurl($d['color'][$key]) ."\" />\n";
   echo "</td>";
 }
-echo "<td>Total</td><td>Accepted</td></tr>\n";
+echo "<td>Total</td><td>Aceitas</td></tr>\n";
 
 reset($d['username']);
 // while (list($keya, $vala) = each($d['username'])) {
@@ -445,7 +445,7 @@ foreach($d['timestampyes'] as $keya => $val){
 }
 
 $values_ac = array();
-$str="Accepted Submissões por período" . chr(1) . $m;
+$str="Submissões aceitas por período" . chr(1) . $m;
 $atual=0;
 for($pos=0; $pos<$vezes; $pos++) {
   if(!isset($res[$pos]) || $res[$pos]=="") $res[$pos] = 0;
@@ -462,7 +462,7 @@ for($i=0;$i<count($values_ac);$i++){
   fwrite($myfile, "\n");
 }
 
-shell_exec("python3 ../../admin/report/barplot.py accepted_runs_by_time_period.txt 'Accepted Submissões por período'");
+shell_exec("python3 ../../admin/report/barplot.py accepted_runs_by_time_period.txt 'Submissões aceitas por período'");
 
 
 echo "<center><img alt=runs_by_time_period src=accepted_runs_by_time_period.png width=500></center>\n";

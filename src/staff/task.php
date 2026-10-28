@@ -121,7 +121,7 @@ for ($i=0; $i<count($task); $i++) {
   echo "  <td nowrap>" . dateconvminutes($task[$i]["timestamp"]) . "</td>\n";
   echo "  <td nowrap>".$task[$i]["username"]."(" . $task[$i]["user"] . ") / ".$task[$i]["site"]."</td>\n";
 
-  echo "  <td>" . $task[$i]["description"];
+  echo "  <td>" . displayTaskDescription($task[$i]["description"]);
   if($task[$i]["color"] != "") {
 	  echo " <img alt=\"".$task[$i]["colorname"]."\" width=\"25\" ".
 		  "src=\"" . balloonurl($task[$i]["color"]) ."\" />";
@@ -134,7 +134,7 @@ for ($i=0; $i<count($task); $i++) {
     echo " <a href=\"#\" class=menu style=\"font-weight:bold\" onClick=\"window.open('../filewindow.php?".
 		filedownload($task[$i]["oid"],$task[$i]["filename"],$msg) .
 		"', 'Viewx$i','width=680,height=600,scrollbars=yes,toolbar=yes,".
-		"resizable=yes')\">view</a>";
+		"resizable=yes')\">ver</a>";
 	echo "</td>\n";
   }
 
@@ -148,16 +148,16 @@ for ($i=0; $i<count($task); $i++) {
   else if ($st == "opentask") $color="ffff88";
   else $color="ffffff";
 
-  echo "  <td nowrap bgcolor=\"#$color\">$st</td>\n  <td nowrap>";
+  echo "  <td nowrap bgcolor=\"#$color\">" . displayTaskStatus($st) . "</td>\n  <td nowrap>";
 
   if($st == "opentask")
     echo "  <a href=\"javascript: conf2('task.php?get=" . $task[$i]["number"] . "&site=" . 
-       $task[$i]["site"] . "')\">get</a>\n";
+       $task[$i]["site"] . "')\">assumir</a>\n";
   if($st == "processing" && $mine==1) {
     echo "  <a href=\"javascript: conf2('task.php?return=" . $task[$i]["number"] . "&site=" . 
-       $task[$i]["site"] . "')\">return</a>\n";
+       $task[$i]["site"] . "')\">devolver</a>\n";
     echo "  <a href=\"javascript: conf2('task.php?done=" . $task[$i]["number"] . "&site=" . 
-       $task[$i]["site"] . "')\">done</a>\n";
+       $task[$i]["site"] . "')\">concluir</a>\n";
   }
   echo "&nbsp;</td>\n";
 }

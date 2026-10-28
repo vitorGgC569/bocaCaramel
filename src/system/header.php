@@ -29,7 +29,7 @@ require_once('../version.php');
 require_once("../globals.php");
 require_once("../db.php");
 
-echo "<html><head><title>System's Page</title>\n";
+echo "<html><head><title>Área do sistema</title>\n";
 echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n";
 echo "<link rel=stylesheet href=\"../Css.php\" type=\"text/css\">\n";
 

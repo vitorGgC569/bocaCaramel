@@ -78,9 +78,9 @@ for ($i=0; $i<count($task); $i++) {
   echo " <tr>\n";
   echo "  <td nowrap>" . $task[$i]["number"] . "</td>\n";
   echo "  <td nowrap>" . dateconvminutes($task[$i]["timestamp"]) . "</td>\n";
-  echo "  <td nowrap>" . $task[$i]["description"] . "</td>\n";
+  echo "  <td nowrap>" . displayTaskDescription($task[$i]["description"]) . "</td>\n";
   echo "  <td nowrap>" . $task[$i]["filename"] . "&nbsp;</td>\n";
-  echo "  <td nowrap>" . $task[$i]["status"] . "</td>\n";
+  echo "  <td nowrap>" . displayTaskStatus($task[$i]["status"]) . "</td>\n";
 }
 echo "</table>";
 if (count($task) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUM PEDIDO ENCONTRADO</font></b></center>";

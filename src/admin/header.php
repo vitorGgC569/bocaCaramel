@@ -37,7 +37,7 @@ require_once("$locr/db.php");
 
 if(!isset($_POST['noflush'])) {
 	require_once("$locr/version.php");
-	echo "<html><head><title>Admin's Page</title>\n";
+	echo "<html><head><title>Área da administração</title>\n";
 	echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n";
 	echo "<link rel=stylesheet href=\"$loc/Css.php\" type=\"text/css\">\n";
 }

@@ -186,9 +186,9 @@ if($a["autobegin"]!="" && $a["autoend"]=="")
       echo "in progress";
 else if($a["autoend"]!="") {
       if($a["autoanswer"]!="") echo $a["autoanswer"];
-      else echo "Autojudging error";
+      else echo "Erro no julgamento automático";
 } else
-      echo "unavailable";
+      echo "indisponível";
 ?>
         </td>
   </tr>
@@ -197,9 +197,9 @@ else if($a["autoend"]!="") {
 <?php if($a["autobegin"]!="" && $a["autoend"]=="")
       echo "<td width=\"83%\">". $a["autoip"] ." since ". dateconvsimple($a["autobegin"]) ."</td>";
 else if($a["autoend"]!="")
-      echo "<td width=\"83%\">". $a["autoip"] ." from ". dateconvsimple($a["autobegin"]) ." to ". dateconvsimple($a["autoend"]) ."</td>";
+      echo "<td width=\"83%\">". $a["autoip"] ." de ". dateconvsimple($a["autobegin"]) ." até ". dateconvsimple($a["autoend"]) ."</td>";
 else
-      echo "<td width=\"83%\">unavailable</td>";
+      echo "<td width=\"83%\">indisponível</td>";
 ?>
   </tr>
   <tr> 
@@ -212,7 +212,7 @@ if($a["autostdout"]!="") {
 	filedownload($a["autostdout"],"stdout") ."', 'View - STDOUT','width=680,height=600,scrollbars=yes,".
 	"resizable=yes')\">view</a>\n";
 } else
-      echo "unavailable";
+      echo "indisponível";
 ?>
         </td>
   </tr>
@@ -226,7 +226,7 @@ if($a["autostderr"]!="") {
 	filedownload($a["autostderr"],"stderr") ."', 'View - STDERR','width=680,height=600,scrollbars=yes,".
 	"resizable=yes')\">view</a>\n";
 } else
-      echo "unavailable";
+      echo "indisponível";
 ?>
         </td>
   </tr>

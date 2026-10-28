@@ -32,7 +32,7 @@ $runteam='team.php';
 $runphp = "runchief.php";
 $runeditphp = "runeditchief.php";
 
-echo "<html><head><title>Judge's Page</title>\n";
+echo "<html><head><title>Área do juiz</title>\n";
 echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n";
 echo "<link rel=stylesheet href=\"../Css.php\" type=\"text/css\">\n";
 
