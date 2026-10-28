@@ -26,14 +26,14 @@ $sitetime = DBAllSiteTime($_SESSION["usertable"]["contestnumber"], $site);
 
     <table border="0">
 <?php
-echo "        <td nowrap width=\"50%\" align=right>Start date (contest=" . dateconv($ct["conteststartdate"]) . "):</td>";
+echo "        <td nowrap width=\"50%\" align=right>Data de início (competição=" . dateconv($ct["conteststartdate"]) . "):</td>";
 echo "<td width=\"50%\"><b>" . dateconv($st["sitestartdate"]) . "</b></td>\n";
 echo "<tr>";
 if (!$st["siterunning"]) {
 	echo "      <tr>\n";
-	echo "        <td nowrap width=\"50%\" align=right><b>Finished at:</b></td>\n";
+	echo "        <td nowrap width=\"50%\" align=right><b>Encerrado em:</b></td>\n";
 	echo "        <td width=\"50%\"><b>" . dateconv($st["siteendeddate"]); 
-	if($st["siteautoended"]) echo " (auto)";
+	if($st["siteautoended"]) echo " (automático)";
 	echo "</b></td>\n";
 	echo "      </tr>\n";
 	if($st["siteautoended"]) {
@@ -46,13 +46,13 @@ if (!$st["siterunning"]) {
 	}
 	echo "      <tr>\n";
 	echo "        <td nowrap width=\"50%\" align=right><b>Duração real:</b></td>\n";
-	echo "        <td width=\"50%\"><b>$w minutes";
-	if($ww != 0)	echo " plus $ww seconds";
+	echo "        <td width=\"50%\"><b>$w minutos";
+	if($ww != 0)	echo " e $ww segundos";
 	echo "</b></td>\n";
 	echo "      </tr>\n";
 }
 echo "<tr>\n";
-echo "        <td width=\"50%\" align=right>Planned Duration (contest=";
+echo "        <td width=\"50%\" align=right>Duração prevista (competição=";
 echo $ct["contestduration"]/60;
 echo "):</td>";
 ?>
@@ -62,7 +62,7 @@ echo "):</td>";
       </tr>
       <tr>
 <?php
-echo "        <td width=\"50%\" align=right>Stop answering (contest=";
+echo "        <td width=\"50%\" align=right>Fim das respostas (competição=";
 echo $ct["contestlastmileanswer"]/60;
 echo "):</td>";
 ?>
@@ -72,7 +72,7 @@ echo "):</td>";
       </tr>
       <tr>
 <?php
-echo "        <td width=\"50%\" align=right>Stop scoreboard (contest=";
+echo "        <td width=\"50%\" align=right>Congelamento do placar (competição=";
 echo $ct["contestlastmilescore"]/60;
 echo "):</td>";
 ?>
@@ -113,8 +113,8 @@ for ($i=0; $i< $n; $i++) {
   echo "<td nowrap align=left>";
   if($sitetime[$i]["siteenddate"] == 0) {
     if($st["siterunning"])
-      echo "still open";
-    else echo "auto-ended";
+      echo "em andamento";
+    else echo "encerrado automaticamente";
   }
   else
     echo dateconv($sitetime[$i]["siteenddate"]);

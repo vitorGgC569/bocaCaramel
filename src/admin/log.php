@@ -71,6 +71,6 @@ echo "</table>\n";
 <a href="log.php?limit=50<?php echo $get; ?>">50</a>
 <a href="log.php?limit=200<?php echo $get; ?>">200</a>
 <a href="log.php?limit=1000<?php echo $get; ?>">1000</a>
-<a href="log.php?limit=1000000<?php echo $get; ?>">no limit</a>
+<a href="log.php?limit=1000000<?php echo $get; ?>">sem limite</a>
 </body>
 </html>

@@ -228,6 +228,26 @@ def main(profile="si"):
                 page=client.open(base+'admin/clar.php').read().decode('utf-8')
                 assert 'Respondida' in page
                 print('Dúvida: envio, estado e resposta OK',flush=True)
+                # A team backup must be downloadable and removable; the admin
+                # view translates its status without changing the stored value.
+                content=b'backup sintetico da equipe\n'
+                payload,kind=multipart({'Submit':'Enviar','confirmation':'confirm'}, {'sourcefile':('equipe.txt',content)})
+                team.open(urllib.request.Request(base+'team/files.php',payload,{'Content-Type':kind}),timeout=30).read()
+                page=team.open(base+'team/files.php').read().decode('utf-8')
+                from html import unescape
+                import re
+                links=re.findall(r'href="([^"]*filedownload\.php\?[^"]*)"',page)
+                assert len(links)==1,links
+                assert team.open(urllib.parse.urljoin(base+'team/files.php',unescape(links[0]))).read()==content
+                sql="SELECT bkpnumber FROM bkptable WHERE contestnumber=1 AND bkpfilename='equipe.txt'"
+                number=raw_run(['docker','exec',names['db'],'psql','-U','postgres','-d','bocadb','-Atc',sql]).decode().strip()
+                assert number.isdecimal(),number
+                page=client.open(base+'admin/files.php').read().decode('utf-8')
+                assert 'equipe.txt' in page and '<td>Ativo</td>' in page
+                team.open(base+'team/files.php?delete='+number).read()
+                page=client.open(base+'admin/files.php').read().decode('utf-8')
+                assert '<td>Excluído</td>' in page
+                print('Backup da equipe: envio, download e exclusão OK',flush=True)
                 for filename,source in [('correta.c',b'#include <stdio.h>\nint main(){puts("99");}\n'),
                                         ('errada.c',b'#include <stdio.h>\nint main(){puts("0");}\n')]:
                     payload,kind=multipart({'problem':'1','language':'1','Submit':'Send','confirmation':'confirm'},

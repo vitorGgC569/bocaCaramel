@@ -58,7 +58,7 @@ if (isset($_FILES["sourcefile"]) && isset($_POST["Submit"]) && $_FILES["sourcefi
 <br>
 <table width="100%" border=1>
  <tr>
-  <td><b>Bkp #</b></td>
+  <td><b>Backup nº</b></td>
   <td><b>Tempo</b></td>
   <td><b>Arquivo</b></td>
  </tr>
@@ -86,7 +86,7 @@ if (count($run) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUM BACKUP
 ?>
 
 <br><br><center><b>Para excluir um arquivo, clique no número. Para baixá-lo, clique no nome.
-To submit a new backup file, just fill in the following fields:</b></center>
+Para enviar um novo backup, preencha os campos abaixo:</b></center>
 <form name="form1" enctype="multipart/form-data" method="post" action="files.php">
 <!--<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $ct["contestmaxfilesize"] ?>">-->
   <input type=hidden name="confirmation" value="noconfirm" />

@@ -45,6 +45,8 @@ Na revisão dos resultados, o ensaio TII confirmou que a equipe vê as descriç�
 
 No ensaio TII posterior, o relatório de estatísticas exibiu as descrições em português para YES e WA e gerou o gráfico por resposta. O teste também verificou os fluxos de Builder, linguagens, dúvidas, pedidos e restauração; os 56 testes de unidade e a sintaxe PHP passaram.
 
+O ensaio TII também enviou um backup pela equipe, baixou e comparou o conteúdo e o excluiu, conferindo os estados traduzidos na administração. O mesmo ensaio verificou Builder, linguagens, dúvidas, pedidos, relatório, restauração e submissões YES e WA; passaram os 56 testes de unidade e a sintaxe PHP.
+
 Essas evidências não homologam as salas físicas. Os seis ensaios a seguir devem ser realizados presencialmente em cada laboratório; não registre atestados sem executá-los.
 
 ## Uma ficha presencial por laboratório

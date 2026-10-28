@@ -40,7 +40,7 @@ if (isset($_GET["delete"]) && is_numeric($_GET["delete"])) {
   </script>
 <table width="100%" border=1>
  <tr>
-  <td><b>Bkp #</b></td>
+  <td><b>Backup nº</b></td>
   <td><b>Tempo</b></td>
   <td><b>Usuário (local)</b></td>
   <td><b>Arquivo</b></td>
@@ -65,7 +65,7 @@ for ($i=0; $i<count($run); $i++) {
   } else echo "<td>" . $run[$i]["filename"];
   echo " (" . $run[$i]["size"] . " bytes)";
   echo "</td>\n";
-  echo "<td>" . $run[$i]["status"] . "</td>\n";
+  echo "<td>" . displayBackupStatus($run[$i]["status"]) . "</td>\n";
   echo " </tr>\n";
 
 }

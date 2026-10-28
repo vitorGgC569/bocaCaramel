@@ -564,6 +564,12 @@ function displayClarStatus($status) {
     return isset($labels[$status]) ? $labels[$status] : $status;
 }
 // Rótulos apresentados ao operador; os códigos e descrições armazenados permanecem iguais.
+function displayBackupStatus($status) {
+    if ($status == 'active') return 'Ativo';
+    if ($status == 'deleted') return 'Excluído';
+    if (strpos($status, 'deleted by ') === 0) return 'Excluído por ' . substr($status, 11);
+    return $status;
+}
 function displayTaskStatus($status) {
     $labels = array('opentask' => 'Aguardando', 'processing' => 'Em atendimento',
                     'done' => 'Concluído', 'deleted' => 'Excluído');
