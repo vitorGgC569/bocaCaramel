@@ -208,7 +208,7 @@ if($redo) {
 					   $_SESSION["usertable"]["usersitenumber"], $ver, $minu);
 	if(count($rn)>0 && $level>3) {
 		$strtmp .= "<table border=0><tr>";
-		$strtmp .= "<td>News (last ${minu}'): &nbsp;</td>\n";
+		$strtmp .= "<td>Novidades (últimos ${minu} minutos): &nbsp;</td>\n";
 		for($i=0; $i<count($rn); $i++) {
 			$strtmp .= "<td width=200>";
 			if($rn[$i]["yes"]=='t') {
@@ -224,7 +224,8 @@ if($redo) {
 		$strtmp .= "</tr></table>";
 	}
 	if($hor>=0) {
-		$strtmp .= "<center>As of $hor minutes. Next: ";
+		$unidade = ($hor == 1) ? 'minuto' : 'minutos';
+		$strtmp .= "<center>Placar aos $hor $unidade. Outros horários: ";
 		for($h=-30; $h<40; $h+=10) {
 			if($hor+$h>=0 && $h!=0) {
 				$strtmp .= "<a href=\"$loc/" . $_SESSION['usertable']['usertype'] . "/report/score.php?p=0&hor=" . ($hor+$h) . "\">";

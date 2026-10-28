@@ -367,6 +367,9 @@ def main(profile="si"):
                 assert 'Sim (YES)' in team_page and 'resposta incorreta (WA)' in team_page
                 report_page=client.open(base+'admin/report/stat.php',timeout=120).read().decode('utf-8')
                 assert 'Sim (YES)' in report_page and 'resposta incorreta (WA)' in report_page
+                score_page=client.open(base+'admin/report/score.php?p=0&hor=1',timeout=120).read().decode('utf-8')
+                assert 'Placar aos 1 minuto. Outros horários:' in score_page
+                assert 'As of 1 minutes' not in score_page
                 print('Relatório apresenta resultados em português: OK',flush=True)
                 print('Submissões e resultados visíveis para a equipe: OK',flush=True)
                 report={'passed':True,'server_source_sha256':kit.source_hash(),'native_create_import_edit':True,
