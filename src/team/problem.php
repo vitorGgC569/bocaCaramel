@@ -32,13 +32,13 @@ if(($ct = DBContestInfo($_SESSION["usertable"]["contestnumber"])) == null)
 
 if(is_readable('/var/www/boca/src/sample/secretcontest/maratona.pdf')) {
 ?>
-<b>PLAIN FILES:</b>  <b>CONTEST</b> (
+<b>ARQUIVOS:</b>  <b>COMPETIÇÃO</b> (
 <a href='https://global.naquadah.com.br/boca/secretcontest/maratona.pdf'>PT</a> |
 <a href='https://global.naquadah.com.br/boca/secretcontest/maratona_es.pdf'>ES</a> |
 <a href='https://global.naquadah.com.br/boca/secretcontest/maratona_en.pdf'>EN</a>
 )
 &nbsp;&nbsp;&nbsp; 
-<b>Info Sheet</b> (
+<b>Informações</b> (
 <a href='https://global.naquadah.com.br/boca/secretcontest/info_maratona.pdf'>PT</a> |
 <a href='https://global.naquadah.com.br/boca/secretcontest/info_maratona_es.pdf'>ES</a> |
 <a href='https://global.naquadah.com.br/boca/secretcontest/info_maratona_en.pdf'>EN</a>

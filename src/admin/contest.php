@@ -202,25 +202,25 @@ echo $contest;
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Duration (in minutes):</td>
+        <td width="35%" align=right>Duração (em minutos):</td>
         <td width="65%">
           <input type="text" name="duration" <?php if(!$main) echo "readonly"; ?> value="<?php echo $ct["contestduration"]/60; ?>" size="20" maxlength="20" />
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Stop answering (in minutes):</td>
+        <td width="35%" align=right>Fim das respostas (em minutos):</td>
         <td width="65%">
           <input type="text" name="lastmileanswer" <?php if(!$main) echo "readonly"; ?> value="<?php echo $ct["contestlastmileanswer"]/60; ?>" size="20" maxlength="20" />
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Stop scoreboard (in minutes):</td>
+        <td width="35%" align=right>Congelamento do placar (em minutos):</td>
         <td width="65%">
           <input type="text" name="lastmilescore" <?php if(!$main) echo "readonly"; ?> value="<?php echo $ct["contestlastmilescore"]/60; ?>" size="20" maxlength="20" />
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Penalty (in minutes):</td>
+        <td width="35%" align=right>Penalidade (em minutos):</td>
         <td width="65%">
           <input type="text" name="penalty" <?php if(!$main) echo "readonly"; ?> value="<?php echo $ct["contestpenalty"]/60; ?>" size="20" maxlength="20" />
         </td>

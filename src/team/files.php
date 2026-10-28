@@ -85,7 +85,7 @@ if (count($run) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUM BACKUP
 
 ?>
 
-<br><br><center><b>To erase a file, click on its number. To download a file, click on its name.
+<br><br><center><b>Para excluir um arquivo, clique no número. Para baixá-lo, clique no nome.
 To submit a new backup file, just fill in the following fields:</b></center>
 <form name="form1" enctype="multipart/form-data" method="post" action="files.php">
 <!--<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $ct["contestmaxfilesize"] ?>">-->
@@ -115,7 +115,7 @@ To submit a new backup file, just fill in the following fields:</b></center>
     }
   </script>
   <center>
-      <input type="submit" name="Submit" value="Send" onClick="conf()">
+      <input type="submit" name="Submit" value="Enviar" onClick="conf()">
   </center>
 </form>
 

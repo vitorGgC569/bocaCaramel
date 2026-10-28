@@ -85,7 +85,7 @@ function computeHASH()
 	<input type="text" name="localsite" size="10">
         </td>
       </tr>
-      <tr><td width="50%" align=right>Challenge string:</td><td width="50%"><input type="text" name="challenge" size="20"></td></tr>
+      <tr><td width="50%" align=right>Texto de desafio:</td><td width="50%"><input type="text" name="challenge" size="20"></td></tr>
 <!--
       <tr>
         <td width="50%" align=right>Arquivo para importação:</td>
@@ -95,7 +95,7 @@ function computeHASH()
       </tr>
 -->
 	<tr> 
-	 <td width="50%" align=right>Encryption key:</td>
+	 <td width="50%" align=right>Chave de criptografia:</td>
 	<td width="50%">
 	<input type="password" name="password">
 	</td>

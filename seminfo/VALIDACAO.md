@@ -23,6 +23,8 @@ As imagens do servidor foram reconstruídas preservando a correção de compila�
 
 - Os 55 testes de unidade passaram; os testes isolados de rede e autorização aprovaram isolamento IPv4/IPv6, TLS e revogação.
 - O fluxo sintético de criação, importação, quatro referências e envio pela equipe passou em SI e TII, incluindo resultados YES e WA, sem alterar os bancos reais. Após esse ensaio foram alterados apenas rótulos de interface; os testes de unidade e a geração dos gráficos foram repetidos.
+- O ensaio ampliado de cada categoria processou 47 submissões de dez equipes, nas quatro linguagens, com resultados esperados para acerto, erro, compilação e tempo; também conferiu placar, congelamento e restauração.
+- As ISOs atualizadas de SI e TII passaram na inspeção estática das identidades, banners por perfil, initramfs e boot híbrido. Os hashes e caminhos constam no README. As originais de 17/10 continuam preservadas.
 - As imagens atuais passaram na verificação automática das duas categorias; SI foi iniciada em preparação nesta máquina e os bancos permaneceram iguais aos anteriores. A troca temporária de SI para TII e de volta foi testada antes do último ajuste textual.
 - Gráficos de pizza e barras foram renderizados com PHP/GD. O teste reproduzível está em `seminfo/tests/chart-smoke.php` e deve ser executado dentro da imagem web com o arquivo montado em `/tests`.
 - O bundle offline foi reconstruído; antes da distribuição, confira o hash indicado em `seminfo/dist/server-bundle.json` e a correspondência com `server.lock.json`. A pasta privada e os backups não são públicos.

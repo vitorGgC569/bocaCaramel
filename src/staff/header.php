@@ -71,7 +71,7 @@ echo "  <td align=center width=\"20%\"><a class=menu style=\"font-weight:bold\" 
 
 //echo " <td align=center width=\"20%\"><a href=\"#\" class=menu style=\"font-weight:bold\" onClick=\"window.open('report/stat.php', ".
 //                "'Problem Statistics','width=800,height=600,scrollbars=yes,toolbar=yes,menubar=yes,".
-//                "resizable=yes')\">Statistics</a></td>\n";
+//                "resizable=yes')\">Estatísticas</a></td>\n";
 
 //echo "  <td align=center width=\"20%\"><a class=menu style=\"font-weight:bold\" href=option.php>Opções</a></td>\n";
 echo "  <td align=center width=\"20%\"><a class=menu style=\"font-weight:bold\" href=../index.php>Sair</a></td>\n";

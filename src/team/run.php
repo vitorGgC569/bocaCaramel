@@ -421,8 +421,8 @@ if($redo) {
       "    }\n".
       "  </script>\n".
       "  <center>\n".
-      "      <input type=\"submit\" name=\"Submit\" value=\"Send\" onClick=\"conf()\">\n".
-      "      <input type=\"reset\" name=\"Submit2\" value=\"Clear\">\n".
+      "      <input type=\"submit\" name=\"Submit\" value=\"Enviar\" onClick=\"conf()\">\n".
+      "      <input type=\"reset\" name=\"Submit2\" value=\"Limpar\">\n".
       "  </center>\n".
       "</form>\n";
   }

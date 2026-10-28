@@ -108,11 +108,10 @@ if (count($task) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUM PEDID
     }
   </script>
   <center>
-      <input type="submit" name="Submit" value="Send" onClick="conf()">
-      <input type="reset" name="Submit2" value="Clear">
+      <input type="submit" name="Submit" value="Enviar" onClick="conf()">
+      <input type="reset" name="Submit2" value="Limpar">
   </center>
-<br><br><center><b>If you needed staff assistance, please click
-on the button above and wait.</b><br>
+<br><br><center><b>Se precisar de ajuda da organização, clique no botão abaixo e aguarde.</b><br>
       <input type="submit" name="Submit" value="S.O.S." onClick="conf()">
   </center>
 </form>

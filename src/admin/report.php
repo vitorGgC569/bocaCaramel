@@ -64,7 +64,7 @@ if (isset($_GET)) {
 
       echo " <a href=\"#\" class=menu style=\"font-weight:bold\" onClick=\"window.open('report/stat.php', ".
 		"'Problem Statistics','width=800,height=600,scrollbars=yes,toolbar=yes,menubar=yes,".
-		"resizable=yes')\">Statistics</a><br />\n";
+		"resizable=yes')\">Estatísticas</a><br />\n";
 
 /*
       echo "<br /><br />\n";

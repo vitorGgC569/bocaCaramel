@@ -272,7 +272,7 @@ echo "</table></center>";
 //----------------------------------------------------------
 echo "<br />";
 echo "<hr />";
-echo "<center><h3>Runs by Answer</h3></center>\n";
+echo "<center><h3>Submissões por resposta</h3></center>\n";
 
 echo "<center><table><tr>";
 echo "<td>";
@@ -283,7 +283,7 @@ echo "<tr><td><b><u>Respostas</u></b></td>";
 echo "<td>Respostas</td>";
 echo "</tr>\n";
 
-$str="All Runs by Answer";
+$str="All Submissões por resposta";
 $values = array();
 // while (list($keya, $val) = each($d['answer'])) {
 foreach($d['answer'] as $keya => $val){
@@ -305,7 +305,7 @@ for($i=0;$i<count($values);$i++){
 
 fclose($myfile);
 
-shell_exec("python3 ../../admin/report/piechart.py all_runs_by_answer.txt 'All Runs by Answer' 'lower'");
+shell_exec("python3 ../../admin/report/piechart.py all_runs_by_answer.txt 'All Submissões por resposta' 'lower'");
 
 
 echo "</table></center>";
@@ -379,7 +379,7 @@ echo "</table></center>";
 //----------------------------------------------------------
 echo "<br />";
 echo "<hr />";
-echo "<center><h3>Runs by Time Period</h3></center>\n";
+echo "<center><h3>Submissões por período</h3></center>\n";
 
 $vezes = 30;
 $passo = $st['siteduration']/$vezes;
@@ -401,7 +401,7 @@ foreach($d['timestamp'] as $keya => $val){
   if($res[$pos] > $m) $m=$res[$pos];
 }
 
-$str="Runs by Time Period" . chr(1) . $m;
+$str="Submissões por período" . chr(1) . $m;
 $atual=0;
 $values = array();
 for($pos=0; $pos<$vezes; $pos++) {
@@ -419,7 +419,7 @@ for($i=0;$i<count($values);$i++){
   fwrite($myfile, "\n");
 }
 
-shell_exec("python3 ../../admin/report/barplot.py runs_by_time_period.txt 'Runs by Time Period'");
+shell_exec("python3 ../../admin/report/barplot.py runs_by_time_period.txt 'Submissões por período'");
 
 
 echo "<center><img alt=runs_by_time_period src=runs_by_time_period.png width=500></center>\n";
@@ -445,7 +445,7 @@ foreach($d['timestampyes'] as $keya => $val){
 }
 
 $values_ac = array();
-$str="Accepted Runs by Time Period" . chr(1) . $m;
+$str="Accepted Submissões por período" . chr(1) . $m;
 $atual=0;
 for($pos=0; $pos<$vezes; $pos++) {
   if(!isset($res[$pos]) || $res[$pos]=="") $res[$pos] = 0;
@@ -462,7 +462,7 @@ for($i=0;$i<count($values_ac);$i++){
   fwrite($myfile, "\n");
 }
 
-shell_exec("python3 ../../admin/report/barplot.py accepted_runs_by_time_period.txt 'Accepted Runs by Time Period'");
+shell_exec("python3 ../../admin/report/barplot.py accepted_runs_by_time_period.txt 'Accepted Submissões por período'");
 
 
 echo "<center><img alt=runs_by_time_period src=accepted_runs_by_time_period.png width=500></center>\n";

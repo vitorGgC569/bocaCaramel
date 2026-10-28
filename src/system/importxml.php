@@ -201,7 +201,7 @@ function computeHASH()
       </tr>
 <?php
 		if(isset($_SESSION['importfile'])) {
-			echo "<tr><td width=\"50%\" align=right>Challenge string:</td><td width=\"50%\">" . $id . "</td></tr>\n";
+			echo "<tr><td width=\"50%\" align=right>Texto de desafio:</td><td width=\"50%\">" . $id . "</td></tr>\n";
 		} else {
 ?>
       <tr>
@@ -217,7 +217,7 @@ function computeHASH()
 	} else {
 ?>
 	<tr> 
-	 <td width="50%" align=right>Encryption key:</td>
+	 <td width="50%" align=right>Chave de criptografia:</td>
 	<td width="50%">
 	<input type="password" name="password">
 	</td>

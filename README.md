@@ -40,7 +40,14 @@ Na Central, selecione a categoria em **Esta banca gerencia** antes de editar que
 
 ## ISOs personalizadas - download
 
-**Atualização pendente:** o pacote de ISOs publicado e as ISOs originais de 17/10 são anteriores às correções de 27/10 do PR #1. Elas ainda não contêm a seleção fixa dos banners por categoria. As novas imagens estão sendo preparadas e precisam passar pela inspeção e pela homologação presencial antes da distribuição para a competição. O link e os hashes abaixo identificam somente o pacote anterior.
+**Imagens atualizadas em 28/10:** as ISOs locais foram reconstruídas e aprovadas na inspeção estática, incluindo initramfs e identidade da banca. A validação de boot, persistência e rede em pendrive físico deve ser feita no IF. Elas não estão incluídas no Git e ainda não foram publicadas para download. Os caminhos e hashes são:
+
+| Categoria | ISO atualizada local | SHA-256 |
+|---|---|---|
+| SI / Lab 3 | `seminfo/dist/clients-refresh-20261028/si/ml-seminfo-lab3-si-atualizada.iso` | `5493a6843f8f29bbefd1b662ad578ba30889ee3bc7e7a2a619be7d484ca89126` |
+| TII / Lab 4 | `seminfo/dist/clients-refresh-20261028/tii/ml-seminfo-lab4-tii-atualizada.iso` | `998863a82665dc52a7613a80a528a61c049f692d5efc1a5d3c6f711c376332f0` |
+
+O link e os hashes na seção seguinte identificam o **pacote anterior**, de 17/10, que não contém as correções do PR #1. Não o confunda com as imagens atualizadas.
 
 
 **[Baixar o pacote das ISOs SI e TII pelo SwissTransfer](https://www.swisstransfer.com/dl/01a151eb-2850-70bb-8a64-f23753f527b1)**
