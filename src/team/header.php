@@ -109,7 +109,7 @@ if(!isset($_SESSION["popuptime"]) || $_SESSION["popuptime"] < time()-120) {
 			if ($run[$i]["anstime"]>$_SESSION["usertable"]["userlastlogin"]-$st["sitestartdate"] && 
 				$run[$i]["anstime"] < $st['sitelastmileanswer'] &&
 				$run[$i]["ansfake"]!="t" && !isset($_SESSION["popups"]['run' . $i . '-' . $run[$i]["anstime"]])) {
-				$_SESSION["popups"]['run' . $i . '-' . $run[$i]["anstime"]] = "(Submissão ".$run[$i]["number"]." resultado: ".$run[$i]["answer"] . ')\n';
+				$_SESSION["popups"]['run' . $i . '-' . $run[$i]["anstime"]] = "(Submissão ".$run[$i]["number"]." — resultado: ".displayRunAnswer($run[$i]["answer"]) . ')\n';
 			}
 		}
 	}

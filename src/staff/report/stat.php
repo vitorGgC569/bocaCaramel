@@ -103,7 +103,7 @@ echo "<center><table border=1>\n";
 echo "<tr><td><b><u>Questões x respostas</u></b></td>";
 // while (list($key, $val) = each($d['answer']))
 foreach($d['answer'] as $key => $val){
-  echo "<td>$key</td>";
+  echo "<td>" . displayRunAnswer($key) . "</td>";
 }
 echo "<td>Total</td></tr>\n";
 
@@ -245,7 +245,7 @@ echo "<tr><td><b><u>Linguagens x respostas</u></b></td>";
 reset($d['answer']);
 // while (list($key, $val) = each($d['answer']))
 foreach($d['answer'] as $key => $val){
-  echo "<td>$key</td>";
+  echo "<td>" . displayRunAnswer($key) . "</td>";
 }
 echo "<td>Total</td></tr>\n";
 
@@ -287,9 +287,9 @@ $str="Todas as submissões por resposta";
 $values = array();
 // while (list($keya, $val) = each($d['answer'])) {
 foreach($d['answer'] as $keya => $val){
-  $values[] = $keya . ":" . $val;
+  $values[] = displayRunAnswer($keya) . ":" . $val;
   $str .= chr(1) . $keya . "(" . $val . ")" . chr(1) . $val;
-  echo "<tr><td>$keya</td>";
+  echo "<tr><td>" . displayRunAnswer($keya) . "</td>";
   echo "<td>$val</td>";
   echo "</tr>";
 }

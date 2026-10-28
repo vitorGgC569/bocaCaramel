@@ -102,7 +102,7 @@ echo "<tr><td><b><u>Questões x respostas</u></b></td>";
 
 foreach($d['answer'] as $key => $val){
 // while (list($key, $val) = each($d['answer']))
-  echo "<td>$key</td>";
+  echo "<td>" . displayRunAnswer($key) . "</td>";
 }
 echo "<td>Total</td></tr>\n";
 
@@ -237,7 +237,7 @@ echo "<center><table border=1>\n";
 echo "<tr><td><b><u>Linguagens x respostas</u></b></td>";
 foreach($d['answer'] as $key => $val){
 // while (list($key, $val) = each($d['answer']))
-  echo "<td>$key</td>";
+  echo "<td>" . displayRunAnswer($key) . "</td>";
 }
 echo "<td>Total</td></tr>\n";
 
@@ -278,8 +278,8 @@ $values = array();
 // while (list($keya, $val) = each($d['answer'])) {
 foreach($d['answer'] as $keya => $val){
   $str .= chr(1) . $keya . "(" . $val . ")" . chr(1) . $val;
-  $values[] = $keya . ":" . $val;
-  echo "<tr><td>$keya</td>";
+  $values[] = displayRunAnswer($keya) . ":" . $val;
+  echo "<tr><td>" . displayRunAnswer($keya) . "</td>";
   echo "<td>$val</td>";
   echo "</tr>";
 }

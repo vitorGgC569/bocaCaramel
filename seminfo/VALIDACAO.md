@@ -43,6 +43,8 @@ Na revisão dos menus do juiz e das telas de sede e usuários, o ensaio TII conf
 
 Na revisão dos resultados, o ensaio TII confirmou que a equipe vê as descrições em português para YES e WA enquanto os códigos originais permanecem no banco. O teste também conferiu Builder, quatro linguagens, restauração, pedido e dúvida; passaram os 56 testes de unidade e a sintaxe PHP.
 
+No ensaio TII posterior, o relatório de estatísticas exibiu as descrições em português para YES e WA e gerou o gráfico por resposta. O teste também verificou os fluxos de Builder, linguagens, dúvidas, pedidos e restauração; os 56 testes de unidade e a sintaxe PHP passaram.
+
 Essas evidências não homologam as salas físicas. Os seis ensaios a seguir devem ser realizados presencialmente em cada laboratório; não registre atestados sem executá-los.
 
 ## Uma ficha presencial por laboratório

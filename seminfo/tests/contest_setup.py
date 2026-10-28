@@ -248,6 +248,9 @@ def main(profile="si"):
                 team_page=team.open(base+'team/run.php').read().decode('utf-8')
                 assert 'correta.c' in team_page and 'errada.c' in team_page
                 assert 'Sim (YES)' in team_page and 'resposta incorreta (WA)' in team_page
+                report_page=client.open(base+'admin/report/stat.php',timeout=120).read().decode('utf-8')
+                assert 'Sim (YES)' in report_page and 'resposta incorreta (WA)' in report_page
+                print('Relatório apresenta resultados em português: OK',flush=True)
                 print('Submissões e resultados visíveis para a equipe: OK',flush=True)
                 report={'passed':True,'server_source_sha256':kit.source_hash(),'native_create_import_edit':True,
                         'cpp20_template':True,'references_four_languages':good['results'],
