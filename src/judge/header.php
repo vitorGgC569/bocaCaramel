@@ -88,15 +88,15 @@ echo "<table border=0 width=\"100%\" align=center>\n";
 echo " <tr>\n";
 //echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=problem.php>Questões</a></td>\n";
 
-echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=run.php>Runs ($nr)</a></td>\n";
+echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=run.php>Submissões ($nr)</a></td>\n";
 if($isboss) {
-  echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=runchief.php>Chief ($nrchief)</a></td>\n";
+  echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=runchief.php>Juiz chefe ($nrchief)</a></td>\n";
 }
 {
   echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=allrunlist.php>Todas as submissões </a></td>\n";
 }
 echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=score.php>Placar</a></td>\n";
-echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=clar.php>Clarifications ($nc)</a></td>\n";
+echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=clar.php>Dúvidas ($nc)</a></td>\n";
 
 echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=history.php>Histórico</a></td>\n";
 echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=team.php>Como equipe</a></td>\n";

@@ -2,6 +2,7 @@
 import argparse
 import base64
 import datetime as dt
+import hashlib
 import io
 import json
 from pathlib import Path
@@ -280,6 +281,16 @@ def main(profile="si"):
                 # the organizer-only reference seeding API. The edited package
                 # expects 99; send one correct and one incorrect C solution.
                 team=login(base,profile+'01',credentials['TEAM_01'],'team')
+                temporary_password=secrets.token_hex(16)
+                password_hash='!'+hashlib.sha256(temporary_password.encode()).hexdigest()
+                for number,username,role in ((3001,'juizteste','judge'),(3002,'apoioteste','staff')):
+                    query=("INSERT INTO usertable(contestnumber,usersitenumber,usernumber,username,userfullname,userdesc,usertype,userenabled,usermultilogin,userpassword,usersession,usersessionextra,usericpcid,userinfo) "
+                           f"VALUES(1,1,{number},'{username}','Ensaio','','{role}',true,false,'{password_hash}','','','','')")
+                    raw_run(['docker','exec',names['db'],'psql','-U','postgres','-d','bocadb','-c',query])
+                raw_run(['docker','exec',names['db'],'psql','-U','postgres','-d','bocadb','-c',
+                         "UPDATE sitetable SET sitechiefname='juizteste' WHERE contestnumber=1 AND sitenumber=1"])
+                judge=login(base,'juizteste',temporary_password,'judge')
+                staff=login(base,'apoioteste',temporary_password,'staff')
                 # Visit read-only pages with real authenticated sessions. Ignore
                 # scripts and styles: internal form values and protocol strings
                 # are deliberately kept in their original language.
@@ -300,8 +311,12 @@ def main(profile="si"):
                              'team/files.php','team/option.php','team/score.php']}
                 pages[login(base,'system',credentials['SYSTEM_PASSWORD'],'system')]=['system/contest.php','system/importxml.php','system/option.php']
                 pages[login(base,'placar',credentials['SCORE_PASSWORD'],'score')]=['score/index.php','score/score.php']
+                pages[judge]=['judge/run.php','judge/runchief.php','judge/allrunlist.php','judge/clar.php',
+                              'judge/history.php','judge/team.php','judge/option.php','judge/score.php']
+                pages[staff]=['staff/run.php','staff/task.php','staff/option.php','staff/score.php']
                 english=('still open','auto-ended','in progress','runs renewed for autojudging',
-                         're-run autojudge for selected runs','news (last','as of 1 minutes')
+                         're-run autojudge for selected runs','news (last','as of 1 minutes',
+                         'clarifications (','runs (','chief (')
                 checked=0
                 for browser,paths in pages.items():
                     for path in paths:
@@ -312,6 +327,8 @@ def main(profile="si"):
                         assert 'fatal error' not in text,(path,text[:500])
                         assert 'usuário:' in text,(path,'Cabeçalho autenticado ausente')
                         assert not any(fragment in text for fragment in english),(path,text[:500])
+                        if path=='judge/runchief.php':
+                            assert 'juiz chefe (' in text and 'dúvidas (' in text and 'submissões (' in text
                         checked+=1
                 print(f'Navegação autenticada e textos visíveis: {checked} páginas conferidas',flush=True)
                 # Create a real support request and verify both the translated
