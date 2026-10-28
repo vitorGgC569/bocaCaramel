@@ -67,7 +67,7 @@ class ManualDoc(BaseDocTemplate):
     def __init__(self,filename,title,chapter_pages):
         super().__init__(str(filename),pagesize=A4,leftMargin=18*mm,rightMargin=18*mm,topMargin=23*mm,bottomMargin=19*mm,title=title,author='IF Goiano - Núcleo de Informática / Organização SEMINFO')
         self.book_title=title;self.chapter_pages=chapter_pages
-        self.footer_note='Guia visual | revisão 28/10/2026' if chapter_pages else 'Guia visual | edição 18/10/2026'
+        self.footer_note='Guia visual | revisão 28/10/2026' if chapter_pages or title=='Roteiro rápido da banca' else 'Guia visual | edição 18/10/2026'
         self.addPageTemplates(PageTemplate(id='main',frames=[Frame(self.leftMargin,self.bottomMargin,self.width,self.height,id='body',leftPadding=0,rightPadding=0,topPadding=0,bottomPadding=0)],onPage=self.decorate))
 
     def decorate(self,canvas,doc):
@@ -118,7 +118,7 @@ def generate(name,title,full=False):
     for index,heading in enumerate(soup.find_all('h2'),1):
         heading['id']='capitulo-'+str(index)
         navigation.append('<li><a href="#'+heading['id']+'">'+html.escape(heading.get_text())+'</a></li>')
-    footer_note=('Texto revisado em 28/10/2026. Capturas históricas de 18/10; valores pendentes continuam para decisão da organização.' if name=='manual-if' else 'Edição de 18/10/2026. Capturas reais da mesa; registros virtuais identificados nas legendas. Campos pendentes continuam para decisão da organização.')
+    footer_note=('Texto revisado em 28/10/2026. Capturas históricas de 18/10; valores pendentes continuam para decisão da organização.' if name in ('manual-if','roteiro-banca') else 'Edição de 18/10/2026. Capturas reais da mesa; registros virtuais identificados nas legendas. Campos pendentes continuam para decisão da organização.')
     page='<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>'+html.escape(title)+'</title><style>'+HTML_CSS+'main img{max-width:100%;height:auto}.page-break{break-before:page}</style><main><header><img src="recursos/if-goiano-urutai.png" alt="Instituto Federal Goiano - Campus Urutaí"><p>XIX SEMINFO 2026 | Documentação da organização</p></header><nav aria-label="Índice"><strong>Neste documento</strong><ul>'+''.join(navigation)+'</ul></nav>'+str(soup)+'<footer>'+footer_note+'</footer></main></html>'
     (HERE/(name+'.html')).write_text(page,encoding='utf-8')
     story=[]

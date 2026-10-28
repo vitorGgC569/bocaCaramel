@@ -143,8 +143,8 @@
     {
       "file": "output\\pdf\\roteiro-banca.pdf",
       "source": "roteiro-banca.md",
-      "source_sha256": "59535844e776a622f4cd866f243346009b070a83b2036b450ce754a2b1686864",
-      "pdf_sha256": "c6f6b39bbb589ca594e5984b8a9653a308314fc8dcfca8da2dc3645c41267e8a"
+      "source_sha256": "413c6a20ecbd1b2625c8033c850513ac4b21999afff91d284ddd5de57c61720d",
+      "pdf_sha256": "36280dbec53f6351912c4f431fd4059c0332d335a4978caa2f862843ef0a8832"
     },
     {
       "file": "output\\pdf\\ficha-homologacao.pdf",

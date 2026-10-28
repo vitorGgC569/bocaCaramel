@@ -1,10 +1,10 @@
 # Roteiro rápido da banca
 
-XIX SEMINFO 2026 | 29/10/2026 | Edição 18/10/2026. Use com instalação e homologação concluídas.
+XIX SEMINFO 2026 | 29/10/2026 | Texto revisado em 28/10/2026. Use com instalação e homologação concluídas.
 
 ## 1. Abrir a sala e conferir a prova
 
-![Operação da maratona](recursos/telas-2026-10-18/recortes/08-operacao.png)
+![Operação da maratona - captura de 18/10](recursos/telas-2026-10-18/recortes/08-operacao.png)
 
 1. Abra Docker Desktop → Central SEMINFO → aceite a permissão do Windows.
 2. Confira **Esta banca gerencia**: SI/Lab 3 ou TII/Lab 4.
@@ -52,18 +52,18 @@ XIX SEMINFO 2026 | 29/10/2026 | Edição 18/10/2026. Use com instalação e homo
 
 ## 3. Acompanhar, encerrar e recuperar
 
-![Backup da categoria](recursos/telas-2026-10-18/recortes/11-backup.png)
+![Backup da categoria - captura de 18/10](recursos/telas-2026-10-18/recortes/11-backup.png)
 
 | Durante a prova | Fazer |
 |---|---|
-| Submissões e dúvidas | BOCA: Runs, Clarifications e Score. Confira se o juiz esvazia a fila. |
+| Submissões e dúvidas | BOCA: Submissões, Dúvidas e Placar. Confira se o juiz esvazia a fila. |
 | Projetor | Somente o placar da categoria. Uma banca pode estar congelada enquanto a outra já terminou. |
 | Ocorrência | Anote hora, equipe, falha e decisão em ocorrencias.csv; comunique o responsável. |
 | Backup | Combine a breve pausa → Criar backup e verificar restauração → aguarde aprovação → copie a pasta completa para outra mídia protegida. |
 | Falha de serviço | Atualizar diagnóstico; conferir Docker/rede. Use Iniciar mesa para retomar os serviços existentes. Chame a TI se persistir. |
 | Trocar a mesa | Somente com a TI: kit, identidade e backup correspondentes; restauração em destino vazio. |
 
-**Encerramento:** aguarde todos os julgamentos/rejulgamentos → confira Score → **Publicar resultado final…** da categoria → confirme o laboratório → confira o placar projetado → faça backup conferido.
+**Encerramento:** aguarde todos os julgamentos/rejulgamentos → confira o Placar → **Publicar resultado final…** da categoria → confirme o laboratório → confira o placar projetado → faça backup conferido.
 
 **Animeitor:** a TI usa `python seminfo/manage.py reveal si` ou `tii` após o final validado. Espaço avança; q sai. Em divergência/falha, use o resultado oficial do BOCA.
 
