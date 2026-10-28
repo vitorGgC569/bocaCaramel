@@ -50,7 +50,7 @@ Na Central, selecione a categoria em **Esta banca gerencia** antes de editar que
 O link e os hashes na seção seguinte identificam o **pacote anterior**, de 17/10, que não contém as correções do PR #1. Não o confunda com as imagens atualizadas.
 
 
-**[Baixar o pacote das ISOs SI e TII pelo SwissTransfer](https://www.swisstransfer.com/dl/01a151eb-2850-70bb-8a64-f23753f527b1)**
+**[Pacote anterior das ISOs SI e TII pelo SwissTransfer — não usar como versão atual](https://www.swisstransfer.com/dl/01a151eb-2850-70bb-8a64-f23753f527b1)**
 
 Se o pacote estiver em ZIP, extraia antes de conferir o SHA256 e gravar o pendrive. Escolha a ISO correspondente ao laboratório:
 
