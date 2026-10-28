@@ -101,7 +101,7 @@ echo "):</td>";
 <br />
 <table border=1>
 <tr>
-<td nowrap width=\"50%\" align=right>Starting at</td><td nowrap width=\"50%\" align=left>Ending at</td>
+<td nowrap width=\"50%\" align=right>Início</td><td nowrap width=\"50%\" align=left>Término</td>
 </tr>
 <?php
 $n = count($sitetime);

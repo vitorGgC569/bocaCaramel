@@ -46,10 +46,10 @@ require 'header.php';
   </center>
 </form>
 <pre>
-OPERATION LOG DISPLAYS BELOW:
+REGISTRO DA OPERAÇÃO:
 
 <?php
-echo "Start: " . now() . "\n";
+echo "Início: " . now() . "\n";
 if(isset($_GET['confirmation']) && $_GET['confirmation'] == 'confirm') {
 $ds = DIRECTORY_SEPARATOR;
 if($ds=="") $ds = "/";
@@ -70,13 +70,13 @@ if (isset($_GET["Submit3"]) && $_GET["Submit3"] == "Transfer scores") {
 }
 if (isset($_GET["Submit4"]) && $_GET["Submit4"] == "Clear cache") {
   if(fixbocadir(dirname(__DIR__)))
-    echo "Done\n";
-  else echo "Error (likely permission/ownership issues)\n";
+    echo "Concluído\n";
+  else echo "Erro (verifique as permissões e o proprietário dos arquivos)\n";
 }
 if (isset($_GET["Submit5"]) && $_GET["Submit5"] == "Full clear") {
   if(fixbocadir(dirname(__DIR__),true))
-    echo "Done\n";
-  else echo "Error (likely permission/ownership issues)\n";
+    echo "Concluído\n";
+  else echo "Erro (verifique as permissões e o proprietário dos arquivos)\n";
 }
 if (isset($_GET["Submit6"]) && $_GET["Submit6"] == "Update BOCA") {
   $dir = dirname(__DIR__);
@@ -96,21 +96,21 @@ if (isset($_GET["Submit6"]) && $_GET["Submit6"] == "Update BOCA") {
 	require($dir . $ds . "private" . $ds . "newboca." . $t . $ds . 'versionnum.php');
 	$newv = explode('.',$BOCAVERSION);
 	if($curv[0] != $newv[0] || $curv[1] != $newv[1])
-	  echo "Cannot updated because of major version difference\n";
+	  echo "Não foi possível atualizar devido à diferença entre versões principais\n";
 	else {
-	  echo "Updating\n";
+	  echo "Atualizando\n";
 	  $q = updatebocafile($dir, $dir . $ds . "private" . $ds . "newboca." . $t, $t);
-	  echo $q . " files updated to " . $BOCAVERSION . "\n\n";
+	  echo $q . " arquivos atualizados para " . $BOCAVERSION . "\n\n";
 	  $str = @file_get_contents($dir . $ds . "private" . $ds . "updateboca.log");
 	  @file_put_contents($dir . $ds . "private" . $ds . "updateboca.log",  $str . $t . "\n");
 	}
       } else {
-	echo "Downloaded file corrupted\n";
+	echo "O arquivo baixado está corrompido\n";
       }
       @unlink($tmpfname);
-    } else echo "Download error\n";
+    } else echo "Erro no download\n";
   } else {
-    echo "Cannot update log file\n";
+    echo "Não foi possível atualizar o arquivo de registro\n";
   }
 }
 if (isset($_GET["Submit7"]) && $_GET["Submit7"] == "Revert Update") {
@@ -124,17 +124,17 @@ if (isset($_GET["Submit7"]) && $_GET["Submit7"] == "Revert Update") {
       $str = implode("\n", $str);
       fixbocadir($dir);
       if($t != '') {
-	echo "Reverting last update\n";
+	echo "Revertendo a última atualização\n";
 	$q = revertupdatebocafile($dir, $t);
-	echo $q . " files reverted properly\n";
+	echo $q . " arquivos revertidos com sucesso\n";
 	fixbocadir($dir);
       }
       @file_put_contents($dir . $ds . "private" . $ds . "updateboca.log", $str);
     } else {
-      echo "No updates to revert\n";
+      echo "Não há atualizações para reverter\n";
     }
   } else {
-    echo "Cannot update log file\n";
+    echo "Não foi possível atualizar o arquivo de registro\n";
   }
 }
 if($dotransfer || $doscore || $dotransferall) {
@@ -146,7 +146,7 @@ if($dotransfer || $doscore || $dotransferall) {
       if($doscore) {
 	if (($s = DBSiteInfo($_SESSION["usertable"]["contestnumber"],$_SESSION["usertable"]["usersitenumber"])) == null)
 	  ForceLoad("index.php");
-	echo "Building scores\n";
+	echo "Gerando placares\n";
 	$level=$s["sitescorelevel"];
 	$data0 = array();
 	if($level>0) {
@@ -169,9 +169,9 @@ if($dotransfer || $doscore || $dotransferall) {
 	$fname = $remotedir . $ds . "score_site" . $localsite . "_" . $localsite . "_x"; // . md5($_SERVER['HTTP_HOST']);
 	@file_put_contents($fname . ".tmp",base64_encode(serialize($data0)));
 	@rename($fname . ".tmp",$fname . ".dat");
-	echo "Checking for transfers\n";
+	echo "Verificando transferências\n";
 	echo scoretransfer($fname . ".dat", $localsite);
-	echo "Saving scores\n";
+	echo "Salvando placares\n";
 	if(@create_zip($remotedir,glob($remotedir . '/*.dat'),$fname . ".tmp") != 1) {
 	  LOGError("Cannot create score zip file");
 	  if(@create_zip($remotedir,array(),$fname . ".tmp") == 1)
@@ -182,19 +182,19 @@ if($dotransfer || $doscore || $dotransferall) {
 	@fclose($fp);
       }
       if($dotransfer) {
-	echo "Processing contest data\n";
+	echo "Processando dados da competição\n";
 	echo getMainXML($_SESSION["usertable"]["contestnumber"],10,$dotransferall);
       }
       @unlink($destination . ".lck");
     } else {
       if(file_exists($destination . ".lck") && filemtime($destination . ".lck") < time() - 120)
 	@unlink($destination . ".lck");
-      echo "Transfers locked by other process - try again soon\n";
+      echo "As transferências estão bloqueadas por outro processo. Tente novamente em instantes\n";
     }
   }
 }
 }
-echo "End: " . now() . "\n";
+echo "Fim: " . now() . "\n";
 ?>
 </pre>
 </body>

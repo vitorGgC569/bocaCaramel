@@ -28,7 +28,7 @@ require('header.php');
   <td><b>Usuário / local</b></td>
   <td><b>Descrição</b></td>
   <td><b>Arquivo</b></td>
-  <td><b>Staff / Site</b></td>
+  <td><b>Equipe de apoio / sede</b></td>
   <td><b>Status</b></td>
  </tr>
 <?php

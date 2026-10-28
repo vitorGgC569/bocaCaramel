@@ -98,6 +98,12 @@ def main(profile="si"):
                     if tag=='button' and self.active:
                         attrs,parts=self.active; self.labels[''.join(parts).strip()]=attrs; self.active=None
             page=client.open(base+'admin/site.php?site=1').read().decode('utf-8')
+            assert 'Encerramento automático:' in page and 'Ativo:' in page
+            user_sql="SELECT usernumber FROM usertable WHERE contestnumber=1 AND username='"+profile+"01'"
+            team_number=raw_run(['docker','exec',names['db'],'psql','-U','postgres','-d','bocadb','-Atc',user_sql]).decode().strip()
+            assert team_number.isdecimal(),team_number
+            user_page=client.open(base+'admin/user.php?site=1&user='+team_number).read().decode('utf-8')
+            assert 'value=\"team\">Equipe</option>' in user_page and 'value=\"judge\">Juiz</option>' in user_page
             buttons=Buttons(); buttons.feed(page)
             login_sql="SELECT sitepermitlogins FROM sitetable WHERE contestnumber=1 AND sitenumber=1"
             def login_state():

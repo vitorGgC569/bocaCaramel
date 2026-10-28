@@ -39,6 +39,8 @@ Na revisão dos estados e mensagens de erro, um ensaio isolado de TII enviou uma
 
 Após a tradução das mensagens de erro de banco, importação, parâmetros e backups, a imagem passou na sintaxe PHP, nos 56 testes de unidade e no ensaio isolado TII, incluindo acesso, Builder, quatro linguagens, restauração, pedido de ajuda, dúvida e submissões YES e WA.
 
+Na revisão dos menus do juiz e das telas de sede e usuários, o ensaio TII conferiu os rótulos e valores de formulários renderizados, o acesso, o Builder, as quatro linguagens, a restauração, os pedidos, as dúvidas e as submissões YES e WA. Os 56 testes de unidade e a sintaxe PHP passaram.
+
 Essas evidências não homologam as salas físicas. Os seis ensaios a seguir devem ser realizados presencialmente em cada laboratório; não registre atestados sem executá-los.
 
 ## Uma ficha presencial por laboratório

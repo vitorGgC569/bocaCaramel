@@ -406,13 +406,13 @@ if (isset($u)) {
         <td width="35%" align=right>Tipo:</td>
         <td width="65%">
 		<select name="usertype">
-		<option <?php if(!isset($u) || $u["usertype"] == "team") echo "selected"; ?> value="team">Team</option>
-		<option <?php if(isset($u)) if($u["usertype"] == "judge") echo "selected"; ?> value="judge">Judge</option>
-		<option <?php if(isset($u)) if($u["usertype"] == "admin") echo "selected"; ?> value="admin">Admin</option>
-		<option <?php if(isset($u)) if($u["usertype"] == "staff") echo "selected"; ?> value="staff">Staff</option>
-		<option <?php if(isset($u)) if($u["usertype"] == "score") echo "selected"; ?> value="score">Score</option>
+		<option <?php if(!isset($u) || $u["usertype"] == "team") echo "selected"; ?> value="team">Equipe</option>
+		<option <?php if(isset($u)) if($u["usertype"] == "judge") echo "selected"; ?> value="judge">Juiz</option>
+		<option <?php if(isset($u)) if($u["usertype"] == "admin") echo "selected"; ?> value="admin">Administrador</option>
+		<option <?php if(isset($u)) if($u["usertype"] == "staff") echo "selected"; ?> value="staff">Apoio</option>
+		<option <?php if(isset($u)) if($u["usertype"] == "score") echo "selected"; ?> value="score">Placar</option>
 		<?php if(1 || $main) { ?>
-        <option <?php if(isset($u)) if($u["usertype"] == "site") echo "selected"; ?> value="site">Site</option>
+        <option <?php if(isset($u)) if($u["usertype"] == "site") echo "selected"; ?> value="site">Sede</option>
         <?php } ?>
 		</select>
         </td>

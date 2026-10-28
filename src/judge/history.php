@@ -23,7 +23,7 @@ require('header.php');
 <br>
 <table width="100%" border=1>
  <tr>
-  <td><b>Clar # (site)</b></td>
+  <td><b>Dúvida nº (sede)</b></td>
   <td><b>Tempo</b></td>
   <td><b>Questão</b></td>
   <td><b>Status</b></td>

@@ -98,8 +98,8 @@ if($isboss) {
 echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=score.php>Placar</a></td>\n";
 echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=clar.php>Clarifications ($nc)</a></td>\n";
 
-echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=history.php>History</a></td>\n";
-echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=team.php>As Team</a></td>\n";
+echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=history.php>Histórico</a></td>\n";
+echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=team.php>Como equipe</a></td>\n";
 echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=option.php>Opções</a></td>\n";
 echo "  <td align=center width=\"10%\"><a class=menu style=\"font-weight:bold\" href=../index.php>Sair</a></td>\n";
 echo " </tr>\n"; 

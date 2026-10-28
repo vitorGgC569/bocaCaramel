@@ -34,7 +34,7 @@ else
 <table width="100%" border=1>
  <tr>
   <td><b><a href="<?php echo $runphp; ?>?order=run">Submissão nº</a></b></td>
-  <td><b><a href="<?php echo $runphp; ?>?order=site">Site</a></b></td>
+  <td><b><a href="<?php echo $runphp; ?>?order=site">Sede</a></b></td>
 <?php if($runphp == "run.php") { ?>
   <td><b><a href="<?php echo $runphp; ?>?order=user">Usuário</a></b></td>
 <?php } ?>
@@ -43,7 +43,7 @@ else
   <td><b><a href="<?php echo $runphp; ?>?order=language">Linguagem</a></b></td>
 <!--  <td><b>Nome do arquivo</b></td> -->
   <td><b><a href="<?php echo $runphp; ?>?order=status">Status</a></b></td>
-  <td><b><a href="<?php echo $runphp; ?>?order=judge">Judge (Site)</a></b></td>
+  <td><b><a href="<?php echo $runphp; ?>?order=judge">Juiz (sede)</a></b></td>
   <td><b>AJ</b></td>
   <td><b><a href="<?php echo $runphp; ?>?order=answer">Resposta</a></b></td>
  </tr>

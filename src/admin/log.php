@@ -43,10 +43,10 @@ $log = DBGetLogs($order, $_SESSION["usertable"]["contestnumber"],
 <br>
 <table width="100%" border=1>
  <tr>
-  <td><b><a href="log.php?order=site&limit=<?php echo $limit; ?>">Site</a></b></td>
+  <td><b><a href="log.php?order=site&limit=<?php echo $limit; ?>">Sede</a></b></td>
   <td nowrap><b><a href="log.php?order=user&limit=<?php echo $limit; ?>">Usuário nº</a></b></td>
   <td><b><a href="log.php?order=ip&limit=<?php echo $limit; ?>">IP</a></b></td>
-  <td><b><a href="log.php?order=type&limit=<?php echo $limit; ?>">Type</a></b></td>
+  <td><b><a href="log.php?order=type&limit=<?php echo $limit; ?>">Tipo</a></b></td>
   <td><b>Data</b></td>
   <td><b>Descrição</b></td>
   <td><b>Status</b></td>

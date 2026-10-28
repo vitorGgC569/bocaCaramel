@@ -37,7 +37,7 @@ $runphp="run.php";
 <table width="100%" border=1>
  <tr>
   <td><b><a href="<?php echo $runphp; ?>?order=run">Submissão nº</a></b></td>
-  <td><b><a href="<?php echo $runphp; ?>?order=site">Site</a></b></td>
+  <td><b><a href="<?php echo $runphp; ?>?order=site">Sede</a></b></td>
 <?php if($runphp == "run.php") { ?>
   <td><b><a href="<?php echo $runphp; ?>?order=user">Usuário</a></b></td>
 <?php } ?>

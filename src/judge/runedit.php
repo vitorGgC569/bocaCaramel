@@ -119,7 +119,7 @@ for ($i=0;$i<count($b);$i++) {
 echo "<a href=\"../filedownload.php?". filedownload($a["sourceoid"], $a["sourcename"]) . "\">" . $a["sourcename"] . "</a>\n";
         echo "<a href=\"#\" class=menu style=\"font-weight:bold\" onClick=\"window.open('../filewindow.php?" .
             filedownload($a["sourceoid"], $a["sourcename"])  . "', 'View - SOURCE CODE', ".
-             "'width=680,height=600,scrollbars=yes,resizable=yes')\">view</a>\n";
+             "'width=680,height=600,scrollbars=yes,resizable=yes')\">ver</a>\n";
 ?>
         </td>
       </tr>
@@ -221,7 +221,7 @@ if($a["autostdout"]!="") {
 	echo "<a href=\"../filedownload.php?". filedownload($a["autostdout"],"stdout") ."\">stdout</a>\n";
 	echo "<a href=\"#\" class=menu style=\"font-weight:bold\" onClick=\"window.open('../filewindow.php?".
 	filedownload($a["autostdout"],"stdout") ."', 'View - STDOUT','width=680,height=600,scrollbars=yes,".
-	"resizable=yes')\">view</a>\n";
+	"resizable=yes')\">ver</a>\n";
 } else
 	echo "indisponível";
 ?>
@@ -235,7 +235,7 @@ if($a["autostderr"]!="") {
 	echo "<a href=\"../filedownload.php?". filedownload($a["autostderr"], "stderr") ."\">stderr</a>\n";
         echo "<a href=\"#\" class=menu style=\"font-weight:bold\" onClick=\"window.open('../filewindow.php?".
 	    filedownload($a["autostderr"], "stderr") ."', 'View - STDERR','width=680,height=600,scrollbars=yes,".
-	     "resizable=yes')\">view</a>\n";
+	     "resizable=yes')\">ver</a>\n";
 } else
       echo "indisponível";
 ?>

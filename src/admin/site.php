@@ -445,7 +445,7 @@ echo "):</td>";
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Active:</td>
+        <td width="35%" align=right>Ativo:</td>
         <td width="65%">
 <?php
           if ($st["siteactive"] == "t")
@@ -456,7 +456,7 @@ echo "):</td>";
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Autoend:</td>
+        <td width="35%" align=right>Encerramento automático:</td>
         <td width="65%">
 <?php
           if ($st["siteautoend"] == "t")
@@ -544,7 +544,7 @@ echo "):</td>";
 <br />
 <table border=1>
 <tr>
-<td nowrap width=\"50%\" align=right>Starting at</td><td nowrap width=\"50%\" align=left>Ending at</td>
+<td nowrap width=\"50%\" align=right>Início</td><td nowrap width=\"50%\" align=left>Término</td>
 </tr>
 <?php
 $n = count($sitetime);

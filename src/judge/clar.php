@@ -81,7 +81,7 @@ echo "</table>";
 if (count($clar) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUMA DÚVIDA DISPONÍVEL</font></b></center>";
 
 ?>
-<br><br><br><center><b>To submit a clarification, just fill in the following fields
+<br><br><br><center><b>Para enviar uma dúvida, preencha os campos abaixo
 </b></center>
 <form name="form1" method="post" action="clar.php">
   <input type=hidden name="confirmation" value="noconfirm" />

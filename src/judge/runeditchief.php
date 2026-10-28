@@ -131,14 +131,14 @@ for ($i=0;$i<count($b);$i++) {
 	echo "<b>Entrada:</b><a href=\"../filedownload.php?". filedownload($b[$i]["inputoid"], $b[$i]["inputfilename"]) ."\">";
 	echo $b[$i]["inputfilename"] . "</a>";
 	echo " <a href=\"#\" class=menu style=\"font-weight:bold\" onClick=\"window.open('../filewindow.php?".
-		filedownload($b[$i]["inputoid"], $b[$i]["inputfilename"]) ."', 'View$i - INPUT','width=680,height=600,scrollbars=yes,resizable=yes')\">view</a> &nbsp;";
+		filedownload($b[$i]["inputoid"], $b[$i]["inputfilename"]) ."', 'View$i - INPUT','width=680,height=600,scrollbars=yes,resizable=yes')\">ver</a> &nbsp;";
 
 	if(isset($b[$i]["soloid"])) {
 	  echo "<b>Sol:</b><a href=\"../filedownload.php?". filedownload($b[$i]["soloid"], $b[$i]["solfilename"])  . "\">";
 	  echo $b[$i]["solfilename"] . "</a>";
 	}
 	echo " <a href=\"#\" class=menu style=\"font-weight:bold\" onClick=\"window.open('../filewindow.php?".
-		filedownload($b[$i]["soloid"], $b[$i]["solfilename"]) ."', 'View$i - CORRECT OUTPUT','width=680,height=600,scrollbars=yes,resizable=yes')\">view</a>";
+		filedownload($b[$i]["soloid"], $b[$i]["solfilename"]) ."', 'View$i - CORRECT OUTPUT','width=680,height=600,scrollbars=yes,resizable=yes')\">ver</a>";
 }
 ?>
 	&nbsp;</td>
@@ -155,7 +155,7 @@ for ($i=0;$i<count($b);$i++) {
 			echo "<a href=\"../filedownload.php?". filedownload($a["sourceoid"],$a["sourcename"]) . "\">" . $a["sourcename"] . "</a>\n";
 echo "<a href=\"#\" class=menu style=\"font-weight:bold\" onClick=\"window.open('../filewindow.php?" .
 filedownload($a["sourceoid"],$a["sourcename"]) ."', 'View - SOURCE', ".
-"'width=680,height=600,scrollbars=yes,resizable=yes')\">view</a>\n";
+"'width=680,height=600,scrollbars=yes,resizable=yes')\">ver</a>\n";
 ?>
         </td>
       </tr>
@@ -295,7 +295,7 @@ if($a["autostdout"]!="") {
 	echo "<a href=\"../filedownload.php?".filedownload($a["autostdout"],"stdout") ."\">stdout</a>\n";
 	echo "<a href=\"#\" class=menu style=\"font-weight:bold\" onClick=\"window.open('../filewindow.php?".
 	filedownload($a["autostdout"],"stdout") ."', 'View - STDOUT','width=680,height=600,scrollbars=yes,".
-	"resizable=yes')\">view</a>\n";
+	"resizable=yes')\">ver</a>\n";
 } else
       echo "indisponível";
 ?>
@@ -309,7 +309,7 @@ if($a["autostderr"]!="") {
 	echo "<a href=\"../filedownload.php?". filedownload($a["autostderr"],"stderr") . "\">stderr</a>\n";
 	echo "<a href=\"#\" class=menu style=\"font-weight:bold\" onClick=\"window.open('../filewindow.php?".
 	filedownload($a["autostderr"],"stderr") ."', 'View - STDERR','width=680,height=600,scrollbars=yes,".
-	"resizable=yes')\">view</a>\n";
+	"resizable=yes')\">ver</a>\n";
 } else
       echo "indisponível";
 ?>
