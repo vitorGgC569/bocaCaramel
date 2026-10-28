@@ -29,6 +29,8 @@ As imagens do servidor foram reconstruídas preservando a correção de compila�
 - Gráficos de pizza e barras foram renderizados com PHP/GD. O teste reproduzível está em `seminfo/tests/chart-smoke.php` e deve ser executado dentro da imagem web com o arquivo montado em `/tests`.
 - O bundle offline foi reconstruído e seu SHA-256, suas quatro imagens e o manifesto foram conferidos. Um clone público de `main` teve seus hashes de servidor e cliente comparados à instalação e ao pacote; os dois coincidiram. Antes da distribuição, confira `seminfo/dist/server-bundle.json` e `server.lock.json`. A pasta privada e os backups não são públicos.
 
+Na revisão posterior do placar, acesso e tela do juiz, os 56 testes de unidade passaram novamente. A nova imagem foi verificada para SI e TII; em TII, o fluxo isolado repetiu a criação e importação de questão, as quatro referências, o envio HTTP com resultados YES e WA e a restauração de backup. A preparação de SI foi atualizada e o banco permaneceu intacto. O pacote offline e seu manifesto foram conferidos contra as fontes.
+
 Essas evidências não homologam as salas físicas. Os seis ensaios a seguir devem ser realizados presencialmente em cada laboratório; não registre atestados sem executá-los.
 
 ## Uma ficha presencial por laboratório

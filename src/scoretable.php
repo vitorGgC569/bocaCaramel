@@ -248,7 +248,7 @@ if($redo) {
 			}
 			$lin = trim($lin[0]);
 			if($lin=='') continue;
-		//if($fta) { $fta=false; $strtmp .= "<br><img src=\"$loc/images/smallballoontransp.png\" alt=\"\" onload=\"javascript:toggleGroup($rfi)\"> <b>Available scores:</b> \n"; }
+		//if($fta) { $fta=false; $strtmp .= "<br><img src=\"$loc/images/smallballoontransp.png\" alt=\"\" onload=\"javascript:toggleGroup($rfi)\"> <b>Classificações disponíveis:</b> \n"; }
             $grname=explode(' ',$lin);
 			$class=1;
 			reset($score);
@@ -277,7 +277,7 @@ if($redo) {
 			}
 
 			if($class>1) {
-			  if($fta) { $fta=false; $strtmp .= "<br><img src=\"$loc/images/smallballoontransp.png\" alt=\"\" onload=\"javascript:toggleGroup($rfi)\"> <b>Available scores:</b> \n"; }
+			  if($fta) { $fta=false; $strtmp .= "<br><img src=\"$loc/images/smallballoontransp.png\" alt=\"\" onload=\"javascript:toggleGroup($rfi)\"> <b>Classificações disponíveis:</b> \n"; }
 				$strtmp .= "<a href=\"#\" onclick=\"javascript:toggleGroup($rfi)\">" . $grname[0] . "</a> ";
 			}
 /*
@@ -299,10 +299,10 @@ if($redo) {
 		}
 	}
 
-	$strtmp .= "<br>\n<table id=\"myscoretable\" width=\"100%\" border=1>\n <tr>\n  <td><b>#</b></td>\n  <td><b>User/Site</b></td>\n  <td><b>Name</b></td>\n";
+	$strtmp .= "<br>\n<table id=\"myscoretable\" width=\"100%\" border=1>\n <tr>\n  <td><b>#</b></td>\n  <td><b>Usuário/Sede</b></td>\n  <td><b>Nome</b></td>\n";
 	if(!$des) {
 		if($level>0)
-			$strtmp .= "<td><b>Problems</b></td>";
+			$strtmp .= "<td><b>Questões</b></td>";
 	} else if($detail) {
 		for($i=0;$i<count($pr);$i++)
 			$strtmp .= "<td nowrap><b>" . $pr[$i]["problem"] . " &nbsp;</b></td>";
@@ -415,11 +415,11 @@ if($redo) {
 		  break;
 	}
 	$strtmp .= "</table>";
-	if ($n == 0) $strtmp .= "<br><center><b><font color=\"#ff0000\">SCOREBOARD IS EMPTY</font></b></center>";
+	if ($n == 0) $strtmp .= "<br><center><b><font color=\"#ff0000\">A CLASSIFICAÇÃO ESTÁ VAZIA</font></b></center>";
 	else {
 		if(!$des) 
-			if($level>0) $strtmp .= "<br><font color=\"#ff0000\">P.S. Problem names are hidden.</font>";
-			else  $strtmp .= "<br><font color=\"#ff0000\">P.S. Problem data are hidden.</font>";
+			if($level>0) $strtmp .= "<br><font color=\"#ff0000\">Observação: os nomes das questões estão ocultos.</font>";
+			else  $strtmp .= "<br><font color=\"#ff0000\">Observação: os dados das questões estão ocultos.</font>";
 	}
 
 	$conf=globalconf();

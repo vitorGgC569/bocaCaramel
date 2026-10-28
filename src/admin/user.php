@@ -75,7 +75,7 @@ if (isset($_POST["username"]) && isset($_POST["userfullname"]) && isset($_POST["
 			if($param['user'] != 1000)
 				DBNewUser($param);
 		}
-		else MSGError ("Passwords don't match.");
+		else MSGError ("As senhas não coincidem.");
 	}
 	ForceLoad("user.php");
 }
@@ -259,7 +259,7 @@ for ($i=0; $i < count($usr); $i++) {
 		  $usr[$i]["usernumber"] . "\">" . $usr[$i]["usernumber"] . "</a>";
   else
 	  echo "  <td nowrap>" . $usr[$i]["usernumber"];
-  if($usr[$i]['userenabled'] != 't' && $usr[$i]['userlastlogin'] < 1) echo "(inactive)";
+  if($usr[$i]['userenabled'] != 't' && $usr[$i]['userlastlogin'] < 1) echo "(inativo)";
   echo "</td>\n";
 
   echo "  <td nowrap>" . $usr[$i]["usersitenumber"] . "</td>\n";
@@ -271,26 +271,26 @@ for ($i=0; $i < count($usr); $i++) {
   else
     echo "  <td nowrap>" . $usr[$i]["userip"] . "&nbsp;</td>\n";
   if ($usr[$i]["userlastlogin"] < 1)
-    echo "  <td nowrap>never</td>\n";
+    echo "  <td nowrap>nunca</td>\n";
   else
     echo "  <td nowrap>" . dateconv($usr[$i]["userlastlogin"]) . "</td>\n";
   if ($usr[$i]["usersession"] != "")
     echo "  <td nowrap><a href=\"javascript: conf2('user.php?logout=1&site=" . $usr[$i]["usersitenumber"] . "&user=" .
-         $usr[$i]["usernumber"] . "')\">Force Logout</a></td>\n";
+         $usr[$i]["usernumber"] . "')\">Encerrar sessão</a></td>\n";
   else {
     if ($usr[$i]["userlastlogout"] < 1)
-      echo "  <td nowrap>never</td>\n";
+      echo "  <td nowrap>nunca</td>\n";
     else
       echo "  <td nowrap>" . dateconv($usr[$i]["userlastlogout"]) . "</td>\n";
   }
   if ($usr[$i]["userenabled"] == "t")
-    echo "  <td nowrap>Yes</td>\n";
+    echo "  <td nowrap>Sim</td>\n";
   else
-    echo "  <td nowrap>No</td>\n";
+    echo "  <td nowrap>Não</td>\n";
   if ($usr[$i]["usermultilogin"] == "t")
-    echo "  <td nowrap>Yes</td>\n";
+    echo "  <td nowrap>Sim</td>\n";
   else
-    echo "  <td nowrap>No</td>\n";
+    echo "  <td nowrap>Não</td>\n";
   echo "  <td nowrap>" . $usr[$i]["userfullname"] . "&nbsp;</td>\n";
   echo "  <td nowrap>" . $usr[$i]["userdesc"] . "&nbsp;</td>\n";
   echo "</tr>";
@@ -418,20 +418,20 @@ if (isset($u)) {
         </td>
       </tr>
       <tr> 
-        <td width="35%" align=right>Enabled:</td>
+        <td width="35%" align=right>Ativo:</td>
         <td width="65%">
 		<select name="userenabled">
-		<option <?php if(!isset($u) || $u["userenabled"] != "f") echo "selected"; ?> value="t">Yes</option>
-		<option <?php if(isset($u) && $u["userenabled"] == "f") echo "selected"; ?> value="f">No</option>
+		<option <?php if(!isset($u) || $u["userenabled"] != "f") echo "selected"; ?> value="t">Sim</option>
+		<option <?php if(isset($u) && $u["userenabled"] == "f") echo "selected"; ?> value="f">Não</option>
 		</select>
         </td>
       </tr>
       <tr> 
-        <td width="35%" align=right>MultiLogins (local teams should be set to <b>Não</b>):</td>
+        <td width="35%" align=right>Acessos simultâneos (para equipes locais, selecione <b>Não</b>):</td>
         <td width="65%">
 		<select name="usermultilogin">
-		<option <?php if(isset($u) && $u["usermultilogin"] == "t") echo "selected"; ?> value="t">Yes</option>
-		<option <?php if(!isset($u) || $u["usermultilogin"] != "t") echo "selected"; ?> value="f">No</option>
+		<option <?php if(isset($u) && $u["usermultilogin"] == "t") echo "selected"; ?> value="t">Sim</option>
+		<option <?php if(!isset($u) || $u["usermultilogin"] != "t") echo "selected"; ?> value="f">Não</option>
 		</select>
         </td>
       </tr>
@@ -477,8 +477,8 @@ echo $u["userdesc"]; } ?>" size="50" maxlength="300" />
         <td width="35%" align=right>Permitir alteração de senha:</td>
         <td width="65%">
 		<select name="changepass">
-		<option <?php if(isset($u) && $u["changepassword"]) echo "selected"; ?> value="t">Yes</option>
-		<option <?php if(!isset($u) || !$u["changepassword"]) echo "selected"; ?> value="f">No</option>
+		<option <?php if(isset($u) && $u["changepassword"]) echo "selected"; ?> value="t">Sim</option>
+		<option <?php if(!isset($u) || !$u["changepassword"]) echo "selected"; ?> value="f">Não</option>
 		</select>
         </td>
       </tr>

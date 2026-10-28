@@ -135,7 +135,7 @@ if($redo) {
 $strtmp .= "</table>";
 if (count($run) == 0) $strtmp .= "<br><center><b><font color=\"#ff0000\">NENHUMA SUBMISSÃO DISPONÍVEL</font></b></center>";
 
-$strtmp .= "<br><br><center><b>To submit a program, just fill in the following fields:</b></center>\n".
+$strtmp .= "<br><br><center><b>Para enviar uma solução, preencha os campos abaixo:</b></center>\n".
 "<form name=\"form1\" enctype=\"multipart/form-data\" method=\"post\" action=\"". $runteam ."\">\n".
 "  <input type=hidden name=\"confirmation\" value=\"noconfirm\" />\n".
 "  <center>\n".
@@ -176,8 +176,8 @@ $strtmp .= "	  </select>\n".
 "    }\n".
 "  </script>\n".
 "  <center>\n".
-"      <input type=\"submit\" name=\"Submit\" value=\"Send\" onClick=\"conf()\">\n".
-"      <input type=\"reset\" name=\"Submit2\" value=\"Clear\">\n".
+"      <input type=\"submit\" name=\"Submit\" value=\"Enviar\" onClick=\"conf()\">\n".
+"      <input type=\"reset\" name=\"Submit2\" value=\"Limpar\">\n".
 "  </center>\n".
 "</form>\n";
     $conf=globalconf();
