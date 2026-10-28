@@ -434,7 +434,9 @@ def main(profile="si"):
                 assert 'submissão(ões) enviada(s) novamente ao julgamento automático.' in result
                 print('Relatório apresenta resultados em português: OK',flush=True)
                 print('Submissões e resultados visíveis para a equipe: OK',flush=True)
-                report={'passed':True,'server_source_sha256':kit.source_hash(),'native_create_import_edit':True,
+                report={'passed':True,'profile':profile,'synthetic_environment':True,
+                        'authenticated_pages_checked':checked,'team_verdicts':verdicts,
+                        'server_source_sha256':kit.source_hash(),'native_create_import_edit':True,
                         'cpp20_template':True,'references_four_languages':good['results'],
                         'wrong_reference_rejected':True,'changed_package_invalidates_validation':True,
                         'active_native_problem_edit_rejected':True,'disposable_preparation_database_unchanged_by_references':True,
@@ -442,6 +444,7 @@ def main(profile="si"):
                         'real_event_databases_unchanged':True,'utc':dt.datetime.now(dt.timezone.utc).isoformat()}
             assert all(kit.fingerprint(f'boca-{p}-boca-db-1')==actual_before[p] for p in ('si','tii'))
             kit.write_json(kit.HERE/'reports/contest-setup.json',report)
+            kit.write_json(kit.HERE/'reports'/f'contest-setup-{profile}.json',report)
             print('PASSOU: criacao, importacao, edicao, referencias AC/WA, revisoes e bancos reais intactos.',flush=True)
         finally:
             for name in names.values():subprocess.run(['docker','rm','-f','-v',name],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
