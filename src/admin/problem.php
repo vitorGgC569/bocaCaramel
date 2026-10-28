@@ -338,7 +338,7 @@ for ($i=0; $i<count($prob); $i++) {
 	  if(strpos($prob[$i]["fullname"],"(DEL)") !== false) {
 		  echo "  <td nowrap><a href=\"javascript: conf3('problem.php?delete=" . $prob[$i]["number"] . "&input=" . myrawurlencode($prob[$i]["inputfilename"]) . 
 			  "')\">" . $prob[$i]["number"];
-		  echo "(deleted)";
+		  echo " (excluída)";
 	  } else {
 		  echo "  <td nowrap><a href=\"javascript: conf2('problem.php?delete=" . $prob[$i]["number"] . "&input=" . myrawurlencode($prob[$i]["inputfilename"]) . 
 			  "')\">" . $prob[$i]["number"];
@@ -350,7 +350,7 @@ for ($i=0; $i<count($prob); $i++) {
 	  //echo "<input type=\"text\" name=\"problemname" . $prob[$i]['number'] . "\" value=\"" . $prob[$i]["name"] . "\" size=\"4\" maxlength=\"20\" />";
 	  //echo "</td>\n";
   } else {
-    echo "  <td nowrap>" . $prob[$i]["number"] . " (fake)</td>\n";
+    echo "  <td nowrap>" . $prob[$i]["number"] . " (interno)</td>\n";
     echo "  <td nowrap>" . $prob[$i]["name"] . "</td>\n";
   }
   echo "  <td nowrap>" . $prob[$i]["fullname"] . "&nbsp;</td>\n";

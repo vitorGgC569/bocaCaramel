@@ -329,6 +329,11 @@ def main(profile="si"):
                         assert not any(fragment in text for fragment in english),(path,text[:500])
                         if path in ('admin/task.php','team/task.php','staff/task.php'):
                             assert 'ajuda e impressão' in text,(path,'Menu de pedidos ausente')
+                        if path=='admin/contest.php':
+                            assert 'a configuração do php permite no máximo:' in text and 'expiração da sessão:' in text
+                            assert 'your php config' not in text and 'session expiration' not in text
+                        if path=='admin/problem.php':
+                            assert '(interno)' in text and '(fake)' not in text
                         if path=='judge/runchief.php':
                             assert 'juiz chefe (' in text and 'dúvidas (' in text and 'submissões (' in text
                         checked+=1
