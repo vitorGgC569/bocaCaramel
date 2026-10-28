@@ -35,11 +35,11 @@ if (isset($_FILES["sourcefile"]) && isset($_POST["problem"]) && isset($_POST["Su
 		if ($size > $ct["contestmaxfilesize"]) {
 	                LOGLevel("User {$_SESSION["usertable"]["username"]} tried to submit file " .
 			"$name with $size bytes ({$ct["contestmaxfilesize"]} max allowed).", 1);
-			MSGError("File size exceeds the limit allowed.");
+			MSGError("O arquivo excede o limite de tamanho permitido.");
 			ForceLoad($runteam);
 		}
 		if(strpos($name,' ') === true || strpos($temp,' ') === true) {
-			MSGError("File name cannot contain spaces.");
+			MSGError("O nome do arquivo não pode conter espaços.");
 			ForceLoad($runteam);		
 		}
 		if (!is_uploaded_file($temp) || strlen($name)>100) {

@@ -69,9 +69,9 @@ if (isset($_POST["Submit3"]) && isset($_POST["penalty"]) && is_numeric($_POST["p
 		if ($ac == 1 && $_POST["contest"] != $_SESSION["usertable"]["contestnumber"]) {
 			$cf = globalconf();
 			if($cf["basepass"] == "")
-				MSGError("You must log in the new contest. The standard admin password is empty (if not changed yet).");
+				MSGError("Entre na nova competição. A senha padrão do administrador está vazia, caso ainda não tenha sido alterada.");
 			else
-				MSGError("You must log in the new contest. The standard admin password is " . $cf["basepass"] . " (if not changed yet).");
+				MSGError("Entre na nova competição. A senha padrão do administrador é " . $cf["basepass"] . " (caso ainda não tenha sido alterada).");
 
 			ForceLoad("../index.php");
 		}

@@ -1190,11 +1190,11 @@ function DBUserUpdate($contest, $site, $user, $username, $userfull, $userdesc, $
 	if ($a["userpassword"] != "" && $p != $passo) {
 		LOGLevel("User " . $_SESSION["usertable"]["username"]."/". $_SESSION["usertable"]["usersitenumber"] . " (contest=$contest, site=$site) " .
 				 "tried to change settings, but password was incorrect.",2);
-		MSGError ("Incorrect password.");
+		MSGError ("Senha incorreta.");
 	}
 	else { 
 		if(!$a['changepassword']) {
-			MSGError('Password change is DISABLED'); return;
+			MSGError('A alteração de senha está desativada'); return;
 		}
 		if ($a["userpassword"] == "") $temp = myhash("");
 		else $temp = $a["userpassword"];
@@ -1387,24 +1387,24 @@ function siteclock() {
 	}
 	
 	if ($s["siteactive"]!="t") 
-		return array("site is not active",-1000000000);
+		return array("local não está ativo",-1000000000);
 	if (!$s["siterunning"])
-		return array("contest not running",-1000000000);
+		return array("competição não está em andamento",-1000000000);
 	if ($s["currenttime"]<0) {
 		$t = - $s["currenttime"];
                 if($t>3600*24) {
                         $t = ((int) ($t/(360*24)))/10;
-                        return array("&gt; ". $t . " day(s) to start",$s["currenttime"]);
+                        return array("&gt; ". $t . " dia(s) para começar",$s["currenttime"]);
                 }
 		if($t>3600) {
 			$t = ((int) ($t/360))/10;
-			return array("&gt; ". $t . " hour(s) to start",$s["currenttime"]);
+			return array("&gt; ". $t . " hora(s) para começar",$s["currenttime"]);
 		}
 		if ($t>60) {
 			$t = (int) ($t/60);
-			return array("&gt; ". $t . " min(s) to start",$s["currenttime"]);
+			return array("&gt; ". $t . " minuto(s) para começar",$s["currenttime"]);
 		} else {
-			return array($t . " second(s) to start",$s["currenttime"]);
+			return array($t . " segundo(s) para começar",$s["currenttime"]);
 		}
 	}
 	if ($s["currenttime"]>=0) {
@@ -1420,17 +1420,17 @@ function siteclock() {
 		}
 		if ($t>60) {
 			$t = (int) ($t/60);
-			return array($str . $t . " min(s) left",$s["currenttime"]);
+			return array($str . $t . " minuto(s) restantes",$s["currenttime"]);
 		} else if($str=='') {
 			if ($t>0) {
-				return array($t . " second(s) left",$s["currenttime"]);
+				return array($t . " segundo(s) restantes",$s["currenttime"]);
 			} else {
 				$t = (int) (- $t/60);
-				return array($t . "min. of extra time",$s["currenttime"]);
+				return array($t . " min de tempo extra",$s["currenttime"]);
 			}
-		} else return array($str . " left",$s["currenttime"]);
+		} else return array($str . " restantes",$s["currenttime"]);
 	}
-	else return array("not started",-1000000000);
+	else return array("não iniciada",-1000000000);
 }
 // eof
 ?>

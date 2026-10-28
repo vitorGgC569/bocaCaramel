@@ -22,6 +22,21 @@ def config():
 
 
 class ConfigurationTests(unittest.TestCase):
+    def test_source_hash_normalizes_source_line_endings_but_not_assets(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            script = root / 'page.php'
+            script.write_bytes(b'<?php\r\necho 1;\r\n')
+            self.assertEqual(manage.source_hash_bytes(script), b'<?php\necho 1;\n')
+            script.write_bytes(b'<?php\necho 1;\n')
+            self.assertEqual(manage.source_hash_bytes(script), b'<?php\necho 1;\n')
+            asset = root / 'input.dat'
+            asset.write_bytes(b'a\r\nb\n')
+            self.assertEqual(manage.source_hash_bytes(asset), b'a\r\nb\n')
+            image = root / 'image.png'
+            image.write_bytes(b'\x89PNG\r\n\x00\r\n')
+            self.assertEqual(manage.source_hash_bytes(image), b'\x89PNG\r\n\x00\r\n')
+
     def test_missing_ip_and_times_block_activation(self):
         c=json.loads((HERE/'labs/si.json').read_text(encoding='utf-8'))
         with self.assertRaises(ValueError): manage.validate(c,network=True,timing=True)

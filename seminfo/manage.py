@@ -337,21 +337,41 @@ def check_restore(folder):
         subprocess.run(['docker', 'volume', 'rm', volume], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, **hidden_process_options())
 
 
+def source_hash_bytes(path):
+    """Hash source text independently of Git's Windows checkout line endings.
+
+    Binary assets remain byte-exact. Known source files, sample text inputs
+    and executable scripts are normalized to match Git checkouts.
+    """
+    data = path.read_bytes()
+    suffix = path.suffix.lower()
+    text_source = suffix in {'.php', '.py', '.js', '.css', '.html', '.sh', '.ps1',
+                             '.vbs', '.yml', '.yaml', '.json', '.md', '.dockerfile', '.c', '.h',
+                             '.conf', '.conf-ssl', '.txt', '.info', '.in', '.out',
+                             '.sample', '.config', '.sep'}
+    text_source = (text_source or path.name.lower() in {'dockerfile', '.htaccess', 'version',
+                   'changelog', 'copying', 'readme', 'file1'} or path.name.startswith('cron-')
+                   or data.startswith(b'#!'))
+    if text_source and b'\x00' not in data:
+        return data.replace(b'\r\n', b'\n')
+    return data
+
+
 def source_hash():
     h = hashlib.sha256()
     for folder in (ROOT / 'src', ROOT / 'tools', HERE / 'server', ROOT/'doc/problemexamples/problemtemplate'):
-        for p in sorted(folder.rglob('*')):
+        for p in sorted(folder.rglob('*'), key=lambda item: item.relative_to(ROOT).as_posix()):
             if p.is_file():
-                h.update(str(p.relative_to(ROOT)).replace('\\', '/').encode())
-                h.update(p.read_bytes())
+                h.update(p.relative_to(ROOT).as_posix().encode())
+                h.update(source_hash_bytes(p))
     for name in ('manage.py','admission.py','admission_wire.py','admission_setup.py','hub.py','webcast.py','scoring.py','compose.yml','firewall-mesa.ps1','install-admission.ps1','stop-admission.ps1',
                  'organizer.py','problems.py','launch-organizer.ps1','install-organizer-shortcut.ps1','Abrir Central SEMINFO.vbs'):
         path = HERE/name
         if path.exists():
-            h.update(name.encode()); h.update(path.read_bytes())
+            h.update(name.encode()); h.update(source_hash_bytes(path))
     for path in sorted((HERE/'operator-ui').glob('*')):
         if path.is_file():
-            h.update(path.relative_to(HERE).as_posix().encode()); h.update(path.read_bytes())
+            h.update(path.relative_to(HERE).as_posix().encode()); h.update(source_hash_bytes(path))
     return h.hexdigest()
 
 
