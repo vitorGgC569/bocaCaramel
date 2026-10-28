@@ -333,6 +333,9 @@ def main(profile="si"):
                             assert 'extensão:' in text and 'extension:' not in text
                         if path=='admin/site.php':
                             assert 'sede local' in text and 'local site' not in text
+                        if path=='admin/user.php':
+                            assert 'tenha cuidado ao usar um número de usuário já existente' in text
+                            assert 'specially care' not in text
                         if path in ('admin/task.php','team/task.php','staff/task.php'):
                             assert 'ajuda e impressão' in text,(path,'Menu de pedidos ausente')
                         if path=='admin/contest.php':

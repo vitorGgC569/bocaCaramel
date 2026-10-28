@@ -351,7 +351,7 @@ O arquivo deve seguir o formato definido no manual da administração.</b></cent
   <center>
 <b>Para criar ou editar um usuário, informe os dados abaixo.<br>
 As alterações substituirão os dados já cadastrados.<br>
-(Specially care if you use a user number that is already existent.)<br>
+Tenha cuidado ao usar um número de usuário já existente.<br>
 <br>
 </b>
     <table border="0">
