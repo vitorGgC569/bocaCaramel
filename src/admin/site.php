@@ -330,7 +330,7 @@ echo "</select>\n";
 //else
 //  echo "<input type=\"text\" readonly name=\"site\" value=\"$site\" size=\"2\" maxlength=\"2\" />\n";
 
-if($ct["contestlocalsite"]==$site) echo "(local site)"; 
+if($ct["contestlocalsite"]==$site) echo "(sede local)"; 
 ?>
         </td>
       </tr>

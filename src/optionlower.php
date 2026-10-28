@@ -112,7 +112,7 @@ function computeHASH()
         </td>
       </tr>
       <tr> 
-        <td width="35%" align=right>Retype Nova senha:</td>
+        <td width="35%" align=right>Repita a nova senha:</td>
         <td width="65%">
 	  <input type="password" name="passwordn2" size="20" maxlength="200" />
         </td>

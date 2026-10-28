@@ -112,7 +112,7 @@ As alterações substituirão os dados já cadastrados.<br><br>
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Extension:</td>
+        <td width="35%" align=right>Extensão:</td>
         <td width="65%">
           <input type="text" name="langextension" value="" size="20" maxlength="20" />
         </td>

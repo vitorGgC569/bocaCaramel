@@ -317,7 +317,7 @@ def main(profile="si"):
                 english=('still open','auto-ended','in progress','runs renewed for autojudging',
                          're-run autojudge for selected runs','news (last','as of 1 minutes',
                          'clarifications (','runs (','chief (')
-                checked=0
+                checked=0; text_audit={}
                 for browser,paths in pages.items():
                     for path in paths:
                         response=browser.open(base+path,timeout=30)
@@ -327,6 +327,12 @@ def main(profile="si"):
                         assert 'fatal error' not in text,(path,text[:500])
                         assert 'usuário:' in text,(path,'Cabeçalho autenticado ausente')
                         assert not any(fragment in text for fragment in english),(path,text[:500])
+                        if path.endswith('/option.php'):
+                            assert 'repita a nova senha:' in text and 'retype' not in text, path
+                        if path=='admin/language.php':
+                            assert 'extensão:' in text and 'extension:' not in text
+                        if path=='admin/site.php':
+                            assert 'sede local' in text and 'local site' not in text
                         if path in ('admin/task.php','team/task.php','staff/task.php'):
                             assert 'ajuda e impressão' in text,(path,'Menu de pedidos ausente')
                         if path=='admin/contest.php':
@@ -336,7 +342,10 @@ def main(profile="si"):
                             assert '(interno)' in text and '(fake)' not in text
                         if path=='judge/runchief.php':
                             assert 'juiz chefe (' in text and 'dúvidas (' in text and 'submissões (' in text
+                        text_audit[path]=' '.join(' '.join(visible.parts).split())
                         checked+=1
+                kit.write_json(kit.HERE/'reports'/f'ui-text-synthetic-{profile}.json',
+                               {'profile':profile,'synthetic_environment':True,'pages':text_audit})
                 print(f'Navegação autenticada e textos visíveis: {checked} páginas conferidas',flush=True)
                 # Create a real support request and verify both the translated
                 # display and unchanged internal states through completion.
