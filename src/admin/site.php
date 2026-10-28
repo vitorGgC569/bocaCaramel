@@ -556,8 +556,8 @@ for ($i=0; $i< $n; $i++) {
   echo "<td nowrap align=left>";
   if($sitetime[$i]["siteenddate"] == 0) {
     if($st["siterunning"])
-      echo "still open";
-    else echo "auto-ended";
+      echo "em andamento";
+    else echo "encerrado automaticamente";
   }
   else
     echo dateconv($sitetime[$i]["siteenddate"]);

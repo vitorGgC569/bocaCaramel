@@ -69,7 +69,7 @@ foreach($d['problem'] as $keya => $val){
 }
 echo "</table></center>";
 
-$myfile = fopen("runs_by_problems.txt", "w") or die("Unable to open file runs_by_problems.txt!");
+$myfile = fopen("runs_by_problems.txt", "w") or die("Não foi possível abrir o arquivo runs_by_problems.txt.");
 for($i=0;$i<count($values);$i++){
   fwrite($myfile, $values[$i]);
   fwrite($myfile, " ");
@@ -78,7 +78,7 @@ for($i=0;$i<count($values);$i++){
 }
 fclose($myfile);
 
-$myfile = fopen("accepted_runs_by_problems.txt", "w") or die("Unable to open file accepted_runs_by_problems.txt!");
+$myfile = fopen("accepted_runs_by_problems.txt", "w") or die("Não foi possível abrir o arquivo accepted_runs_by_problems.txt.");
 for($i=0;$i<count($values_ac);$i++){
   fwrite($myfile, $values_ac[$i]);
   fwrite($myfile, " ");
@@ -209,7 +209,7 @@ $color[] = "#ffa700";
 $color[] = "#ff0000";
 
 
-$myfile = fopen("all_runs_by_language.txt", "w") or die("Unable to open file all_runs_by_language.txt!");
+$myfile = fopen("all_runs_by_language.txt", "w") or die("Não foi possível abrir o arquivo all_runs_by_language.txt.");
 for($i=0;$i<count($values);$i++){
   fwrite($myfile, $values[$i]);
   fwrite($myfile, " ");
@@ -218,7 +218,7 @@ for($i=0;$i<count($values);$i++){
 }
 fclose($myfile);
 
-$myfile = fopen("accepted_runs_by_language.txt", "w") or die("Unable to open file accepted_runs_by_language.txt!");
+$myfile = fopen("accepted_runs_by_language.txt", "w") or die("Não foi possível abrir o arquivo accepted_runs_by_language.txt.");
 for($i=0;$i<count($values);$i++){
   fwrite($myfile, $values_ac[$i]);
   fwrite($myfile, " ");
@@ -295,7 +295,7 @@ foreach($d['answer'] as $keya => $val){
 }
 
 $color[] = "#af7f57";
-$myfile = fopen("all_runs_by_answer.txt", "w") or die("Unable to open file all_runs_by_answer.txt!");
+$myfile = fopen("all_runs_by_answer.txt", "w") or die("Não foi possível abrir o arquivo all_runs_by_answer.txt.");
 for($i=0;$i<count($values);$i++){
   fwrite($myfile, $values[$i]);
   fwrite($myfile, " ");
@@ -413,7 +413,7 @@ for($pos=0; $pos<$vezes; $pos++) {
   $values[] = $res[$pos];
 }
 
-$myfile = fopen("runs_by_time_period.txt", "w") or die("Unable to open file runs_by_time_period.txt!");
+$myfile = fopen("runs_by_time_period.txt", "w") or die("Não foi possível abrir o arquivo runs_by_time_period.txt.");
 for($i=0;$i<count($values);$i++){
   fwrite($myfile, $values[$i]);
   fwrite($myfile, "\n");
@@ -456,7 +456,7 @@ for($pos=0; $pos<$vezes; $pos++) {
   $values_ac[] = $res[$pos];
 }
 
-$myfile = fopen("accepted_runs_by_time_period.txt", "w") or die("Unable to open file accepted_runs_by_time_period.txt!");
+$myfile = fopen("accepted_runs_by_time_period.txt", "w") or die("Não foi possível abrir o arquivo accepted_runs_by_time_period.txt.");
 for($i=0;$i<count($values_ac);$i++){
   fwrite($myfile, $values_ac[$i]);
   fwrite($myfile, "\n");
