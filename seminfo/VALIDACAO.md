@@ -17,6 +17,18 @@ O teste de rede usa `seminfo/client-builder:22.04`, quatro containers próprios 
 
 O ensaio `admission_network.py` usa bancas/clientes isolados, certificados reais, fila, código de aprovação, gate HTTP GET/POST e nftables. Confere revogação, certificado de outro laboratório, token de projetor impedido de aprovar, identidade root 0600 e expiração no kernel após matar o agente sem limpeza. Também consulta duas bancas e renderiza os placares de categorias separadas com questões, tempos e fases diferentes. A integração BOCA verifica igualdade do placar público, ocultação após freeze e bloqueio da publicação final antes do fim/com pendências.
 
+## Evidências automatizadas de 28/10/2026
+
+As imagens do servidor foram reconstruídas preservando a correção de compilação Java do PR #1. O juiz usa o JDK instalado fora do chroot; a construção verifica C, C++ e Python dentro dele. A imagem-base contém pacotes Java parcialmente configurados no banco dpkg do chroot, por isso não se executa apt naquele ambiente durante a construção. Os executáveis e o julgamento precisam continuar sendo verificados sempre que a imagem-base mudar.
+
+- Os 55 testes de unidade passaram; os testes isolados de rede e autorização aprovaram isolamento IPv4/IPv6, TLS e revogação.
+- O fluxo sintético de criação, importação, quatro referências e envio pela equipe passou em SI e TII, incluindo resultados YES e WA, sem alterar os bancos reais. Após esse ensaio foram alterados apenas rótulos de interface; os testes de unidade e a geração dos gráficos foram repetidos.
+- As imagens atuais passaram na verificação automática das duas categorias; SI foi iniciada em preparação nesta máquina e os bancos permaneceram iguais aos anteriores. A troca temporária de SI para TII e de volta foi testada antes do último ajuste textual.
+- Gráficos de pizza e barras foram renderizados com PHP/GD. O teste reproduzível está em `seminfo/tests/chart-smoke.php` e deve ser executado dentro da imagem web com o arquivo montado em `/tests`.
+- O bundle offline foi reconstruído; antes da distribuição, confira o hash indicado em `seminfo/dist/server-bundle.json` e a correspondência com `server.lock.json`. A pasta privada e os backups não são públicos.
+
+Essas evidências não homologam as salas físicas. Os seis ensaios a seguir devem ser realizados presencialmente em cada laboratório; não registre atestados sem executá-los.
+
 ## Uma ficha presencial por laboratório
 
 | Registro | Evidência exigida |
