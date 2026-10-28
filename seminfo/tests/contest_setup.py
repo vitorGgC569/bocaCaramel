@@ -280,6 +280,40 @@ def main(profile="si"):
                 # the organizer-only reference seeding API. The edited package
                 # expects 99; send one correct and one incorrect C solution.
                 team=login(base,profile+'01',credentials['TEAM_01'],'team')
+                # Visit read-only pages with real authenticated sessions. Ignore
+                # scripts and styles: internal form values and protocol strings
+                # are deliberately kept in their original language.
+                class VisibleText(HTMLParser):
+                    def __init__(self):
+                        super().__init__(); self.hidden=0; self.parts=[]
+                    def handle_starttag(self,tag,attrs):
+                        if tag in ('script','style'): self.hidden+=1
+                    def handle_endtag(self,tag):
+                        if tag in ('script','style') and self.hidden: self.hidden-=1
+                    def handle_data(self,data):
+                        if not self.hidden: self.parts.append(data)
+                pages={client:['admin/contest.php','admin/site.php','admin/user.php','admin/language.php',
+                               'admin/answer.php','admin/problem.php','admin/buildproblem.php','admin/run.php',
+                               'admin/clar.php','admin/task.php','admin/files.php','admin/report.php',
+                               'admin/misc.php','admin/option.php'],
+                       team:['team/problem.php','team/run.php','team/clar.php','team/task.php',
+                             'team/files.php','team/option.php','team/score.php']}
+                pages[login(base,'system',credentials['SYSTEM_PASSWORD'],'system')]=['system/contest.php','system/importxml.php','system/option.php']
+                pages[login(base,'placar',credentials['SCORE_PASSWORD'],'score')]=['score/index.php','score/score.php']
+                english=('still open','auto-ended','in progress','runs renewed for autojudging',
+                         're-run autojudge for selected runs','news (last','as of 1 minutes')
+                checked=0
+                for browser,paths in pages.items():
+                    for path in paths:
+                        response=browser.open(base+path,timeout=30)
+                        html=response.read().decode('utf-8')
+                        assert response.url.endswith(path), (path,response.url)
+                        visible=VisibleText(); visible.feed(html); text=' '.join(visible.parts).casefold()
+                        assert 'fatal error' not in text,(path,text[:500])
+                        assert 'usuário:' in text,(path,'Cabeçalho autenticado ausente')
+                        assert not any(fragment in text for fragment in english),(path,text[:500])
+                        checked+=1
+                print(f'Navegação autenticada e textos visíveis: {checked} páginas conferidas',flush=True)
                 # Create a real support request and verify both the translated
                 # display and unchanged internal states through completion.
                 request=urllib.parse.urlencode({'Submit':'S.O.S.','confirmation':'confirm'}).encode()
