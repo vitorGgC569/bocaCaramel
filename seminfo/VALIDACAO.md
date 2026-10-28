@@ -31,6 +31,8 @@ As imagens do servidor foram reconstruídas preservando a correção de compila�
 
 Na revisão posterior do placar, acesso e tela do juiz, os 56 testes de unidade passaram novamente. A nova imagem foi verificada para SI e TII; em TII, o fluxo isolado repetiu a criação e importação de questão, as quatro referências, o envio HTTP com resultados YES e WA e a restauração de backup. A preparação de SI foi atualizada e o banco permaneceu intacto. O pacote offline e seu manifesto foram conferidos contra as fontes.
 
+Na revisão seguinte, os botões administrativos e de julgamento foram traduzidos preservando os valores enviados aos formulários. O ensaio isolado de TII verificou os botões de habilitar e desabilitar acessos com versões consecutivas no mesmo segundo; uma correção no BOCA impede que a segunda alteração local seja ignorada. O ensaio repetiu criação e importação, quatro referências, backup e restauração, e submissões HTTP com YES e WA. Os 56 testes de unidade e a verificação de sintaxe PHP passaram.
+
 Essas evidências não homologam as salas físicas. Os seis ensaios a seguir devem ser realizados presencialmente em cada laboratório; não registre atestados sem executá-los.
 
 ## Uma ficha presencial por laboratório

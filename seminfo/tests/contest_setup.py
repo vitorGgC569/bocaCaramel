@@ -11,6 +11,8 @@ import sys
 import tempfile
 import time
 import urllib.request
+import urllib.parse
+from html.parser import HTMLParser
 from unittest.mock import patch
 from zipfile import ZipFile
 
@@ -83,6 +85,36 @@ def main(profile="si"):
                 assert b'Gerar ZIP' in response.read()
             with client.open(base+'index.php?contest=1&destination=problems') as response:
                 assert response.url.endswith('admin/problem.php')
+            # Exercise the translated buttons using the actual name/value emitted
+            # by the rendered form; preserve the site's initial login setting.
+            class Buttons(HTMLParser):
+                def __init__(self):
+                    super().__init__(); self.active=None; self.labels={}
+                def handle_starttag(self,tag,attrs):
+                    if tag=='button': self.active=(dict(attrs),[])
+                def handle_data(self,data):
+                    if self.active: self.active[1].append(data)
+                def handle_endtag(self,tag):
+                    if tag=='button' and self.active:
+                        attrs,parts=self.active; self.labels[''.join(parts).strip()]=attrs; self.active=None
+            page=client.open(base+'admin/site.php?site=1').read().decode('utf-8')
+            buttons=Buttons(); buttons.feed(page)
+            login_sql="SELECT sitepermitlogins FROM sitetable WHERE contestnumber=1 AND sitenumber=1"
+            def login_state():
+                return raw_run(['docker','exec',names['db'],'psql','-U','postgres','-d','bocadb','-Atc',login_sql]).decode().strip()
+            initial=login_state()
+            assert initial in ('t','f'),initial
+            # Force the stored version ahead of the current second to reproduce
+            # consecutive local changes deterministically, even on slower hosts.
+            raw_run(['docker','exec',names['db'],'psql','-U','postgres','-d','bocadb','-c',
+                     "UPDATE sitetable SET updatetime=extract(epoch from now())::bigint+10 WHERE contestnumber=1 AND sitenumber=1"])
+            for label,expected in [('Desabilitar acessos','f'),('Habilitar acessos','t')]+([('Desabilitar acessos','f')] if initial=='f' else []):
+                button=buttons.labels[label]
+                assert button['name']=='Logins'
+                data=urllib.parse.urlencode({'site':'1','confirmation':'confirm',button['name']:button['value']}).encode()
+                client.open(urllib.request.Request(base+'admin/site.php?site=1',data),timeout=30).read()
+                assert login_state()==expected,(label,login_state())
+            print('Botões traduzidos de acesso: desabilitar e habilitar OK',flush=True)
             def post(fields,files):
                 data,kind=multipart(fields,files)
                 with client.open(urllib.request.Request(base+'admin/problem.php',data,{'Content-Type':kind}),timeout=30) as response:return response.read()

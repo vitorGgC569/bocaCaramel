@@ -203,9 +203,9 @@ for ($i=0; $i<count($cs); $i++) {
     </table>
   </center>
   <center>
-      <input type="submit" name="Submit3" value="Send" onClick="conf()">
-      <input type="submit" name="Submit3" value="Activate" onClick="conf()">
-      <input type="reset" name="Submit4" value="Clear">
+      <button type="submit" name="Submit3" value="Send" onClick="conf()">Enviar</button>
+      <button type="submit" name="Submit3" value="Activate" onClick="conf()">Ativar</button>
+      <input type="reset" name="Submit4" value="Limpar">
   </center>
 							<?php } else { echo "<br><br><center>Selecione uma competição ou crie uma nova.</center><br><br>"; } ?>
 </form>

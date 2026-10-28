@@ -81,8 +81,8 @@ if (count($lang) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUMA LING
 ?>
 
 <br><br><center><b>Clique no número de uma linguagem para excluí-la.<br>
-WARNING: deleting a language will remove EVERYTHING related to it.<br>
-It is NOT recommended to change anything while the contest is running.<br>
+ATENÇÃO: excluir uma linguagem removerá todos os dados relacionados.<br>
+Não é recomendado alterar esses dados enquanto a prova estiver em andamento.<br>
 </b></center>
 
 <form name="form1" enctype="multipart/form-data" method="post" action="language.php">
@@ -96,7 +96,7 @@ It is NOT recommended to change anything while the contest is running.<br>
   </script>
   <center>
 <b>Para criar ou editar uma linguagem, informe os dados abaixo.<br>
-Note that any changes will overwrite the already defined data.<br><br>
+As alterações substituirão os dados já cadastrados.<br><br>
 </b>
     <table border="0">
       <tr>
@@ -120,8 +120,8 @@ Note that any changes will overwrite the already defined data.<br><br>
     </table>
   </center>
   <center>
-      <input type="submit" name="Submit3" value="Send" onClick="conf()">
-      <input type="reset" name="Submit4" value="Clear">
+      <button type="submit" name="Submit3" value="Send" onClick="conf()">Enviar</button>
+      <input type="reset" name="Submit4" value="Limpar">
   </center>
 </form>
 

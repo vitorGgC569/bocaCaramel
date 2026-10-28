@@ -46,7 +46,7 @@ if (isset($_GET)) {
 		"resizable=yes')\">Lista de dúvidas</a><br />\n";
       echo " <a href=\"#\" class=menu style=\"font-weight:bold\" onClick=\"window.open('report/task.php', ".
 		"'Task List','width=800,height=600,scrollbars=yes,toolbar=yes,menubar=yes,".
-		"resizable=yes')\">Task List</a><br />\n";
+		"resizable=yes')\">Lista de pedidos</a><br />\n";
       echo " <a href=\"#\" class=menu style=\"font-weight:bold\" onClick=\"window.open('report/site.php', ".
 		"'Start/Stop Logs','width=800,height=600,scrollbars=yes,toolbar=yes,menubar=yes,".
 		"resizable=yes')\">Registros de início e parada do local</a><br />\n";

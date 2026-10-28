@@ -81,15 +81,15 @@ for ($i=0; $i<count($ans); $i++) {
 		} else 
 			echo "  <td nowrap>".$ans[$i]["number"]."</td>\n";
     } else {
-      echo "  <td nowrap>".$ans[$i]["number"]." (fake)</td>\n";
+      echo "  <td nowrap>".$ans[$i]["number"]." (simulada)</td>\n";
     }
     echo " <td nowrap>" . $ans[$i]["desc"] . "</td>\n";
     
-    if ($ans[$i]["short"]=="") echo "  <td nowrap>&lt;EMPTY&gt;</td>\n";
+    if ($ans[$i]["short"]=="") echo "  <td nowrap>&lt;VAZIO&gt;</td>\n";
     else echo "  <td nowrap>".$ans[$i]["short"]."</td>\n";
     
-    if($ans[$i]["yes"]=="t") echo "  <td nowrap>Yes</td>\n";
-    else echo "  <td nowrap>No</td>\n";
+    if($ans[$i]["yes"]=="t") echo "  <td nowrap>Sim</td>\n";
+    else echo "  <td nowrap>Não</td>\n";
     
     echo " </tr>\n";
     $n++;
@@ -99,11 +99,11 @@ if ($n == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUMA RESPOSTA CADAS
 ?>
 
 <br><br><center><b>Quando permitido, clique no número da resposta para excluí-la.<br>
-	Inputting with the same number of an existing one will update its description.<br>
-	TAKE CARE: deleting an answer will remove EVERYTHING related to it (ALSO IN OTHER TABLES!!).<br>
-		It is NOT recommended to change anything while the contest is running.<br>
-	 To insert a new answer, enter the data below.<br>
-	 Note that any changes will overwrite the already defined data.<br><br>
+	Informar o número de uma resposta existente atualizará sua descrição.<br>
+	ATENÇÃO: excluir uma resposta removerá todos os dados relacionados, inclusive em outras tabelas.<br>
+		Não é recomendado alterar esses dados enquanto a prova estiver em andamento.<br>
+	 Para cadastrar uma resposta, informe os dados abaixo.<br>
+	 As alterações substituirão os dados já cadastrados.<br><br>
 </b>
 <form name="form1" enctype="multipart/form-data" method="post" action="answer.php">
   <input type=hidden name="confirmation" value="noconfirm" />
@@ -121,25 +121,25 @@ if ($n == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUMA RESPOSTA CADAS
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Shortname (usually 2 or 3 letters):</td>
+        <td width="35%" align=right>Nome curto (geralmente 2 ou 3 letras):</td>
         <td width="65%">
           <input type="text" name="answershort" value="" size="20" maxlength="20" />
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Type:</td>
+        <td width="35%" align=right>Tipo:</td>
         <td width="65%">
                 <select name="answeryes">
-                <option selected value="f">No</option>
-                <option value="t">Yes</option>
+                <option selected value="f">Não</option>
+                <option value="t">Sim</option>
                 </select>
         </td>
       </tr>
     </table>
   </center>
   <center>
-      <input type="submit" name="Submit3" value="Send" onClick="conf()">
-      <input type="reset" name="Submit4" value="Clear">
+      <button type="submit" name="Submit3" value="Send" onClick="conf()">Enviar</button>
+      <input type="reset" name="Submit4" value="Limpar">
   </center>
 </form>
 

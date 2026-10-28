@@ -111,9 +111,9 @@ function computeHASH()
     }
   </script>
   <center>
-      <input type="submit" name="Submit" value="Reduced Export" onClick="conf()">
-      <input type="submit" name="Submit1" value="Full Export" onClick="conf()">
-      <input type="reset" name="Submit2" value="Clear">
+      <button type="submit" name="Submit" value="Reduced Export" onClick="conf()">Exportação reduzida</button>
+      <button type="submit" name="Submit1" value="Full Export" onClick="conf()">Exportação completa</button>
+      <input type="reset" name="Submit2" value="Limpar">
   </center>
 </form>
 

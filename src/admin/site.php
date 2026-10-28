@@ -427,13 +427,13 @@ echo "):</td>";
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Runs/clars that will be judged here (comma sep):</td>
+        <td width="35%" align=right>Submissões e dúvidas julgadas aqui (separadas por vírgula):</td>
         <td width="65%">
           <input type="text" name="judging" value="<?php echo $st["sitejudging"]; ?>" size="20" maxlength="200" />
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Tasks that will be treated here (comma sep):</td>
+        <td width="35%" align=right>Pedidos atendidos aqui (separados por vírgula):</td>
         <td width="65%">
           <input type="text" name="tasking" value="<?php echo $st["sitetasking"]; ?>" size="20" maxlength="200" />
         </td>
@@ -473,7 +473,7 @@ echo "):</td>";
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Autojudge (without human interaction):</td>
+        <td width="35%" align=right>Julgamento automático (sem intervenção humana):</td>
         <td width="65%">
 <?php
           if ($st["siteautojudge"] == "t")
@@ -485,13 +485,13 @@ echo "):</td>";
         </td>
       </tr>
       <tr>
-        <td width="35%" align=right>Logins are:</td>
+        <td width="35%" align=right>Acessos:</td>
         <td width="65%">
 <?php
           if ($st["sitepermitlogins"] == "t")
-            echo "enabled";
+            echo "habilitados";
           else
-            echo "disabled";
+            echo "desabilitados";
 ?>
         </td>
       </tr>
@@ -522,20 +522,20 @@ echo "):</td>";
 <?php
 		if($main || $site == $ct["contestlocalsite"]) {
 ?>
-      <input type="submit" name="Submit1" value="Send" onClick="conf()">
-      <input type="submit" name="Submit2" value="Start Now" onClick="conf()">
-      <input type="submit" name="Submit3" value="Stop Now" onClick="conf()">
-      <input type="reset" name="Submit4" value="Restore fields">
+      <button type="submit" name="Submit1" value="Send" onClick="conf()">Enviar</button>
+      <button type="submit" name="Submit2" value="Start Now" onClick="conf()">Iniciar agora</button>
+      <button type="submit" name="Submit3" value="Stop Now" onClick="conf()">Encerrar agora</button>
+      <input type="reset" name="Submit4" value="Restaurar campos">
 <br>
-      <input type="submit" name="Logoff" value="Logoff all users" onClick="conf()">
-      <input type="submit" name="Logins" value="Disable logins" onClick="conf()">
-      <input type="submit" name="Logins" value="Enable logins" onClick="conf()">
+      <button type="submit" name="Logoff" value="Logoff all users" onClick="conf()">Encerrar sessões de todos os usuários</button>
+      <button type="submit" name="Logins" value="Disable logins" onClick="conf()">Desabilitar acessos</button>
+      <button type="submit" name="Logins" value="Enable logins" onClick="conf()">Habilitar acessos</button>
 <br><br><br>
 
-      <input type="submit" name="SubmitDC" value="Delete ALL clars" onClick="conf2()">
-      <input type="submit" name="SubmitDR" value="Delete ALL runs" onClick="conf2()">
-      <input type="submit" name="SubmitDT" value="Delete ALL tasks" onClick="conf2()">
-      <input type="submit" name="SubmitDB" value="Delete ALL bkps" onClick="conf2()">
+      <button type="submit" name="SubmitDC" value="Delete ALL clars" onClick="conf2()">Excluir TODAS as dúvidas</button>
+      <button type="submit" name="SubmitDR" value="Delete ALL runs" onClick="conf2()">Excluir TODAS as submissões</button>
+      <button type="submit" name="SubmitDT" value="Delete ALL tasks" onClick="conf2()">Excluir TODOS os pedidos</button>
+      <button type="submit" name="SubmitDB" value="Delete ALL bkps" onClick="conf2()">Excluir TODOS os backups</button>
 <?php
 				}
 ?>
@@ -576,7 +576,7 @@ for ($i=0; $i< $n; $i++) {
       <tr>
 <td nowrap width="50%" align=right>
 (Do not use this button unless really necessary)
-  <input type="submit" name="endat" value="Stop At" onClick="conf()">:
+  <button type="submit" name="endat" value="Stop At" onClick="conf()">Encerrar em</button>:
 </td>
 <?php
 $w = $st["siteendeddate"];
@@ -609,7 +609,7 @@ if($main) {
         </td>
       </tr>
     </table>
-      <input type="submit" name="Submit" value="Import" onClick="conf()">
+      <button type="submit" name="Submit" value="Import" onClick="conf()">Importar</button>
   </center>
 		<?php } ?>
 </form>
@@ -618,7 +618,7 @@ if($main) {
 <form action="site.php" id="formnew" method="get" name="formnew">
 <h2>Selecione o número do local</h2>
 <input id="new" name="Number" placeholder="new" type="text">
-<input type="submit" name="Go" value="Go">
+<button type="submit" name="Go" value="Go">Ir</button>
 </form>
 </div>
 </div>

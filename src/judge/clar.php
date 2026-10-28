@@ -115,8 +115,8 @@ for ($i=0;$i<count($prob);$i++)
     }
   </script>
   <center>
-      <input type="submit" name="Submit" value="Send" onClick="conf()">
-      <input type="reset" name="Submit2" value="Clear">
+      <button type="submit" name="Submit" value="Send" onClick="conf()">Enviar</button>
+      <input type="reset" name="Submit2" value="Limpar">
   </center>
 </form>
 

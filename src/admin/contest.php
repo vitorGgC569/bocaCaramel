@@ -282,17 +282,17 @@ echo $contest;
   </center>
   <center>
 <?php if($main) { ?>
-	  <input type="submit" name="Submit3" value="Update" onClick="conf()">
-	   <input type="submit" name="Submit3" value="Update Contest and All Sites" onClick="conf2()">
-	   <input type="reset" name="Submit4" value="Clear">
+	  <button type="submit" name="Submit3" value="Update" onClick="conf()">Atualizar</button>
+	   <button type="submit" name="Submit3" value="Update Contest and All Sites" onClick="conf2()">Atualizar prova e todas as sedes</button>
+	   <input type="reset" name="Submit4" value="Limpar">
 <br><br>
-      <input type="submit" name="SubmitDC" value="Delete ALL clars" onClick="conf2()">
-      <input type="submit" name="SubmitDR" value="Delete ALL runs" onClick="conf2()">
-      <input type="submit" name="SubmitDT" value="Delete ALL tasks" onClick="conf2()">
-      <input type="submit" name="SubmitDB" value="Delete ALL bkps" onClick="conf2()">
+      <button type="submit" name="SubmitDC" value="Delete ALL clars" onClick="conf2()">Excluir TODAS as dúvidas</button>
+      <button type="submit" name="SubmitDR" value="Delete ALL runs" onClick="conf2()">Excluir TODAS as submissões</button>
+      <button type="submit" name="SubmitDT" value="Delete ALL tasks" onClick="conf2()">Excluir TODOS os pedidos</button>
+      <button type="submit" name="SubmitDB" value="Delete ALL bkps" onClick="conf2()">Excluir TODOS os backups</button>
 <?php } else { ?>
-      <input type="submit" name="Submit3" value="Update" onClick="conf()">
-	   <input type="submit" name="Submit3" value="Become Main Site" onClick="conf3()">
+      <button type="submit" name="Submit3" value="Update" onClick="conf()">Atualizar</button>
+	   <button type="submit" name="Submit3" value="Become Main Site" onClick="conf3()">Definir como sede principal</button>
 <?php } ?>
 	   </center>
 </form>

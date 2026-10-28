@@ -36,13 +36,13 @@ require 'header.php';
     }
    </script>
    <center>
-   <input type="submit" name="Submit1" value="Transfer" onClick="conf()"> &nbsp;
-   <input type="submit" name="Submit2" value="Transfer all" onClick="conf()"> &nbsp;
-   <input type="submit" name="Submit3" value="Transfer scores" onClick="conf()"> &nbsp;
-   <input type="submit" name="Submit4" value="Clear cache" onClick="conf()"> &nbsp; 
-   <input type="submit" name="Submit5" value="Full clear" onClick="conf2()">  &nbsp;
-   <input type="submit" name="Submit6" value="Update BOCA" onClick="conf2()">  &nbsp;
-   <input type="submit" name="Submit7" value="Revert Update" onClick="conf2()"> 
+   <button type="submit" name="Submit1" value="Transfer" onClick="conf()">Transferir</button> &nbsp;
+   <button type="submit" name="Submit2" value="Transfer all" onClick="conf()">Transferir tudo</button> &nbsp;
+   <button type="submit" name="Submit3" value="Transfer scores" onClick="conf()">Transferir placares</button> &nbsp;
+   <button type="submit" name="Submit4" value="Clear cache" onClick="conf()">Limpar cache</button> &nbsp;
+   <button type="submit" name="Submit5" value="Full clear" onClick="conf2()">Limpeza completa</button>  &nbsp;
+   <button type="submit" name="Submit6" value="Update BOCA" onClick="conf2()">Atualizar BOCA</button>  &nbsp;
+   <button type="submit" name="Submit7" value="Revert Update" onClick="conf2()">Reverter atualização</button>
   </center>
 </form>
 <pre>

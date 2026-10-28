@@ -236,8 +236,8 @@ function computeHASH()
     }
   </script>
   <center>
-      <input type="submit" name="Submit" value="Import" onClick="conf()">
-      <input type="reset" name="Submit2" value="Clear">
+      <button type="submit" name="Submit" value="Import" onClick="conf()">Importar</button>
+      <input type="reset" name="Submit2" value="Limpar">
   </center>
 </form>
 

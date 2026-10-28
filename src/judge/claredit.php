@@ -142,10 +142,10 @@ if (($a = DBGetClarToAnswer($clarnumber, $clarsitenumber,
     }
   </script>
   <center>
-      <input type="submit" name="Submit" value="Answer" onclick="conf()">
-      <input type="submit" name="Submit" value="No response" onclick="conf()">
-      <input type="submit" name="giveup" value="Cancel">
-      <input type="reset" name="Submit2" value="Clear">
+      <button type="submit" name="Submit" value="Answer" onclick="conf()">Responder</button>
+      <button type="submit" name="Submit" value="No response" onclick="conf()">Sem resposta</button>
+      <button type="submit" name="giveup" value="Cancel">Cancelar</button>
+      <input type="reset" name="Submit2" value="Limpar">
   </center>
 </form>
 

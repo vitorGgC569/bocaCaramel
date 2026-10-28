@@ -53,7 +53,7 @@ if (isset($_GET["done"]) && is_numeric($_GET["done"]) && isset($_GET["site"]) &&
   </script>
 <table width="100%" border=1>
  <tr>
-  <td><b>Task #</b></td>
+  <td><b>Pedido nº</b></td>
   <td><b>Tempo</b></td>
   <td><b>Usuário / local</b></td>
   <td><b>Descrição</b></td>

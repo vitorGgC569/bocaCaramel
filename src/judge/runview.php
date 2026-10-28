@@ -161,11 +161,11 @@ if ($a["timestamp"] < $s["sitelastmileanswer"]) echo "checked"; ?>>
     }
   </script>
   <center>
-      <input type="submit" name="Submit" value="Judge" onClick="conf()">
-     <input type="submit" name="open" value="Open run for rejudging" onClick="conf()">
-      <input type="submit" name="cancel" value="Cancel editing">
-      <input type="submit" name="delete" value="Delete" onClick="conf()">
-      <input type="reset" name="Submit2" value="Clear">
+      <button type="submit" name="Submit" value="Judge" onClick="conf()">Julgar</button>
+     <button type="submit" name="open" value="Open run for rejudging" onClick="conf()">Abrir submissão para novo julgamento</button>
+      <button type="submit" name="cancel" value="Cancel editing">Cancelar edição</button>
+      <button type="submit" name="delete" value="Delete" onClick="conf()">Excluir</button>
+      <input type="reset" name="Submit2" value="Limpar">
 <br><br>
   </center>
 
@@ -174,7 +174,7 @@ if ($a["timestamp"] < $s["sitelastmileanswer"]) echo "checked"; ?>>
 <br>
 <b>Julgamento automático:</b>
 <!--
-<input type="submit" name="giveup" value="Renew">
+<button type="submit" name="giveup" value="Renew">Renovar</button>
 -->
 <br><br>
   <table border="1">

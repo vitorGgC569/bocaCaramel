@@ -339,15 +339,15 @@ The file must be in the format defined in the admin's manual.</b></center>
     }
   </script>
   <center>
-      <input type="submit" name="Submit" value="Import" onClick="conf()">
-      <input type="reset" name="Submit2" value="Clear">
+      <button type="submit" name="Submit" value="Import" onClick="conf()">Importar</button>
+      <input type="reset" name="Submit2" value="Limpar">
   </center>
 </form>
 
   <br><br>
   <center>
 <b>Para criar ou editar um usuário, informe os dados abaixo.<br>
-Note that any changes will overwrite the already defined data.<br>
+As alterações substituirão os dados já cadastrados.<br>
 (Specially care if you use a user number that is already existent.)<br>
 <br>
 </b>
@@ -403,7 +403,7 @@ if (isset($u)) {
         </td>
       </tr>
       <tr> 
-        <td width="35%" align=right>Type:</td>
+        <td width="35%" align=right>Tipo:</td>
         <td width="65%">
 		<select name="usertype">
 		<option <?php if(!isset($u) || $u["usertype"] == "team") echo "selected"; ?> value="team">Team</option>
@@ -491,13 +491,13 @@ echo $u["userdesc"]; } ?>" size="50" maxlength="300" />
     </table>
   </center>
   <center>
-      <input type="submit" name="Submit" value="Send" onClick="conf3()">
+      <button type="submit" name="Submit" value="Send" onClick="conf3()">Enviar</button>
 <?php if(isset($u)) { ?>
-      <input type="submit" name="Delete" value="Delete" onClick="conf4()">
+      <button type="submit" name="Delete" value="Delete" onClick="conf4()">Excluir</button>
 <?php } ?>
-      <input type="submit" name="Cancel" value="Cancel" onClick="conf5()">
+      <button type="submit" name="Cancel" value="Cancel" onClick="conf5()">Cancelar</button>
 <?php if(isset($u)) { ?>
-<br><br><b>WARNING: deleting a user will completely remove EVERYTHING related to it (including runs, clarifications, etc).<b><br>
+<br><br><b>ATENÇÃO: excluir um usuário removerá todos os dados relacionados, inclusive submissões e dúvidas.<b><br>
 <?php } ?>
   </center>
 </form>

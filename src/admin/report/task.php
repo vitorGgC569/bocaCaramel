@@ -20,7 +20,7 @@ require('header.php');
 
 ?>
 <br>
-<center><h2>Task List</h2></center>
+<center><h2>Lista de pedidos</h2></center>
 <table width="100%" border=1>
  <tr>
   <td><b>#</b></td>

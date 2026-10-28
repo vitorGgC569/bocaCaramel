@@ -171,9 +171,9 @@ if ($a["timestamp"] < $s["sitelastmileanswer"]) echo "checked"; ?>>
     }
   </script>
   <center>
-      <input type="submit" name="Submit" value="Judge" onClick="conf()">
-      <input type="submit" name="giveup" value="Cancel editing">
-      <input type="reset" name="Submit2" value="Clear">
+      <button type="submit" name="Submit" value="Judge" onClick="conf()">Julgar</button>
+      <button type="submit" name="giveup" value="Cancel editing">Cancelar edição</button>
+      <input type="reset" name="Submit2" value="Limpar">
 
 <br><br>
 <!--

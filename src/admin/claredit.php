@@ -157,11 +157,11 @@ if (($a = DBChiefGetClarToAnswer($clarnumber, $clarsitenumber,
     }
   </script>
   <center>
-      <input type="submit" name="Submit" value="Answer" onClick="conf()">
-      <input type="submit" name="open" value="Open the Clar" onClick="conf()">
-      <input type="submit" name="cancel" value="Cancel">
-      <input type="submit" name="delete" value="Delete" onClick="conf()">
-      <input type="reset" name="Submit2" value="Clear">
+      <button type="submit" name="Submit" value="Answer" onClick="conf()">Responder</button>
+      <button type="submit" name="open" value="Open the Clar" onClick="conf()">Abrir a dúvida</button>
+      <button type="submit" name="cancel" value="Cancel">Cancelar</button>
+      <button type="submit" name="delete" value="Delete" onClick="conf()">Excluir</button>
+      <input type="reset" name="Submit2" value="Limpar">
   </center>
 </form>
 

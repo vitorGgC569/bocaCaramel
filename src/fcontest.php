@@ -697,7 +697,8 @@ function DBUpdateSite ($param,$c=null) {
 	}
 	$t = time();
 	if($updatetime <= 0)
-		$updatetime=$t;
+		// Alterações locais consecutivas precisam de versões distintas para sincronização.
+		$updatetime=max($t, (int)$a['updatetime'] + 1);
 	$ret=1;
 	if($updatetime > $a['updatetime']) {
 		$ret=2;

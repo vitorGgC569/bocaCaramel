@@ -67,7 +67,7 @@ for ($i=0; $i<count($clar); $i++) {
 }
 echo "</table>";
 if (count($clar) == 0) echo "<br><center><b><font color=\"#ff0000\">NENHUMA DÚVIDA DISPONÍVEL</font></b></center>";
-else echo "<br><b><font color=\"#b0b0a0\">* Shadowed clars and runs were judged by this judge</font></b>";
+else echo "<br><b><font color=\"#b0b0a0\">* Dúvidas e submissões destacadas foram julgadas por este juiz</font></b>";
 
 ?>
 <br><br>
