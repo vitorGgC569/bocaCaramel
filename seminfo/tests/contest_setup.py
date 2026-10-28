@@ -327,6 +327,8 @@ def main(profile="si"):
                         assert 'fatal error' not in text,(path,text[:500])
                         assert 'usuário:' in text,(path,'Cabeçalho autenticado ausente')
                         assert not any(fragment in text for fragment in english),(path,text[:500])
+                        if path in ('admin/task.php','team/task.php','staff/task.php'):
+                            assert 'ajuda e impressão' in text,(path,'Menu de pedidos ausente')
                         if path=='judge/runchief.php':
                             assert 'juiz chefe (' in text and 'dúvidas (' in text and 'submissões (' in text
                         checked+=1

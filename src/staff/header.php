@@ -64,7 +64,7 @@ if(($s = DBSiteInfo($_SESSION["usertable"]["contestnumber"], $_SESSION["usertabl
 
 echo "<table border=0 width=\"100%\" align=center>\n";
 echo " <tr>\n";
-echo "  <td align=center width=\"20%\"><a class=menu style=\"font-weight:bold\" href=task.php>Impressão</a></td>\n";
+echo "  <td align=center width=\"20%\"><a class=menu style=\"font-weight:bold\" href=task.php>Ajuda e impressão</a></td>\n";
 //echo "  <td align=center width=\"20%\"><a class=menu style=\"font-weight:bold\" href=task.php>Tasks ($nr)</a></td>\n";
 echo "  <td align=center width=\"20%\"><a class=menu style=\"font-weight:bold\" href=score.php>Placar</a></td>\n";
 echo "  <td align=center width=\"20%\"><a class=menu style=\"font-weight:bold\" href=run.php>Submissões</a></td>\n";

@@ -137,7 +137,7 @@ echo "  <td align=center width=\"12%\"><a class=menu style=\"font-weight:bold\" 
 echo "  <td align=center width=\"12%\"><a class=menu style=\"font-weight:bold\" href=run.php>Submissões</a></td>\n";
 echo "  <td align=center width=\"12%\"><a class=menu style=\"font-weight:bold\" href=score.php>Placar</a></td>\n";
 echo "  <td align=center width=\"12%\"><a class=menu style=\"font-weight:bold\" href=clar.php>Dúvidas</a></td>\n";
-echo "  <td align=center width=\"12%\"><a class=menu style=\"font-weight:bold\" href=task.php>Impressão</a></td>\n";
+echo "  <td align=center width=\"12%\"><a class=menu style=\"font-weight:bold\" href=task.php>Ajuda e impressão</a></td>\n";
 echo "  <td align=center width=\"12%\"><a class=menu style=\"font-weight:bold\" href=files.php>Backups</a></td>\n";
 echo "  <td align=center width=\"12%\"><a class=menu style=\"font-weight:bold\" href=option.php>Opções</a></td>\n";
 echo "  <td align=center width=\"12%\"><a class=menu style=\"font-weight:bold\" href=../index.php>Sair</a></td>\n";

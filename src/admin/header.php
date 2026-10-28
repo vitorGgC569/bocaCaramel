@@ -79,7 +79,7 @@ if(!isset($_POST['noflush'])) {
 	echo "  <td align=center><a class=menu style=\"font-weight:bold\" href=misc.php>Diversos</a></td>\n";
 //echo " </tr></table><hr><table border=0 width=\"100%\" align=center><tr>\n";
 	echo " </tr><tr>\n";
-	echo "  <td align=center><a class=menu style=\"font-weight:bold\" href=task.php>Impressão</a></td>\n";
+	echo "  <td align=center><a class=menu style=\"font-weight:bold\" href=task.php>Ajuda e impressão</a></td>\n";
 	echo "  <td align=center><a class=menu style=\"font-weight:bold\" href=site.php>Local</a></td>\n";
 	echo "  <td align=center><a class=menu style=\"font-weight:bold\" href=contest.php>Competição</a></td>\n";
 	echo "  <td align=center><a class=menu style=\"font-weight:bold\" href=log.php>Registros</a></td>\n";
